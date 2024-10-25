@@ -77,7 +77,7 @@
 
 <style lang="postcss">
 	nav {
-		@apply fixed top-0 w-full backdrop-blur-md z-10 bg-green-50;
+		@apply fixed top-0 w-full backdrop-blur-md bg-green-50/30 z-10;
 		border-bottom: 1px solid #cfe1b9;
 	}
 
