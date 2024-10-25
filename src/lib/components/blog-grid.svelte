@@ -1,4 +1,4 @@
-<div class="flex-container h-[550px]">
+<section class="flex-container h-fit">
 	<div class="main-blog">
 		<h1 class="text-2xl text-center my-auto">Main Blog Post</h1>
 	</div>
@@ -11,7 +11,7 @@
 			<h1 class="text-2xl text-center my-auto">Sub Blog Post</h1>
 		</div>
 	</div>
-</div>
+</section>
 
 <style lang="postcss">
 	.flex-container {
@@ -19,7 +19,7 @@
 	}
 
 	.main-blog {
-		@apply flex-1 bg-green-100/50 rounded-md  flex justify-center;
+		@apply flex-1 min-h-96 sm:min-h-full bg-green-100/50 rounded-md  flex justify-center;
 	}
 
 	.sub-blogs {
@@ -27,6 +27,6 @@
 	}
 
 	.sub-blogs > div {
-		@apply flex-1 bg-red-100/50 rounded-md aspect-square sm:aspect-auto  flex justify-center;
+		@apply flex-1 bg-red-100/50 rounded-md aspect-square   flex justify-center;
 	}
 </style>
