@@ -19,9 +19,15 @@
 			<li>
 				<a href="/">Home</a>
 			</li>
+
 			<li>
-				<a href="/">Articles</a>
+				<a href="/">Blogs</a>
 			</li>
+
+			<li>
+				<a href="/">Categories</a>
+			</li>
+
 			<li>
 				<a href="/">Contact Us</a>
 			</li>
@@ -41,19 +47,22 @@
 		</div>
 
 		<Sheet.Root>
-			<Sheet.Trigger class="sm:hidden">
+			<Sheet.Trigger class="md:hidden">
 				<Button size="icon" variant="ghost">
 					<Menu />
 				</Button>
 			</Sheet.Trigger>
-			<Sheet.Content class="sm:hidden py-16  flex flex-col ">
+			<Sheet.Content class="md:hidden py-16  flex flex-col ">
 				<Sheet.Description class=" flex flex-col h-full justify-between">
 					<ul class="mobile-links">
 						<li>
 							<a href="/">Home</a>
 						</li>
 						<li>
-							<a href="/">Articles</a>
+							<a href="/">Blogs</a>
+						</li>
+						<li>
+							<a href="/">Categories</a>
 						</li>
 						<li>
 							<a href="/">Contact Us</a>
@@ -106,14 +115,14 @@
 	}
 
 	ul.tablet-links {
-		@apply hidden sm:flex gap-5 md:gap-10 items-center;
+		@apply hidden md:flex gap-5 md:gap-6 lg:gap-10 items-center;
 	}
 
 	ul.tablet-links a {
-		@apply text-lg font-medium tracking-wider;
+		@apply text-sm lg:text-lg font-medium tracking-wider;
 	}
 
 	.social-container {
-		@apply hidden sm:flex items-center gap-5;
+		@apply hidden md:flex items-center gap-5;
 	}
 </style>
