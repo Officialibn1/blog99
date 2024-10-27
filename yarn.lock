@@ -1290,6 +1290,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"embla-carousel-reactive-utils@npm:8.3.0":
+  version: 8.3.0
+  resolution: "embla-carousel-reactive-utils@npm:8.3.0"
+  peerDependencies:
+    embla-carousel: 8.3.0
+  checksum: 10c0/64769d7b5d0169f7cda810d909b446ccd47b28afbcb205196c0e1799c51ebbefaa71465cabd6bc5ab92bad78da99fdf2808dc8e1a3f3f18a7e428ae2e0136a0e
+  languageName: node
+  linkType: hard
+
+"embla-carousel-svelte@npm:^8.3.0":
+  version: 8.3.0
+  resolution: "embla-carousel-svelte@npm:8.3.0"
+  dependencies:
+    embla-carousel: "npm:8.3.0"
+    embla-carousel-reactive-utils: "npm:8.3.0"
+  peerDependencies:
+    svelte: ^3.49.0 || ^4.0.0 || ^5.0.0
+  checksum: 10c0/f7f78e04c0f89766b1fc278868a06d7adbf78489b81329c29d6f67216cd8ba028ed7b54bb94d019a82872fbe0a8119aa215f294e92703964321705f9709ccb1a
+  languageName: node
+  linkType: hard
+
+"embla-carousel@npm:8.3.0":
+  version: 8.3.0
+  resolution: "embla-carousel@npm:8.3.0"
+  checksum: 10c0/0240156d6a736603d82ddfe93b03ce296e385e9c18ed2cca9465634c8adb7560bfc2fbef6368a4da2a54926c4ba6de1012ebb33d2fc92c052030ea2288e4cc92
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -2466,6 +2494,7 @@ __metadata:
     autoprefixer: "npm:^10.4.20"
     bits-ui: "npm:^0.21.16"
     clsx: "npm:^2.1.1"
+    embla-carousel-svelte: "npm:^8.3.0"
     eslint: "npm:^9.7.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-svelte: "npm:^2.36.0"

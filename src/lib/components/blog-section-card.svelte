@@ -2,6 +2,7 @@
 	import { Content, Description, Footer, Header, Root, Title } from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
 	import * as Avatar from '$lib/components/ui/avatar';
+	import { goto } from '$app/navigation';
 
 	type Props = {
 		id: number;
@@ -10,7 +11,10 @@
 	let { id }: Props = $props();
 </script>
 
-<Root class="shadow-none  overflow-hidden">
+<Root
+	class="shadow-none cursor-pointer md:hover:shadow-md duration-200 overflow-hidden"
+	onclick={() => goto(`/blogs/${id}`)}
+>
 	<Content class="p-0 flex sm:flex-col">
 		<Header class="w-1/4 p-0 overflow-hidden sm:w-full">
 			<img class=" w-full h-full" src="/placeholder-image.avif" alt="Card_Placeholder_Image" />

@@ -25,15 +25,8 @@
 			</li>
 
 			<li>
-				<a href="/">Categories</a>
-			</li>
-
-			<li>
 				<a href="/">Contact Us</a>
 			</li>
-			<!-- <li>
-				<a href="/">About Us</a>
-			</li> -->
 		</ul>
 
 		<div class="social-container">
@@ -61,9 +54,7 @@
 						<li>
 							<a href="/blogs">Blogs</a>
 						</li>
-						<li>
-							<a href="/">Categories</a>
-						</li>
+
 						<li>
 							<a href="/">Contact Us</a>
 						</li>

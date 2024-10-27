@@ -2,15 +2,21 @@
 	import { Content, Description, Footer, Header, Root, Title } from '$lib/components/ui/card';
 	import { Separator } from '$lib/components/ui/separator';
 	import * as Avatar from '$lib/components/ui/avatar';
+	import { goto } from '$app/navigation';
+	import { cn } from '$lib/utils';
 
 	type Props = {
 		id: number;
+		className?: string;
 	};
 
-	let { id }: Props = $props();
+	let { id, className }: Props = $props();
 </script>
 
-<Root class="shadow-none">
+<Root
+	class={cn('shadow-none md:hover:shadow-md duration-200 cursor-pointer', className)}
+	onclick={() => goto(`/blogs/${id}`)}
+>
 	<Content class="p-0 ">
 		<Header class="">
 			<img src="/placeholder-image.avif" alt="Card_Placeholder_Image" />
