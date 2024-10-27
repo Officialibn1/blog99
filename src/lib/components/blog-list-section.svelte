@@ -1,5 +1,7 @@
 <script>
+	import BlogSectionCard from './blog-section-card.svelte';
 	import { Button } from './ui/button';
+	const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 </script>
 
 <section>
@@ -10,9 +12,9 @@
 	</div>
 
 	<div class="content-grid">
-		<div></div>
-		<div></div>
-		<div></div>
+		{#each nums.slice(0, 4) as num, i}
+			<BlogSectionCard id={num * i} />
+		{/each}
 	</div>
 </section>
 
@@ -31,10 +33,10 @@
 	}
 
 	.content-grid {
-		@apply grid gap-5 md:grid-cols-3;
+		@apply grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
 	}
 
-	.content-grid > div {
+	/* .content-grid > div {
 		@apply aspect-video md:aspect-auto md:h-80 lg:h-96 bg-green-100/50 rounded-md;
-	}
+	} */
 </style>

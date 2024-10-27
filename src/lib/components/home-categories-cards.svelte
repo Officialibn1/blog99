@@ -20,7 +20,7 @@
 	}
 
 	section > h1 {
-		@apply md:text-2xl lg:text-3xl font-medium tracking-wider;
+		@apply text-2xl lg:text-3xl font-medium tracking-wider;
 	}
 
 	.flex-container {
