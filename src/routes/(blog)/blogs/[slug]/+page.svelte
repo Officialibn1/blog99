@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import BlogCard from '$lib/components/blog-card.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import BlogTitles from '$lib/components/ui/blog-titles/blog-titles.svelte';
@@ -60,6 +60,7 @@
 		</aside>
 
 		<div>
+			<img src="/placeholder-image.avif" alt="Placeholder_Blog_Image" />
 			<p>
 				Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate sint error optio
 				assumenda, in incidunt doloremque nobis ad. Delectus nostrum cumque eum mollitia architecto
@@ -168,14 +169,18 @@
 
 	.blog-content-container > div {
 		@apply flex-1 flex flex-col gap-5 p-3 bg-slate-100/50;
-	}
 
-	.blog-content-container > div h1 {
-		@apply text-xl mt-5 tracking-wider font-medium text-justify leading-loose;
-	}
+		& > img {
+			@apply max-w-96 mx-auto my-10;
+		}
 
-	.blog-content-container > div p {
-		@apply text-lg tracking-wider leading-loose;
+		& h1 {
+			@apply text-xl mt-5 tracking-wider font-medium text-justify leading-loose;
+		}
+
+		& p {
+			@apply text-lg tracking-wider leading-loose;
+		}
 	}
 
 	.similar-blogs-section {

@@ -9,11 +9,11 @@
 
 <nav>
 	<div class="nav-content max-w-[1224px]">
-		<div class="logo">
+		<a href="/" class="logo">
 			<BookOpenText size={36} strokeWidth={1.5} />
 
 			<h1>Blog <span>9ja</span></h1>
-		</div>
+		</a>
 
 		<ul class="tablet-links">
 			<li>
@@ -25,7 +25,7 @@
 			</li>
 
 			<li>
-				<a href="/">Contact Us</a>
+				<a href="/contact">Contact Us</a>
 			</li>
 		</ul>
 
@@ -56,7 +56,7 @@
 						</li>
 
 						<li>
-							<a href="/">Contact Us</a>
+							<a href="/contact">Contact Us</a>
 						</li>
 					</ul>
 

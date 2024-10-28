@@ -76,6 +76,7 @@
 	body {
 		@apply bg-background text-foreground relative;
 		/* font-family: "Open Sans", sans-serif; */
+		/* font-family: "Raleway", serif; */
 		font-family: 'Montserrat Alternates', sans-serif;
 	}
 }

@@ -38,46 +38,44 @@
 						<a href="/">Blogs</a>
 					</li>
 					<li>
-						<a href="/">Jist's</a>
+						<a href="/">Contact Us</a>
 					</li>
 				</ul>
 			</div>
 
 			<div class="links">
-				<h1>Categories</h1>
+				<h1>Social</h1>
 
 				<ul>
 					<li>
-						<a href="/">Sports</a>
+						<a href="/">Twitter</a>
 					</li>
 					<li>
-						<a href="/">Finance</a>
+						<a href="/">Facebook</a>
 					</li>
 					<li>
-						<a href="/">Product Updates</a>
+						<a href="/">WhatsApp</a>
 					</li>
-					<li>
+					<!-- <li>
 						<a href="/">Politics</a>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		</div>
 
 		<div class="right">
 			<div class="subscribe-newsletter">
-				<h1 class="text-xl font-medium">Subscribe to news letter</h1>
+				<h1 class="text-xl font-medium capitalize">Subscribe to our news letter</h1>
 
 				<p class="font-light text-sm max-w-96">
 					Subscribe to our new's letter to get instant notifications of news, updates & jists.
 				</p>
 
-				<form action="" class="flex h-max items-center mt-5 max-w-96">
-					<Input class="rounded-tr-none rounded-br-none bg-white py-5" />
+				<form action="" class="flex gap-2 h-max items-center mt-5 max-w-96">
+					<Input class=" bg-white py-5" />
 
-					<Button
-						class="bg-transparent border-none rounded-tl-none rounded-bl-none text-green-900 h-full"
-					>
-						<Send />
+					<Button class="bg-transparent hover:bg-green-100/50 border-none  text-slate-800 h-full">
+						Subscribe
 					</Button>
 				</form>
 			</div>
@@ -114,7 +112,7 @@
 	}
 
 	.middle {
-		@apply flex flex-col gap-8 sm:flex-row;
+		@apply flex flex-col gap-10 md:gap-14 sm:flex-row;
 	}
 
 	.links {
