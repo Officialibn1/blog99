@@ -104,7 +104,7 @@
 				{#if $submitting}
 					<Loader />
 				{:else}
-					'Submit'
+					Submit
 				{/if}
 			</Form.Button>
 		</form>
