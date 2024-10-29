@@ -46,6 +46,7 @@
 				<Input
 					{...attrs}
 					bind:value={$formData.password}
+					type="password"
 					disabled={$submitting}
 					aria-disabled={$submitting}
 				/>

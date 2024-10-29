@@ -1,24 +1,23 @@
 import { superValidate } from 'sveltekit-superforms';
 import type { Actions } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
-import { signInFormSchema } from './schema';
-import { fail } from '@sveltejs/kit';
+import { registerFormSchama } from './schema';
 
 export const actions = {
 	default: async (event) => {
-		const form = await superValidate(event, zod(signInFormSchema));
+		const form = await superValidate(event, zod(registerFormSchama));
 
 		console.log(JSON.stringify(form, null, 2));
 
 		if (!form.valid) {
-			return fail(400, {
-				message: 'Error Signing In',
+			return {
+				message: 'Failed to Register',
 				form
-			});
+			};
 		}
 
 		return {
-			message: 'Sign In Successfully',
+			message: 'Registeration Successfull',
 			form
 		};
 	}
