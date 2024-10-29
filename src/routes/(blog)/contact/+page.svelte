@@ -5,9 +5,9 @@
 	import WhatsApp from '$lib/components/ui/icons/WhatsApp.svelte';
 	import { Input } from '$lib/components/ui/input';
 	import * as Form from '$lib/components/ui/form';
-	import { contactFormSchema, type ContactFormSchema } from './schema';
+	import { contactFormSchema } from './schema';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { type Infer, type SuperValidated, superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import Facebook from '$lib/components/ui/icons/Facebook.svelte';
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
