@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { blogs } from '$lib/dummy-datas/blogs';
-	import { createTable, Render, Subscribe, createRender } from 'svelte-headless-table';
-	import { addPagination, addSortBy, addTableFilter } from 'svelte-headless-table/plugins';
-	import { readable } from 'svelte/store';
-	import { Button } from '$lib/components/ui/button';
-
 	import * as Table from '$lib/components/ui/table';
-	import BlogsTableActions from './blogs-table-actions.svelte';
-	import ArrowUpDown from 'lucide-svelte/icons/arrow-up-down';
+	import { createTable, createRender, Subscribe, Render } from 'svelte-headless-table';
+	import { readable } from 'svelte/store';
+	import { subscribers } from '$lib/dummy-datas/subscribers';
+	import SubscribersTableActions from './subscribers-table-actions.svelte';
+	import { Button } from '$lib/components/ui/button';
+	import { ArrowUpDown } from 'lucide-svelte';
+	import { addPagination, addSortBy, addTableFilter } from 'svelte-headless-table/plugins';
 	import { Input } from '$lib/components/ui/input';
 
-	const table = createTable(readable(blogs), {
+	const table = createTable(readable(subscribers), {
 		page: addPagination({
 			initialPageSize: 8
 		}),
@@ -37,12 +36,16 @@
 			}
 		}),
 		table.column({
-			accessor: 'title',
-			header: 'Title'
+			accessor: 'name',
+			header: 'Name'
 		}),
 		table.column({
-			accessor: 'published',
-			header: 'Publised',
+			accessor: 'email',
+			header: 'Email'
+		}),
+		table.column({
+			accessor: 'blocked',
+			header: 'Blocked',
 			plugins: {
 				sort: {
 					disable: true
@@ -53,19 +56,11 @@
 			}
 		}),
 		table.column({
-			accessor: 'comments',
-			header: 'Comments'
-		}),
-		table.column({
-			accessor: 'views',
-			header: 'Total Views'
-		}),
-		table.column({
 			accessor: ({ id }) => id,
 			header: '',
 			cell: ({ value }) => {
 				// @ts-expect-error
-				return createRender(BlogsTableActions, { id: value });
+				return createRender(SubscribersTableActions, { id: value });
 			},
 			plugins: {
 				sort: {
@@ -90,11 +85,12 @@
 	<div class="search-filter-container">
 		<Input
 			bind:value={$filterValue}
-			placeholder="Filter by Title, Comments or Views..."
+			placeholder="Filter Subscriber by Name or Email..."
 			type="text"
-			class="max-w-md mx-auto bg-white shadow-none rounded-sm"
+			class="bg-white shadow-none rounded-sm max-w-md mx-auto"
 		/>
 	</div>
+
 	<div class="table-container">
 		<Table.Root {...$tableAttrs}>
 			<Table.Header class="bg-white">
@@ -104,23 +100,15 @@
 							{#each headerRow.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
 									<Table.Head {...attrs}>
-										<div
-											class={cell.id === 'views' || cell.id === 'comments'
-												? 'text-right '
-												: cell.id === ''
-													? 'flex justify-end'
-													: ''}
-										>
-											{#if cell.id === 'title' || cell.id === 'comments' || cell.id === 'views'}
-												<Button variant="ghost" onclick={props.sort.toggle}>
-													<Render of={cell.render()} />
-
-													<ArrowUpDown class="ml-2 h-4 w-4" />
-												</Button>
-											{:else}
+										{#if cell.id === 'name' || cell.id === 'email'}
+											<Button variant="ghost" onclick={props.sort.toggle}>
 												<Render of={cell.render()} />
-											{/if}
-										</div>
+
+												<ArrowUpDown class="ml-2 h-4 w-4" />
+											</Button>
+										{:else}
+											<Render of={cell.render()} />
+										{/if}
 									</Table.Head>
 								</Subscribe>
 							{/each}
@@ -132,19 +120,11 @@
 			<Table.Body {...$tableBodyAttrs}>
 				{#each $pageRows as row (row.id)}
 					<Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-						<Table.Row {...rowAttrs} class="even:bg-slate-200/50">
+						<Table.Row {...rowAttrs}>
 							{#each row.cells as cell}
 								<Subscribe attrs={cell.attrs()} let:attrs>
 									<Table.Cell {...attrs}>
-										<div
-											class={cell.id === 'views' || cell.id === 'comments'
-												? 'text-right font-number'
-												: cell.id === ''
-													? 'flex justify-center '
-													: ''}
-										>
-											<Render of={cell.render()} />
-										</div>
+										<Render of={cell.render()} />
 									</Table.Cell>
 								</Subscribe>
 							{/each}
@@ -159,23 +139,22 @@
 		<Button
 			variant="outline"
 			size="sm"
-			onclick={() => {
-				hasPreviousPage && ($pageIndex = $pageIndex - 1);
-			}}
-			disabled={!$hasPreviousPage}>Previous Page</Button
+			disabled={!$hasPreviousPage}
+			onclick={() => ($pageIndex = $pageIndex - 1)}>Previous Page</Button
 		>
+
 		<Button
 			variant="outline"
 			size="sm"
-			onclick={() => ($pageIndex = $pageIndex + 1)}
-			disabled={!$hasNextPage}>Next Page</Button
+			disabled={!$hasNextPage}
+			onclick={() => ($pageIndex = $pageIndex + 1)}>Next Page</Button
 		>
 	</div>
 </section>
 
 <style lang="postcss">
 	section {
-		@apply flex flex-col gap-5 pt-10 h-full;
+		@apply mt-10 flex flex-col gap-5;
 	}
 
 	.table-container {

@@ -1,12 +1,13 @@
 <script lang="ts">
+	import SubscribersTable from './subscribers-table.svelte';
 </script>
 
 <section>
-	<h1 class="text-3xl">Subscribers Page</h1>
+	<SubscribersTable />
 </section>
 
 <style lang="postcss">
 	section {
-		@apply outline w-full h-full;
+		@apply w-full h-full;
 	}
 </style>
