@@ -1,12 +1,16 @@
 <script lang="ts">
+	import type { PageData } from './$types';
+	import BlogsTable from './blogs-table.svelte';
+
+	const { data }: { data: PageData } = $props();
 </script>
 
 <section>
-	<h1 class="text-3xl">Blogs Page</h1>
+	<BlogsTable />
 </section>
 
 <style lang="postcss">
 	section {
-		@apply outline w-full h-full;
+		@apply w-full h-full;
 	}
 </style>

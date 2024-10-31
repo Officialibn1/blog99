@@ -17,34 +17,71 @@
 	import Editor from '@toast-ui/editor';
 	import '@toast-ui/editor/dist/toastui-editor.css'; // Editor's Style
 	import { onMount } from 'svelte';
+	import { enhance } from '$app/forms';
+	import type { ActionData } from './$types';
+	import { Separator } from '$lib/components/ui/separator';
 
-	const { data }: { data: PageData } = $props();
+	type Props = {
+		data: PageData;
+		form: ActionData;
+	};
+
+	const { data, form: FormAction }: Props = $props();
+
+	console.log('Form Action: ', FormAction);
 
 	const form = superForm(data.form, {
-		validators: zodClient(createBlogFormSchema)
+		validators: zodClient(createBlogFormSchema),
+		applyAction: true
 	});
 
-	const { form: formData, submitting, errors, enhance } = form;
+	const { form: formData, submitting, errors } = form;
+
+	let editor: {
+		reset(): unknown;
+		destroy: () => any;
+		getMarkdown: () => Promise<string>;
+	};
 
 	onMount(() => {
-		const editor = new Editor({
+		editor = new Editor({
 			el: document.querySelector('#editor'),
 			height: '500px',
 			initialEditType: 'markdown',
 			previewStyle: 'vertical'
 		});
 
-		editor.getMarkdown();
+		editor;
+
+		return () => editor.destroy();
 	});
+
+	const handleSubmit = async () => {
+		let markdown = await editor?.getMarkdown();
+		await formData.update(
+			($form) => {
+				$form.content = markdown;
+
+				return $form;
+			},
+			{ taint: false }
+		);
+
+		editor.reset();
+
+		console.log('Markdown Content: ', markdown);
+	};
 </script>
 
 <section>
 	<hgroup>
-		<h1>Create a new Blog</h1>
+		<h1>Write New Blog</h1>
 	</hgroup>
 
+	<Separator class="mt-5 mb-10" />
+
 	<div class="editor-container">
-		<form method="POST" use:enhance>
+		<form method="POST" use:enhance onsubmit={handleSubmit}>
 			<FormField {form} name="title">
 				<FormControl let:attrs>
 					<FormLabel>Blog Title</FormLabel>
@@ -68,9 +105,9 @@
 					<Input
 						class="shadow-none bg-white"
 						disabled={$submitting}
+						bind:value={$formData.slug}
 						aria-disabled={$submitting}
 						{...attrs}
-						bind:value={$formData.slug}
 					/>
 				</FormControl>
 
@@ -78,10 +115,12 @@
 			</FormField>
 
 			<FormField {form} name="content">
-				<FormControl>
+				<FormControl let:attrs>
 					<FormLabel>Blog Content</FormLabel>
 
 					<div id="editor" class="shadow-none bg-white"></div>
+
+					<Input {...attrs} type="hidden" bind:value={$formData.content} />
 				</FormControl>
 
 				<FieldErrors />
@@ -120,8 +159,12 @@
 	section {
 		@apply w-full h-full;
 
-		& h1 {
-			@apply text-3xl;
+		& hgroup {
+			/* @apply; */
+
+			& h1 {
+				@apply text-2xl font-medium font-openSans;
+			}
 		}
 	}
 </style>

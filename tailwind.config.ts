@@ -56,7 +56,8 @@ const config: Config = {
 			},
 			fontFamily: {
 				sans: [...fontFamily.sans],
-				openSans: ['Open Sans', 'sans-serif']
+				openSans: ['Open Sans', 'sans-serif'],
+				number: ['JetBrains Mono', 'monospace']
 			}
 		}
 	}

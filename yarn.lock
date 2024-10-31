@@ -3083,6 +3083,7 @@ __metadata:
     prettier-plugin-svelte: "npm:^3.2.6"
     svelte: "npm:^5.0.0"
     svelte-check: "npm:^4.0.0"
+    svelte-headless-table: "npm:^0.18.3"
     svelte-radix: "npm:^2.0.1"
     sveltekit-superforms: "npm:^2.20.0"
     tailwind-merge: "npm:^2.5.4"
@@ -3988,12 +3989,54 @@ __metadata:
   languageName: node
   linkType: hard
 
+"svelte-headless-table@npm:^0.18.3":
+  version: 0.18.3
+  resolution: "svelte-headless-table@npm:0.18.3"
+  dependencies:
+    svelte-keyed: "npm:^2.0.0"
+    svelte-render: "npm:^2.0.1"
+    svelte-subscribe: "npm:^2.0.1"
+  peerDependencies:
+    svelte: ^4.0.0
+  checksum: 10c0/b50003b626aa2152b3886f1a43c0de4e02436c92e7e37219bde2673e325696095563dcbfc2baa85e3c5b2dd35047d1f97be4a852ad15f7af0441ebb974913953
+  languageName: node
+  linkType: hard
+
+"svelte-keyed@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "svelte-keyed@npm:2.0.0"
+  peerDependencies:
+    svelte: ^4.0.0
+  checksum: 10c0/1c0c29119c187c46671ceee894a58f7287e05176219f339aced33e8dc94abe2dc374a299b6661b3cf45cf95a7e6ac054ebc35f3f3863116aec2d2ae3eeec8be6
+  languageName: node
+  linkType: hard
+
 "svelte-radix@npm:^2.0.1":
   version: 2.0.1
   resolution: "svelte-radix@npm:2.0.1"
   peerDependencies:
     svelte: ^5.0.0
   checksum: 10c0/0e9a4abf8a34a150cb5dfe9f659decffe78dd6382020fa76616aa56aaa0f1c08804d7b278c6ad11a50fca8b64234b7ba1cfc07185444815aa7c06cbfd07b8018
+  languageName: node
+  linkType: hard
+
+"svelte-render@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "svelte-render@npm:2.0.1"
+  dependencies:
+    svelte-subscribe: "npm:^2.0.0"
+  peerDependencies:
+    svelte: ^4.0.0
+  checksum: 10c0/f2bb1277a2f41b91c9d6a099c5ea512a8b09958b9f6df0e933392e3da0ca57c9dce3455afeb40b78cfb310315c5eb85b3acbb3dcf752c87f955c5ff02bab63ef
+  languageName: node
+  linkType: hard
+
+"svelte-subscribe@npm:^2.0.0, svelte-subscribe@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "svelte-subscribe@npm:2.0.1"
+  peerDependencies:
+    svelte: ^4.0.0
+  checksum: 10c0/42b1674038f4c12301530a055375b7e7c477e8527bd48164058138f1301ffcb64547796cadb8868ff6590b73be0d77570646ef8569b6b11cb74b13e401013520
   languageName: node
   linkType: hard
 
