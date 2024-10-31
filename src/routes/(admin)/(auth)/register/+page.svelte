@@ -19,7 +19,7 @@
 <section>
 	<hgroup>
 		<div>
-			<h1>Blog <span>9ja</span> Admin</h1>
+			<h1>Blog <a href="/">9ja</a> Admin</h1>
 		</div>
 	</hgroup>
 
@@ -90,8 +90,8 @@
 			& > div h1 {
 				@apply font-bold text-3xl tracking-widest text-center;
 
-				& span {
-					@apply text-green-700;
+				& a {
+					@apply text-green-700 hover:underline duration-100;
 				}
 			}
 		}

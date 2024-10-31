@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	import {
 		LayoutDashboard,
 		LogOut,
@@ -8,49 +10,64 @@
 		UsersRound
 	} from 'lucide-svelte';
 	import { Button } from './ui/button';
+	import type { ComponentType } from 'svelte';
+	import type { Icon } from 'lucide-svelte';
+	import { goto } from '$app/navigation';
+
+	type DashboardSideLinks = {
+		name: string;
+		href: string;
+		icon: ComponentType<Icon>;
+	};
+
+	const dashboardSideLinks: DashboardSideLinks[] = [
+		{
+			name: 'Dashbaord',
+			href: '/dashboard',
+			icon: LayoutDashboard
+		},
+		{
+			name: 'New Blog',
+			href: '/dashboard/blogs/new',
+			icon: NotebookPen
+		},
+		{
+			name: 'Blogs',
+			href: '/dashboard/blogs',
+			icon: Newspaper
+		},
+		{
+			name: 'Subscribers',
+			href: '/dashboard/subscribers',
+			icon: UsersRound
+		},
+		{
+			name: 'Settings',
+			href: '/dashboard/settings',
+			icon: Settings
+		}
+	];
 </script>
 
 <aside>
 	<ul>
-		<li>
-			<Button
-				class="gap-2 font-openSans justify-start text-xs tracking-wide p-2"
-				variant="secondary"><LayoutDashboard size={24} strokeWidth={2} /> Dashbaord</Button
-			>
-		</li>
+		{#each dashboardSideLinks as { name, href, icon }, i}
+			<li>
+				<Button
+					onclick={() => goto(href)}
+					variant={$page.url.pathname === href ? 'secondary' : 'ghost'}
+					class="gap-2 font-openSans justify-start text-xs tracking-wide p-2 font-semibold rounded-sm"
+					><svelte:component this={icon} size={20} strokeWidth={2} /> <span>{name}</span></Button
+				>
+			</li>
+		{/each}
 
 		<li>
 			<Button
-				class="gap-2 font-openSans justify-start text-xs tracking-wide p-2"
-				variant="secondary"><NotebookPen size={24} strokeWidth={2} /> New Blog</Button
-			>
-		</li>
-
-		<li>
-			<Button
-				class="gap-2 font-openSans justify-start text-xs tracking-wide p-2"
-				variant="secondary"><Newspaper size={24} strokeWidth={2} /> Blogs</Button
-			>
-		</li>
-
-		<li>
-			<Button
-				class="gap-2 font-openSans justify-start text-xs tracking-wide p-2"
-				variant="secondary"><UsersRound size={34} strokeWidth={2} /> Subscribers</Button
-			>
-		</li>
-
-		<li>
-			<Button
-				class="gap-2 font-openSans justify-start text-xs tracking-wide p-2"
-				variant="secondary"><Settings size={24} strokeWidth={2} /> Settings</Button
-			>
-		</li>
-
-		<li>
-			<Button
-				class="gap-2 font-openSans justify-start text-xs tracking-wide p-2"
-				variant="destructive"><LogOut color="#fff" size={24} strokeWidth={2} /> Sign Out</Button
+				variant="destructive"
+				class="gap-2 font-openSans justify-start text-xs tracking-wide p-2 font-semibold rounded-sm"
+				><LogOut color="#fff" size={20} strokeWidth={2} /><span class="text-white">Sign Out</span
+				></Button
 			>
 		</li>
 	</ul>
@@ -58,13 +75,17 @@
 
 <style lang="postcss">
 	aside {
-		@apply w-1/5 xl:w-1/12 min-h-screen px-4 py-20;
+		@apply w-fit min-h-screen px-4 py-4;
 
 		& ul {
 			@apply flex flex-col gap-5 w-full h-full;
 
 			& li {
-				@apply w-full flex flex-col last:mt-auto;
+				@apply w-full flex flex-col last:mt-auto last:mb-20;
+
+				& span {
+					@apply hidden lg:block;
+				}
 			}
 		}
 	}

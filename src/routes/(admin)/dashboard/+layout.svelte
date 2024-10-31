@@ -18,7 +18,7 @@
 		@apply w-full flex;
 
 		& div {
-			@apply flex-1;
+			@apply flex-1 min-h-screen p-4 bg-gray-200/30;
 		}
 	}
 </style>

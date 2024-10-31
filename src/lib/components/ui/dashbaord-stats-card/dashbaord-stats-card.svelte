@@ -11,7 +11,7 @@
 </script>
 
 <div>
-	<Card class="w-full shadow-none p-2">
+	<Card class="w-full shadow-none">
 		<CardHeader><p>{title}</p></CardHeader>
 		<CardContent><h1>{value}</h1></CardContent>
 		<CardFooter><span>{percentage}% from last month</span></CardFooter>
