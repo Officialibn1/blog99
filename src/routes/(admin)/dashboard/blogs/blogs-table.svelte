@@ -81,9 +81,11 @@
 	const { headerRows, pageRows, tableAttrs, tableBodyAttrs, pluginStates } =
 		table.createViewModel(columns);
 
-	const { hasNextPage, hasPreviousPage, pageIndex } = pluginStates.page;
+	const { hasNextPage, hasPreviousPage, pageIndex, pageCount } = pluginStates.page;
 
 	const { filterValue } = pluginStates.filter;
+
+	const pageCountArray = $derived(Array.from({ length: $pageCount }, (_, index) => index));
 </script>
 
 <section>
@@ -95,7 +97,7 @@
 			class="max-w-md mx-auto bg-white shadow-none rounded-sm"
 		/>
 	</div>
-	<div class="table-container">
+	<div class="table-container min-h-[500px]">
 		<Table.Root {...$tableAttrs}>
 			<Table.Header class="bg-white">
 				{#each $headerRows as headerRow}
@@ -164,6 +166,18 @@
 			}}
 			disabled={!$hasPreviousPage}>Previous Page</Button
 		>
+
+		<div>
+			{#each pageCountArray as page (page)}
+				<Button
+					size="icon"
+					variant={$pageIndex === page ? 'outline' : 'secondary'}
+					onclick={() => ($pageIndex = page)}
+				>
+					{page}
+				</Button>
+			{/each}
+		</div>
 		<Button
 			variant="outline"
 			size="sm"
@@ -184,5 +198,9 @@
 
 	.pagination-container {
 		@apply flex gap-10 justify-end mt-20;
+
+		& > div {
+			@apply flex gap-2 items-center;
+		}
 	}
 </style>

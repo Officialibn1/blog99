@@ -12,25 +12,27 @@
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
-		<Button variant="ghost" builders={[builder]} size="icon" class="relative h-8 w-8 ml-8 ">
+		<Button variant="ghost" builders={[builder]} size="icon" class="relative h-8 ml-8">
 			<span class="sr-only">Open Menu</span>
+
 			<Ellipsis class="h-4 w-4" />
 		</Button>
 	</DropdownMenu.Trigger>
 
 	<DropdownMenu.Content>
-		<DropdownMenu.Group>
-			<DropdownMenu.Label>Actions</DropdownMenu.Label>
-
-			<DropdownMenu.Item onclick={() => navigator.clipboard.writeText(id)}>
-				Copy Blog Id
-			</DropdownMenu.Item>
-		</DropdownMenu.Group>
+		<DropdownMenu.Item
+			onclick={() => navigator.clipboard.writeText(id)}
+			class="text-sm font-medium"
+		>
+			Copy Email
+		</DropdownMenu.Item>
 
 		<DropdownMenu.Separator />
 
-		<DropdownMenu.Item>View Blog</DropdownMenu.Item>
-		<DropdownMenu.Item>Edit Blog</DropdownMenu.Item>
-		<DropdownMenu.Item>Delete Blog</DropdownMenu.Item>
+		<DropdownMenu.Item class="text-sm font-medium">View</DropdownMenu.Item>
+
+		<DropdownMenu.Item class="text-sm font-medium">Edit</DropdownMenu.Item>
+
+		<DropdownMenu.Item class="text-sm font-medium">Delete</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

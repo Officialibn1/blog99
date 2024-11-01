@@ -19,18 +19,17 @@
 	</DropdownMenu.Trigger>
 
 	<DropdownMenu.Content>
-		<DropdownMenu.Group>
-			<DropdownMenu.Label>Actions</DropdownMenu.Label>
-
-			<DropdownMenu.Item onclick={() => navigator.clipboard.writeText(id)}>
-				Copy Subscriber Email
-			</DropdownMenu.Item>
-		</DropdownMenu.Group>
+		<DropdownMenu.Item
+			onclick={() => navigator.clipboard.writeText(id)}
+			class="text-sm font-medium"
+		>
+			Copy Email
+		</DropdownMenu.Item>
 
 		<DropdownMenu.Separator />
 
-		<DropdownMenu.Item>View Subscriber</DropdownMenu.Item>
-		<DropdownMenu.Item>Edit Subscriber</DropdownMenu.Item>
-		<DropdownMenu.Item>Delete Subscriber</DropdownMenu.Item>
+		<DropdownMenu.Item class="text-sm font-medium">View</DropdownMenu.Item>
+		<DropdownMenu.Item class="text-sm font-medium">Edit</DropdownMenu.Item>
+		<DropdownMenu.Item class="text-sm font-medium">Delete</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

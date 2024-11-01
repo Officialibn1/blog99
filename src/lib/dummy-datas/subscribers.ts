@@ -65,5 +65,65 @@ export const subscribers: Subscriber[] = [
 		name: 'Helen Clark',
 		email: 'helen.clark@example.com',
 		blocked: false
+	},
+	{
+		id: '11',
+		name: 'John Doe',
+		email: 'john.doe@example.com',
+		blocked: true
+	},
+	{
+		id: '12',
+		name: 'Jane Smith',
+		email: 'jane.smith@example.com',
+		blocked: false
+	},
+	{
+		id: '13',
+		name: 'Alice Johnson',
+		email: 'alice.johnson@example.com',
+		blocked: true
+	},
+	{
+		id: '14',
+		name: 'Bob Brown',
+		email: 'bob.brown@example.com',
+		blocked: true
+	},
+	{
+		id: '15',
+		name: 'Charlie Davis',
+		email: 'charlie.davis@example.com',
+		blocked: false
+	},
+	{
+		id: '16',
+		name: 'Diana Miller',
+		email: 'diana.miller@example.com',
+		blocked: true
+	},
+	{
+		id: '17',
+		name: 'Evan Taylor',
+		email: 'evan.taylor@example.com',
+		blocked: true
+	},
+	{
+		id: '18',
+		name: 'Fiona Wilson',
+		email: 'fiona.wilson@example.com',
+		blocked: true
+	},
+	{
+		id: '19',
+		name: 'George Harris',
+		email: 'george.harris@example.com',
+		blocked: false
+	},
+	{
+		id: '20',
+		name: 'Helen Clark',
+		email: 'helen.clark@example.com',
+		blocked: false
 	}
 ];
