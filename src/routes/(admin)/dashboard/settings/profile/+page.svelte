@@ -46,6 +46,7 @@
 					<FormLabel>Name</FormLabel>
 
 					<Input
+						class="shadow-none rounded-sm bg-white max-w-lg"
 						{...attrs}
 						type="text"
 						name="name"
@@ -68,6 +69,7 @@
 					<FormLabel>Username</FormLabel>
 
 					<Input
+						class="shadow-none rounded-sm bg-white max-w-lg"
 						{...attrs}
 						type="text"
 						name="username"
@@ -89,6 +91,7 @@
 					<FormLabel>Email</FormLabel>
 
 					<Input
+						class="shadow-none rounded-sm bg-white max-w-lg"
 						{...attrs}
 						type="email"
 						name="email"
@@ -106,7 +109,11 @@
 				>
 			</FormField>
 
-			<FormButton disabled={$submitting} aria-disabled={$submitting} class="mt-8 max-w-xs">
+			<FormButton
+				disabled={$submitting}
+				aria-disabled={$submitting}
+				class="mt-8 max-w-xs rounded-sm"
+			>
 				{#if $submitting}
 					<Loader />
 				{:else}
@@ -129,7 +136,7 @@
 			}
 
 			& p {
-				@apply text-sm font-medium text-gray-500 tracking-wide;
+				@apply text-sm font-medium font-openSans text-gray-500 tracking-wide;
 			}
 		}
 

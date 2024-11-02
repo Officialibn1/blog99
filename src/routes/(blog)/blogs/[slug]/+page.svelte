@@ -78,6 +78,8 @@
 				dolores consequatur corporis sunt obcaecati enim molestias eum repellendus?
 			</p>
 
+			<img src="/placeholder-image.avif" alt="Placeholder_Blog_Image" />
+
 			<p>
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi consectetur in, est ex
 				expedita numquam sed asperiores eveniet? Ad sunt voluptatem mollitia sit modi possimus quod

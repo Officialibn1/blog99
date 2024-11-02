@@ -64,6 +64,7 @@
 
 		<li>
 			<Button
+				onclick={() => goto('/signin')}
 				variant="destructive"
 				class="gap-2 font-openSans justify-start text-xs tracking-wide p-2 font-semibold rounded-sm"
 				><LogOut color="#fff" size={20} strokeWidth={2} /><span class="text-white">Sign Out</span

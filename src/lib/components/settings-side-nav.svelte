@@ -49,7 +49,7 @@
 
 <style lang="postcss">
 	aside {
-		@apply flex h-1/2 p-3 ml-10 bg-white rounded-sm;
+		@apply flex h-1/2 p-3 bg-white rounded-sm;
 
 		& ul {
 			@apply flex flex-col gap-5;
