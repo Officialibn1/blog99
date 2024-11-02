@@ -3,18 +3,30 @@
 	import { Card, CardHeader } from '$lib/components/ui/card';
 	import DashbaordStatsCard from '$lib/components/ui/dashbaord-stats-card/dashbaord-stats-card.svelte';
 	import { Separator } from '$lib/components/ui/separator';
+	import type { User } from '$lib/utils';
+
+	type Props = {
+		data: {
+			users: User[];
+		};
+	};
+
+	const props: Props = $props();
 </script>
 
 <section>
 	<header>
 		<DashbaordStatsCard title="Total Views" value={`45,231`} percentage={`+20.1`} />
+
 		<DashbaordStatsCard title="Total Views" value={`45,231`} percentage={`+20.1`} />
+
 		<DashbaordStatsCard title="Total Views" value={`45,231`} percentage={`+20.1`} />
+
 		<DashbaordStatsCard title="Total Views" value={`45,231`} percentage={`+20.1`} />
 	</header>
 
 	<div class="analytics-section">
-		<TrafficAnalyticsChart />
+		<TrafficAnalyticsChart users={props.data.users} />
 
 		<Card class="aspect-square md:aspect-auto">
 			<CardHeader>
