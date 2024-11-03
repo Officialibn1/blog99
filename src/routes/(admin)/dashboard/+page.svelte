@@ -3,15 +3,11 @@
 	import { Card, CardHeader } from '$lib/components/ui/card';
 	import DashbaordStatsCard from '$lib/components/ui/dashbaord-stats-card/dashbaord-stats-card.svelte';
 	import { Separator } from '$lib/components/ui/separator';
-	import type { User } from '$lib/utils';
+	import { Skeleton } from '$lib/components/ui/skeleton';
 
-	type Props = {
-		data: {
-			users: User[];
-		};
-	};
+	import type { PageData } from './$types';
 
-	const props: Props = $props();
+	const { data }: { data: PageData } = $props();
 </script>
 
 <section>
@@ -26,7 +22,19 @@
 	</header>
 
 	<div class="analytics-section">
-		<TrafficAnalyticsChart users={props.data.users} />
+		<div>
+			{#await data.users()}
+				<Card class="w-full aspect-video shadow-none">
+					<Skeleton class="h-full w-full rounded-md" />
+				</Card>
+			{:then users}
+				<TrafficAnalyticsChart {users} />
+			{:catch error}
+				<pre>
+				{JSON.stringify(error, null, 2)}
+			  </pre>
+			{/await}
+		</div>
 
 		<Card class="aspect-square md:aspect-auto">
 			<CardHeader>
@@ -49,5 +57,9 @@
 
 	.analytics-section {
 		@apply grid gap-4 md:grid-cols-4;
+
+		& > div {
+			@apply aspect-video overflow-x-scroll md:col-span-3;
+		}
 	}
 </style>

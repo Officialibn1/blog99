@@ -1,8 +1,10 @@
 import { validateUsers, type User } from '$lib/utils';
 import type { PageLoad } from './$types';
 
+export const ssr = false;
+
 export const load = (async ({ fetch }) => {
-	try {
+	const fetchUsers = async () => {
 		const response = await fetch(
 			`https://dummyjson.com/users?limit=15&select=firstName,lastName,weight,height,age`
 		);
@@ -23,10 +25,10 @@ export const load = (async ({ fetch }) => {
 			validatedUsers.push(user);
 		}
 
-		return {
-			users: validatedUsers
-		};
-	} catch (error) {
-		console.error(error);
-	}
+		return validatedUsers;
+	};
+
+	return {
+		users: fetchUsers
+	};
 }) satisfies PageLoad;

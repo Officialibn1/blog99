@@ -13,7 +13,6 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Switch } from '$lib/components/ui/switch';
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
-	import { Textarea } from '$lib/components/ui/textarea';
 	import Editor from '@toast-ui/editor';
 	import '@toast-ui/editor/dist/toastui-editor.css'; // Editor's Style
 	import { onMount } from 'svelte';
@@ -26,9 +25,9 @@
 		form: ActionData;
 	};
 
-	const { data, form: FormAction }: Props = $props();
+	const { data, form: formAction }: Props = $props();
 
-	console.log('Form Action: ', FormAction);
+	// console.log('Form Action: ', formAction);
 
 	const form = superForm(data.form, {
 		validators: zodClient(createBlogFormSchema),
