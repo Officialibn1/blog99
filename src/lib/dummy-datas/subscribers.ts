@@ -10,7 +10,7 @@ export const subscribers: Subscriber[] = [
 		id: '1',
 		name: 'John Doe',
 		email: 'john.doe@example.com',
-		blocked: true
+		blocked: false
 	},
 	{
 		id: '2',
@@ -22,13 +22,13 @@ export const subscribers: Subscriber[] = [
 		id: '3',
 		name: 'Alice Johnson',
 		email: 'alice.johnson@example.com',
-		blocked: true
+		blocked: false
 	},
 	{
 		id: '4',
 		name: 'Bob Brown',
 		email: 'bob.brown@example.com',
-		blocked: true
+		blocked: false
 	},
 	{
 		id: '5',
@@ -46,7 +46,7 @@ export const subscribers: Subscriber[] = [
 		id: '7',
 		name: 'Evan Taylor',
 		email: 'evan.taylor@example.com',
-		blocked: true
+		blocked: false
 	},
 	{
 		id: '8',
@@ -82,7 +82,7 @@ export const subscribers: Subscriber[] = [
 		id: '13',
 		name: 'Alice Johnson',
 		email: 'alice.johnson@example.com',
-		blocked: true
+		blocked: false
 	},
 	{
 		id: '14',
@@ -106,13 +106,13 @@ export const subscribers: Subscriber[] = [
 		id: '17',
 		name: 'Evan Taylor',
 		email: 'evan.taylor@example.com',
-		blocked: true
+		blocked: false
 	},
 	{
 		id: '18',
 		name: 'Fiona Wilson',
 		email: 'fiona.wilson@example.com',
-		blocked: true
+		blocked: false
 	},
 	{
 		id: '19',

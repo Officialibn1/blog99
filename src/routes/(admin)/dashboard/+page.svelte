@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import TrafficAnalyticsChart from '$lib/components/traffic-analytics-chart.svelte';
+	import { Button } from '$lib/components/ui/button';
 	import { Card, CardHeader } from '$lib/components/ui/card';
 	import DashbaordStatsCard from '$lib/components/ui/dashbaord-stats-card/dashbaord-stats-card.svelte';
 	import { Separator } from '$lib/components/ui/separator';
@@ -14,11 +16,11 @@
 	<header>
 		<DashbaordStatsCard title="Total Views" value={`45,231`} percentage={`+20.1`} />
 
-		<DashbaordStatsCard title="Total Views" value={`45,231`} percentage={`+20.1`} />
+		<DashbaordStatsCard title="Avg. Time on Site" value={`4,698 Hrs`} percentage={`+20.1`} />
 
-		<DashbaordStatsCard title="Total Views" value={`45,231`} percentage={`+20.1`} />
+		<DashbaordStatsCard title="Total Blogs" value={`231`} percentage={`+20.1`} />
 
-		<DashbaordStatsCard title="Total Views" value={`45,231`} percentage={`+20.1`} />
+		<DashbaordStatsCard title="Total Subscribers" value={`1,454`} percentage={`+20.1`} />
 	</header>
 
 	<div class="analytics-section">
@@ -37,8 +39,10 @@
 		</div>
 
 		<Card class="aspect-square md:aspect-auto">
-			<CardHeader>
-				<h1 class="font-semibold font-openSans">Top Posts</h1>
+			<CardHeader class="flex-row justify-between items-center">
+				<h1 class="font-semibold font-openSans">Top Blogs</h1>
+
+				<Button onclick={() => goto('/dashboard/blogs')} variant="outline">View All</Button>
 			</CardHeader>
 
 			<Separator class="my-3" />

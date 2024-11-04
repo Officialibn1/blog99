@@ -8,6 +8,7 @@
 	import { ArrowUpDown } from 'lucide-svelte';
 	import { addPagination, addSortBy, addTableFilter } from 'svelte-headless-table/plugins';
 	import { Input } from '$lib/components/ui/input';
+	import TableBadge from '$lib/components/table-badge.svelte';
 
 	const table = createTable(readable(subscribers), {
 		page: addPagination({
@@ -46,6 +47,21 @@
 		table.column({
 			accessor: 'blocked',
 			header: 'Blocked',
+			cell: ({ value }) => {
+				return value
+					? // @ts-expect-error
+						createRender(TableBadge, {
+							title: 'Blocked',
+							className: 'bg-red-400/50 text-red-900 pointer-events-none',
+							variant: 'secondary'
+						})
+					: // @ts-expect-error
+						createRender(TableBadge, {
+							title: 'Active',
+							className: 'bg-green-400/50 text-green-900 pointer-events-none',
+							variant: 'secondary'
+						});
+			},
 			plugins: {
 				sort: {
 					disable: true
@@ -95,22 +111,28 @@
 
 	<div class="table-container">
 		<Table.Root {...$tableAttrs}>
-			<Table.Header class="bg-white">
+			<Table.Header class="bg-white ">
 				{#each $headerRows as headerRow}
 					<Subscribe rowAttrs={headerRow.attrs()}>
 						<Table.Row>
 							{#each headerRow.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
 									<Table.Head {...attrs}>
-										{#if cell.id === 'name' || cell.id === 'email'}
-											<Button variant="ghost" onclick={props.sort.toggle}>
-												<Render of={cell.render()} />
+										<div
+											class={cell.id === 'name' || cell.id === 'email'
+												? 'text-start font-openSans'
+												: 'font-openSans'}
+										>
+											{#if cell.id === 'name' || cell.id === 'email'}
+												<Button variant="ghost" onclick={props.sort.toggle}>
+													<Render of={cell.render()} />
 
-												<ArrowUpDown class="ml-2 h-4 w-4" />
-											</Button>
-										{:else}
-											<Render of={cell.render()} />
-										{/if}
+													<ArrowUpDown class="ml-2 h-4 w-4" />
+												</Button>
+											{:else}
+												<Render of={cell.render()} />
+											{/if}
+										</div>
 									</Table.Head>
 								</Subscribe>
 							{/each}
@@ -122,7 +144,7 @@
 			<Table.Body {...$tableBodyAttrs}>
 				{#each $pageRows as row (row.id)}
 					<Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-						<Table.Row {...rowAttrs}>
+						<Table.Row {...rowAttrs} class="even:bg-slate-200/50 ">
 							{#each row.cells as cell}
 								<Subscribe attrs={cell.attrs()} let:attrs>
 									<Table.Cell {...attrs}>

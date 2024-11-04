@@ -4,11 +4,12 @@
 	import { addPagination, addSortBy, addTableFilter } from 'svelte-headless-table/plugins';
 	import { readable } from 'svelte/store';
 	import { Button } from '$lib/components/ui/button';
+	import { Input } from '$lib/components/ui/input';
 
 	import * as Table from '$lib/components/ui/table';
 	import BlogsTableActions from './blogs-table-actions.svelte';
 	import ArrowUpDown from 'lucide-svelte/icons/arrow-up-down';
-	import { Input } from '$lib/components/ui/input';
+	import TableBadge from '$lib/components/table-badge.svelte';
 
 	const table = createTable(readable(blogs), {
 		page: addPagination({
@@ -42,7 +43,22 @@
 		}),
 		table.column({
 			accessor: 'published',
-			header: 'Publised',
+			header: 'Status',
+			cell: ({ value }) => {
+				return value
+					? // @ts-expect-error
+						createRender(TableBadge, {
+							variant: 'secondary',
+							className: 'bg-green-300/50 text-green-900 pointer-events-none',
+							title: 'Published'
+						})
+					: // @ts-expect-error
+						createRender(TableBadge, {
+							variant: 'secondary',
+							className: 'bg-yellow-300/50 text-yellow-900 pointer-events-none',
+							title: 'Draft'
+						});
+			},
 			plugins: {
 				sort: {
 					disable: true
@@ -97,6 +113,7 @@
 			class="max-w-md mx-auto bg-white shadow-none rounded-sm"
 		/>
 	</div>
+
 	<div class="table-container min-h-[500px]">
 		<Table.Root {...$tableAttrs}>
 			<Table.Header class="bg-white">
@@ -108,10 +125,10 @@
 									<Table.Head {...attrs}>
 										<div
 											class={cell.id === 'views' || cell.id === 'comments'
-												? 'text-right '
+												? 'text-right font-openSans'
 												: cell.id === ''
-													? 'flex justify-end'
-													: ''}
+													? 'flex justify-end font-openSans'
+													: 'font-openSans'}
 										>
 											{#if cell.id === 'title' || cell.id === 'comments' || cell.id === 'views'}
 												<Button variant="ghost" onclick={props.sort.toggle}>
@@ -134,7 +151,7 @@
 			<Table.Body {...$tableBodyAttrs}>
 				{#each $pageRows as row (row.id)}
 					<Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-						<Table.Row {...rowAttrs} class="even:bg-slate-200/50">
+						<Table.Row {...rowAttrs} class="even:bg-slate-200/50 ">
 							{#each row.cells as cell}
 								<Subscribe attrs={cell.attrs()} let:attrs>
 									<Table.Cell {...attrs}>
