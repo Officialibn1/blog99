@@ -21,7 +21,7 @@
 
 	<DropdownMenu.Content>
 		<DropdownMenu.Item
-			onclick={() => navigator.clipboard.writeText(id)}
+			on:click={() => navigator.clipboard.writeText(id)}
 			class="text-sm font-medium"
 		>
 			Copy Email

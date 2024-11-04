@@ -42,7 +42,9 @@
 			<CardHeader class="flex-row justify-between items-center">
 				<h1 class="font-semibold font-openSans">Top Blogs</h1>
 
-				<Button onclick={() => goto('/dashboard/blogs')} variant="outline">View All</Button>
+				<Button onclick={() => goto('/dashboard/blogs')} variant="outline" class="shadow-none"
+					>View All</Button
+				>
 			</CardHeader>
 
 			<Separator class="my-3" />

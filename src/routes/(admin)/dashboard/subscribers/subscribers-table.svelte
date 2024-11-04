@@ -46,7 +46,7 @@
 		}),
 		table.column({
 			accessor: 'blocked',
-			header: 'Blocked',
+			header: 'Status',
 			cell: ({ value }) => {
 				return value
 					? // @ts-expect-error
