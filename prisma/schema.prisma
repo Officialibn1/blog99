@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+model User {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String    @unique
+  authToken   String
+  password    String
+  role        Role      @default(ADMIN)
+  posts       Post[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Post {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  slug        String      @unique
+  markdown    String
+  published   Boolean     @default(false)
+  author      User        @relation(fields: [authorId], references: [id])
+  authorId    String      @db.ObjectId
+  comments    Comment[]
+  upVotes     Int         @default(0)
+  downVotes   Int         @default(0)
+  tags        String[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Subscriber {
+  id                  String              @id @default(auto()) @map("_id") @db.ObjectId
+  name                String
+  email               String              @unique
+  password            String
+  authToken           String
+  comments            Comment[]
+  subscriptionStatus  SubscriptionStatus  @default(ACTIVE)
+  subscribedAt        DateTime            @default(now())
+  lastLogedIn         DateTime?
+  updatedAt           DateTime            @updatedAt
+}
+
+model Comment {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  comment       String
+  post          Post        @relation(fields: [postId], references: [id])
+  postId        String      @db.ObjectId
+  subscriber    Subscriber  @relation(fields: [subscriberId], references: [id]) 
+  subscriberId  String      @db.ObjectId
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+
+
+
+
+
