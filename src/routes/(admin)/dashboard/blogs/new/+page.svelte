@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
-	import type { PageData } from './$types';
+	import type { PageData, ActionData } from './$types';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { createBlogFormSchema } from './schema';
 	import {
@@ -17,7 +17,6 @@
 	import '@toast-ui/editor/dist/toastui-editor.css'; // Editor's Style
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
-	import type { ActionData } from './$types';
 	import { Separator } from '$lib/components/ui/separator';
 
 	type Props = {
@@ -86,7 +85,7 @@
 					<FormLabel>Blog Title</FormLabel>
 
 					<Input
-						class="shadow-none bg-white"
+						class="shadow-none max-w-xl bg-white"
 						disabled={$submitting}
 						aria-disabled={$submitting}
 						{...attrs}
@@ -97,12 +96,12 @@
 				<FieldErrors />
 			</FormField>
 
-			<FormField {form} name="slug">
+			<!-- <FormField {form} name="slug">
 				<FormControl let:attrs>
 					<FormLabel>Slug</FormLabel>
 
 					<Input
-						class="shadow-none bg-white"
+						class="shadow-none max-w-xl bg-white"
 						disabled={$submitting}
 						bind:value={$formData.slug}
 						aria-disabled={$submitting}
@@ -111,13 +110,13 @@
 				</FormControl>
 
 				<FieldErrors />
-			</FormField>
+			</FormField> -->
 
 			<FormField {form} name="content">
 				<FormControl let:attrs>
 					<FormLabel>Blog Content</FormLabel>
 
-					<div id="editor" class="shadow-none bg-white"></div>
+					<div id="editor" class="shadow-none bg-white w-full"></div>
 
 					<Input {...attrs} type="hidden" bind:value={$formData.content} />
 				</FormControl>
@@ -127,21 +126,23 @@
 
 			<FormField {form} name="published">
 				<FormControl let:attrs>
-					<FormLabel>Published</FormLabel>
+					<div class="flex gap-3 items-center">
+						<FormLabel>Published</FormLabel>
 
-					<Switch
-						disabled={$submitting}
-						aria-disabled={$submitting}
-						includeInput
-						{...attrs}
-						bind:checked={$formData.published}
-					/>
+						<Switch
+							disabled={$submitting}
+							aria-disabled={$submitting}
+							includeInput
+							{...attrs}
+							bind:checked={$formData.published}
+						/>
+					</div>
 				</FormControl>
 
 				<FieldErrors />
 			</FormField>
 
-			<FormButton disabled={$submitting} aria-disabled={$submitting}>
+			<FormButton disabled={$submitting} aria-disabled={$submitting} class="max-w-xs">
 				{#if $submitting}
 					<Loader />
 				{:else}
@@ -164,6 +165,14 @@
 			& h1 {
 				@apply text-2xl font-medium font-openSans;
 			}
+		}
+	}
+
+	.editor-container {
+		@apply flex;
+
+		& form {
+			@apply flex flex-col gap-4 w-full;
 		}
 	}
 </style>

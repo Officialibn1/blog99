@@ -5,7 +5,7 @@
 	import { subscribers } from '$lib/dummy-datas/subscribers';
 	import SubscribersTableActions from './subscribers-table-actions.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { ArrowUpDown } from 'lucide-svelte';
+	import { ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import { addPagination, addSortBy, addTableFilter } from 'svelte-headless-table/plugins';
 	import { Input } from '$lib/components/ui/input';
 	import TableBadge from '$lib/components/table-badge.svelte';
@@ -148,7 +148,9 @@
 							{#each row.cells as cell}
 								<Subscribe attrs={cell.attrs()} let:attrs>
 									<Table.Cell {...attrs}>
-										<Render of={cell.render()} />
+										<div class={cell.id !== 'blocked' ? 'ml-4' : ''}>
+											<Render of={cell.render()} />
+										</div>
 									</Table.Cell>
 								</Subscribe>
 							{/each}
@@ -162,10 +164,12 @@
 	<div class="pagination-container">
 		<Button
 			variant="outline"
-			size="sm"
+			size="icon"
 			disabled={!$hasPreviousPage}
-			onclick={() => ($pageIndex = $pageIndex - 1)}>Previous Page</Button
+			onclick={() => ($pageIndex = $pageIndex - 1)}
 		>
+			<ChevronLeft />
+		</Button>
 
 		<div>
 			{#each pageCountArray as page (page)}
@@ -181,10 +185,12 @@
 
 		<Button
 			variant="outline"
-			size="sm"
+			size="icon"
 			disabled={!$hasNextPage}
-			onclick={() => ($pageIndex = $pageIndex + 1)}>Next Page</Button
+			onclick={() => ($pageIndex = $pageIndex + 1)}
 		>
+			<ChevronRight />
+		</Button>
 	</div>
 </section>
 
@@ -198,7 +204,7 @@
 	}
 
 	.pagination-container {
-		@apply flex gap-10 justify-end mt-20;
+		@apply flex gap-5 justify-end mt-20;
 
 		& > div {
 			@apply flex gap-2 items-center;

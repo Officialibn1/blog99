@@ -8,7 +8,7 @@
 
 	import * as Table from '$lib/components/ui/table';
 	import BlogsTableActions from './blogs-table-actions.svelte';
-	import ArrowUpDown from 'lucide-svelte/icons/arrow-up-down';
+	import { ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import TableBadge from '$lib/components/table-badge.svelte';
 
 	const table = createTable(readable(blogs), {
@@ -157,10 +157,12 @@
 									<Table.Cell {...attrs}>
 										<div
 											class={cell.id === 'views' || cell.id === 'comments'
-												? 'text-right font-number'
+												? 'text-right font-number mr-3'
 												: cell.id === ''
 													? 'flex justify-center '
-													: ''}
+													: cell.id !== 'published'
+														? 'ml-4'
+														: ''}
 										>
 											<Render of={cell.render()} />
 										</div>
@@ -177,12 +179,14 @@
 	<div class="pagination-container">
 		<Button
 			variant="outline"
-			size="sm"
+			size="icon"
 			onclick={() => {
 				hasPreviousPage && ($pageIndex = $pageIndex - 1);
 			}}
-			disabled={!$hasPreviousPage}>Previous Page</Button
+			disabled={!$hasPreviousPage}
 		>
+			<ChevronLeft />
+		</Button>
 
 		<div>
 			{#each pageCountArray as page (page)}
@@ -197,10 +201,12 @@
 		</div>
 		<Button
 			variant="outline"
-			size="sm"
+			size="icon"
 			onclick={() => ($pageIndex = $pageIndex + 1)}
-			disabled={!$hasNextPage}>Next Page</Button
+			disabled={!$hasNextPage}
 		>
+			<ChevronRight />
+		</Button>
 	</div>
 </section>
 
@@ -214,7 +220,7 @@
 	}
 
 	.pagination-container {
-		@apply flex gap-10 justify-end mt-20;
+		@apply flex gap-5 justify-end mt-20;
 
 		& > div {
 			@apply flex gap-2 items-center;
