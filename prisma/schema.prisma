@@ -31,12 +31,24 @@ model User {
   authToken   String
   password    String
   role        Role      @default(ADMIN)
-  posts       Post[]
+  blogs       Blog[]
+  tags        Tag[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
 
-model Post {
+model Tag {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  author      User        @relation(fields: [authorId], references: [id])
+  authorId    String      @db.ObjectId
+  blogsIds    String[]    @db.ObjectId
+  blogs       Blog[]      @relation(fields: [blogsIds], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Blog {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   slug        String      @unique
@@ -47,7 +59,8 @@ model Post {
   comments    Comment[]
   upVotes     Int         @default(0)
   downVotes   Int         @default(0)
-  tags        String[]
+  tagsIds     String[]    @db.ObjectId
+  tags        Tag[]       @relation(fields: [tagsIds], references: [id])
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -68,8 +81,8 @@ model Subscriber {
 model Comment {
   id            String      @id @default(auto()) @map("_id") @db.ObjectId
   comment       String
-  post          Post        @relation(fields: [postId], references: [id])
-  postId        String      @db.ObjectId
+  blog          Blog        @relation(fields: [blogsId], references: [id])
+  blogsId       String      @db.ObjectId
   subscriber    Subscriber  @relation(fields: [subscriberId], references: [id]) 
   subscriberId  String      @db.ObjectId
   createdAt     DateTime    @default(now())

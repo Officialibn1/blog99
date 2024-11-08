@@ -7,6 +7,7 @@
 		Newspaper,
 		NotebookPen,
 		Settings,
+		Tags,
 		UsersRound
 	} from 'lucide-svelte';
 	import { Button } from './ui/button';
@@ -30,6 +31,11 @@
 			name: 'New Blog',
 			href: '/dashboard/blogs/new',
 			icon: NotebookPen
+		},
+		{
+			name: 'Tags',
+			href: '/dashboard/blog-tags',
+			icon: Tags
 		},
 		{
 			name: 'Blogs',
