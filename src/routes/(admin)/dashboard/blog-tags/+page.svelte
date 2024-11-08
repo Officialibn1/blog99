@@ -105,7 +105,9 @@
 				return formatdate(value);
 			}
 		}),
+		// @ts-expect-error
 		table.column({
+			// @ts-expect-error
 			accessor: ({ id }) => id,
 			header: '',
 			cell: ({ value }) => {

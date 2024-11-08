@@ -1,19 +1,24 @@
 <script lang="ts">
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
 	import { superForm } from 'sveltekit-superforms';
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 	import { registerFormSchama } from './schema';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 
-	const { data }: { data: PageData } = $props();
+	type Props = {
+		data: PageData;
+		serverData: ActionData;
+	};
+
+	const { data }: Props = $props();
 
 	const form = superForm(data.form, {
 		validators: zodClient(registerFormSchama)
 	});
 
-	const { form: formData, enhance, errors, submitting } = form;
+	const { form: formData, enhance, submitting } = form;
 </script>
 
 <section>
@@ -29,6 +34,7 @@
 				<Form.Label>Name</Form.Label>
 
 				<Input
+					class="rounded-sm shadow-none bg-white"
 					{...attrs}
 					bind:value={$formData.name}
 					disabled={$submitting}
@@ -44,6 +50,7 @@
 				<Form.Label>Email</Form.Label>
 
 				<Input
+					class="rounded-sm shadow-none bg-white"
 					{...attrs}
 					bind:value={$formData.email}
 					disabled={$submitting}
@@ -59,8 +66,26 @@
 				<Form.Label>Password</Form.Label>
 
 				<Input
+					class="rounded-sm shadow-none bg-white"
 					{...attrs}
 					bind:value={$formData.password}
+					type="password"
+					disabled={$submitting}
+					aria-disabled={$submitting}
+				/>
+			</Form.Control>
+
+			<Form.FieldErrors />
+		</Form.Field>
+
+		<Form.Field {form} name="comfirmPassword">
+			<Form.Control let:attrs>
+				<Form.Label>Comfirm Password</Form.Label>
+
+				<Input
+					class="rounded-sm shadow-none bg-white"
+					{...attrs}
+					bind:value={$formData.comfirmPassword}
 					type="password"
 					disabled={$submitting}
 					aria-disabled={$submitting}
@@ -97,7 +122,7 @@
 		}
 
 		& form {
-			@apply flex flex-col gap-5 md:w-96  mx-auto;
+			@apply flex flex-col gap-2 md:w-96  mx-auto;
 		}
 	}
 </style>
