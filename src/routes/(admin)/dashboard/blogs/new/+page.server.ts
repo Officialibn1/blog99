@@ -7,7 +7,7 @@ export const actions = {
 	default: async (event) => {
 		const form = await superValidate(event, zod(createBlogFormSchema));
 
-		console.log(JSON.stringify(form, null, 2));
+		// console.log(JSON.stringify(form, null, 2));
 
 		if (!form.valid) {
 			console.log('Failed to create blog');
@@ -18,7 +18,7 @@ export const actions = {
 			};
 		}
 
-		console.log('Created blog successfully');
+		// console.log('Created blog successfully');
 
 		return {
 			message: 'Created blog successfully',

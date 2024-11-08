@@ -19,6 +19,14 @@
 	import { enhance } from '$app/forms';
 	import { Separator } from '$lib/components/ui/separator';
 
+	import {
+		Root as SelectRoot,
+		Trigger as SelectTrigger,
+		Value as SelectValue,
+		Content as SelectContent,
+		Item as SelectItem
+	} from '$lib/components/ui/select';
+
 	type Props = {
 		data: PageData;
 		form: ActionData;
@@ -30,10 +38,22 @@
 
 	const form = superForm(data.form, {
 		validators: zodClient(createBlogFormSchema),
-		applyAction: true
+		applyAction: true,
+		resetForm: false
 	});
 
-	const { form: formData, submitting, errors } = form;
+	const { form: formData, submitting } = form;
+
+	const selectedTags = $derived(
+		$formData.tags.map((tag) => ({
+			label: data.tags.find((val) => val.id === tag)?.name,
+			value: tag
+		}))
+	);
+
+	// $effect(() => {
+	// 	console.log('SELECTED TAGS: ', selectedTags);
+	// });
 
 	let editor: {
 		reset(): unknown;
@@ -67,7 +87,7 @@
 
 		editor.reset();
 
-		console.log('Markdown Content: ', markdown);
+		// console.log('Markdown Content: ', markdown);
 	};
 </script>
 
@@ -85,7 +105,7 @@
 					<FormLabel>Blog Title</FormLabel>
 
 					<Input
-						class="shadow-none max-w-xl bg-white"
+						class="shadow-none max-w-xl bg-white rounded-sm"
 						disabled={$submitting}
 						aria-disabled={$submitting}
 						{...attrs}
@@ -96,21 +116,39 @@
 				<FieldErrors />
 			</FormField>
 
-			<!-- <FormField {form} name="slug">
+			<FormField {form} name="tags">
 				<FormControl let:attrs>
-					<FormLabel>Slug</FormLabel>
+					<FormLabel>Tags</FormLabel>
 
-					<Input
-						class="shadow-none max-w-xl bg-white"
-						disabled={$submitting}
-						bind:value={$formData.slug}
-						aria-disabled={$submitting}
-						{...attrs}
-					/>
+					<SelectRoot
+						multiple
+						selected={selectedTags}
+						onSelectedChange={(s) => {
+							if (s) {
+								$formData.tags = s.map((v) => v.value);
+							} else {
+								$formData.tags = [];
+							}
+						}}
+					>
+						{#each $formData.tags as tag}
+							<Input type="hidden" name={attrs.name} value={tag} />
+						{/each}
+
+						<SelectTrigger {...attrs} class="max-w-xl bg-white shadow-none rounded-sm">
+							<SelectValue placeholder="Select Tags" />
+						</SelectTrigger>
+
+						<SelectContent>
+							{#each data.tags as tag}
+								<SelectItem label={tag.name} value={tag.id} />
+							{/each}
+						</SelectContent>
+					</SelectRoot>
 				</FormControl>
 
 				<FieldErrors />
-			</FormField> -->
+			</FormField>
 
 			<FormField {form} name="content">
 				<FormControl let:attrs>
