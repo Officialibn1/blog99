@@ -65,7 +65,7 @@
 	<CardHeader class=" items-center pb-3 flex-row">
 		<h1 class="font-semibold font-openSans">Traffic Overview</h1>
 
-		<DropdownMenu.Root>
+		<!-- <DropdownMenu.Root>
 			<DropdownMenu.Trigger
 				class="border ml-auto py-[7px] px-3 font-openSans font-medium rounded-sm text-sm"
 			>
@@ -86,11 +86,15 @@
 
 				<DropdownMenu.Item class="w-44 text-sm font-medium">Delete</DropdownMenu.Item>
 			</DropdownMenu.Content>
-		</DropdownMenu.Root>
+		</DropdownMenu.Root> -->
 
 		<Select.Root>
-			<Select.Trigger class="w-36 ml-5 rounded-sm shadow-none font-medium font-openSans">
-				<Select.Value placeholder="Chart Type" class="placeholder-gray-900" />
+			<Select.Trigger class="w-36 ml-auto rounded-sm shadow-none font-medium font-openSans">
+				<Select.Value asChild>
+					<Select.Label class="capitalize">
+						{chartType}
+					</Select.Label>
+				</Select.Value>
 			</Select.Trigger>
 
 			<Select.Content>
