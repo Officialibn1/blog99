@@ -9,6 +9,8 @@ export const actions = {
 
 		// await new Promise((resolve) => setTimeout(() => resolve, 1000));
 
+		// WHEN THE DATABSE IS IMPLEMENTED THEN THE EXISTING TAGS WILL BE FETCHED
+		// AND THEN COMPARED WITH THE SUBMITTED FORM VALUE
 		const tag = 'Javascript';
 
 		// console.log(JSON.stringify(form, null, 2));
