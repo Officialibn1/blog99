@@ -564,6 +564,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@iarna/toml@npm:^2.2.5":
+  version: 2.2.5
+  resolution: "@iarna/toml@npm:2.2.5"
+  checksum: 10c0/d095381ad4554aca233b7cf5a91f243ef619e5e15efd3157bc640feac320545450d14b394aebbf6f02a2047437ced778ae598d5879a995441ab7b6c0b2c2f201
+  languageName: node
+  linkType: hard
+
 "@iconify/svelte@npm:^4.0.2":
   version: 4.0.2
   resolution: "@iconify/svelte@npm:4.0.2"
@@ -948,6 +955,19 @@ __metadata:
   peerDependencies:
     "@sveltejs/kit": ^2.0.0
   checksum: 10c0/d84c2175ab752f1ee2c4c2057fa31646b3773da6272a24b2bbd065d7aff5c7cf60729a9ad7258e2c25bcd61d561b2626d408caa2c1ba4ff4e93c1affdc784fc6
+  languageName: node
+  linkType: hard
+
+"@sveltejs/adapter-netlify@npm:^4.3.6":
+  version: 4.3.6
+  resolution: "@sveltejs/adapter-netlify@npm:4.3.6"
+  dependencies:
+    "@iarna/toml": "npm:^2.2.5"
+    esbuild: "npm:^0.21.5"
+    set-cookie-parser: "npm:^2.6.0"
+  peerDependencies:
+    "@sveltejs/kit": ^2.4.0
+  checksum: 10c0/fd9b03c90d4629e54a9aca48bab7f6b6770d4559bd0b04591c39571de25da806e3e25361aa5547813ee9267282be3df930f793b61d8f822ee9668e24cc9dec6d
   languageName: node
   linkType: hard
 
@@ -1989,7 +2009,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.21.3":
+"esbuild@npm:^0.21.3, esbuild@npm:^0.21.5":
   version: 0.21.5
   resolution: "esbuild@npm:0.21.5"
   dependencies:
@@ -3267,6 +3287,7 @@ __metadata:
     "@iconify/svelte": "npm:^4.0.2"
     "@prisma/client": "npm:^5.22.0"
     "@sveltejs/adapter-auto": "npm:^3.0.0"
+    "@sveltejs/adapter-netlify": "npm:^4.3.6"
     "@sveltejs/kit": "npm:^2.0.0"
     "@sveltejs/vite-plugin-svelte": "npm:^4.0.0"
     "@tailwindcss/forms": "npm:^0.5.9"
