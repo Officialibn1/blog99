@@ -19,6 +19,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		(adminSession && event.url.pathname.startsWith('/register'))
 	) {
 		// console.log('Redirect Authorised User');
+		event.locals.user = null;
 
 		throw redirect(303, '/dashboard');
 	}
