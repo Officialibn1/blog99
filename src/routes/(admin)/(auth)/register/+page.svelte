@@ -6,6 +6,7 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
+	import { Eye, EyeClosed } from 'lucide-svelte';
 
 	type Props = {
 		data: PageData;
@@ -13,6 +14,8 @@
 	};
 
 	const { data }: Props = $props();
+
+	let showPassword = $state(false);
 
 	const form = superForm(data.form, {
 		validators: zodClient(registerFormSchama)
@@ -61,35 +64,63 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
-		<Form.Field {form} name="password">
+		<Form.Field {form} name="password" class="relative">
 			<Form.Control let:attrs>
 				<Form.Label>Password</Form.Label>
 
-				<Input
-					class="rounded-sm shadow-none bg-white"
-					{...attrs}
-					bind:value={$formData.password}
-					type="password"
-					disabled={$submitting}
-					aria-disabled={$submitting}
-				/>
+				<div class="flex relative">
+					<Input
+						class="rounded-sm shadow-none bg-white"
+						{...attrs}
+						bind:value={$formData.password}
+						type={!showPassword ? 'password' : 'text'}
+						disabled={$submitting}
+						aria-disabled={$submitting}
+					/>
+
+					<button
+						type="button"
+						class="absolute right-0 bottom-2 cursor-pointer hover:bg-transparent px-2"
+						onclick={() => (showPassword = !showPassword)}
+					>
+						{#if showPassword}
+							<Eye color={'#4b5563'} size={16} />
+						{:else}
+							<EyeClosed color={'#4b5563'} size={16} />
+						{/if}
+					</button>
+				</div>
 			</Form.Control>
 
 			<Form.FieldErrors />
 		</Form.Field>
 
-		<Form.Field {form} name="comfirmPassword">
+		<Form.Field {form} name="comfirmPassword" class="relative">
 			<Form.Control let:attrs>
 				<Form.Label>Comfirm Password</Form.Label>
 
-				<Input
-					class="rounded-sm shadow-none bg-white"
-					{...attrs}
-					bind:value={$formData.comfirmPassword}
-					type="password"
-					disabled={$submitting}
-					aria-disabled={$submitting}
-				/>
+				<div class="flex relative">
+					<Input
+						class="rounded-sm shadow-none bg-white"
+						{...attrs}
+						bind:value={$formData.comfirmPassword}
+						type={!showPassword ? 'password' : 'text'}
+						disabled={$submitting}
+						aria-disabled={$submitting}
+					/>
+
+					<button
+						type="button"
+						class="absolute right-0 bottom-2 cursor-pointer hover:bg-transparent px-2"
+						onclick={() => (showPassword = !showPassword)}
+					>
+						{#if showPassword}
+							<Eye color={'#4b5563'} size={16} />
+						{:else}
+							<EyeClosed color={'#4b5563'} size={16} />
+						{/if}
+					</button>
+				</div>
 			</Form.Control>
 
 			<Form.FieldErrors />
