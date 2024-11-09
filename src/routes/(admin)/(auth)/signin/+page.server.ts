@@ -62,6 +62,12 @@ export const actions = {
 				sameSite: 'strict',
 				secure: process.env.NODE_ENV === 'production'
 			});
+
+			event.locals.user = {
+				name: authenticatedUser.name,
+				email: authenticatedUser.email,
+				role: authenticatedUser.role
+			};
 		} catch (error) {
 			console.log('CAUGTH LOGIN ERROR: ', JSON.stringify(error, null, 2));
 

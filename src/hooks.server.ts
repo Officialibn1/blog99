@@ -1,50 +1,38 @@
-import db from '$lib/database';
+import jwt from 'jsonwebtoken';
 import { redirect, type Handle } from '@sveltejs/kit';
+import { SECRET_INGREDIENT } from '$env/static/private';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const adminSession = event.cookies.get('adminSession');
 
-	// const currentPath = event.url.pathname
+	const publicRoutes = ['/signin', '/register', '/', '/blogs', '/contact'];
 
-	const protectedPath = '/dashboard';
+	const currentPath = event.url.pathname;
 
-	if (!adminSession && event.url.pathname.startsWith(protectedPath)) {
-		// console.log('Redirect UnAuthorised User');
+	const isPublicRoute = (path: string): boolean => {
+		return publicRoutes.some((route) => path === route || path.startsWith(`${route}/`));
+	};
 
-		throw redirect(303, '/signin');
-	}
-
-	if (
-		(adminSession && event.url.pathname.startsWith('/signin')) ||
-		(adminSession && event.url.pathname.startsWith('/register'))
-	) {
-		// console.log('Redirect Authorised User');
+	if (!isPublicRoute(currentPath) && !adminSession) {
 		event.locals.user = null;
 
-		throw redirect(303, '/dashboard');
+		return redirect(303, '/signin');
 	}
 
 	if (adminSession) {
-		// console.log('Fetching user from DB');
+		const claims = jwt.verify(adminSession, SECRET_INGREDIENT);
 
-		const user = await db.user.findUnique({
-			where: { authToken: adminSession }
-		});
+		if (!claims) {
+			event.locals.user = null;
+			event.cookies.delete('adminSession', { path: '/' });
 
-		if (!user) {
-			event.cookies.delete('adminSession', {
-				path: '/dashboard'
-			});
-			throw redirect(303, '/signin');
+			return redirect(303, '/signin');
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { password, ...publicData } = user;
-
-		event.locals.user = publicData;
+		if (adminSession && claims && (currentPath === '/signin' || currentPath === '/register')) {
+			return redirect(303, '/dashboard');
+		}
 	}
-
-	// console.log('COOKIES: ', adminSession);
 
 	return resolve(event);
 };
