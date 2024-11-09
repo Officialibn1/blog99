@@ -56,7 +56,7 @@ export const actions = {
 			});
 
 			event.cookies.set('adminSession', authenticatedUser.authToken!, {
-				path: '/dashboard',
+				path: '/',
 				httpOnly: true,
 				maxAge: 60 * 60 * 24 * 30,
 				sameSite: 'strict',
