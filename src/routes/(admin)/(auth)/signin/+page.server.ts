@@ -12,8 +12,6 @@ export const actions = {
 	default: async (event) => {
 		const form = await superValidate(event, zod(signInFormSchema));
 
-		// console.log(JSON.stringify(form, null, 2));
-
 		if (!form.valid) {
 			return fail(400, {
 				message: 'Error Signing In',
@@ -75,6 +73,6 @@ export const actions = {
 			});
 		}
 
-		redirect(303, '/dashbaord');
+		redirect(303, '/dashboard');
 	}
 } satisfies Actions;

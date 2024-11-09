@@ -6,7 +6,6 @@
 	import { signInFormSchema } from './schema';
 	import * as Form from '$lib/components/ui/form';
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
-	import { goto } from '$app/navigation';
 
 	const { data }: { data: PageData } = $props();
 
@@ -56,11 +55,7 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
-		<Form.Button
-			disabled={$submitting}
-			aria-disabled={$submitting}
-			onclick={() => goto('/dashboard')}
-		>
+		<Form.Button disabled={$submitting} aria-disabled={$submitting}>
 			{#if $submitting}
 				<Loader />
 			{:else}
