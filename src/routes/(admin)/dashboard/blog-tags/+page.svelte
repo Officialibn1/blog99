@@ -3,6 +3,7 @@
 	import type { ActionData, PageData } from './$types';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { blogTagsSchema } from './schema';
+	import { page } from '$app/stores';
 
 	import {
 		FormField,
@@ -31,10 +32,11 @@
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { readable } from 'svelte/store';
-	import { tags } from '$lib/dummy-datas/tags';
+	// import { tags } from '$lib/dummy-datas/tags';
 	import { formatdate } from '$lib/utils';
 	import BlogsTableActions from '../blogs/blogs-table-actions.svelte';
 	import { ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-svelte';
+	import { invalidate } from '$app/navigation';
 
 	type Props = {
 		data: PageData;
@@ -44,7 +46,9 @@
 	const { data, form: formActionData }: Props = $props();
 
 	$effect(() => {
-		console.log(JSON.stringify(formActionData, null, 2));
+		if (formActionData?.success) {
+			invalidate(`tags:PageData`);
+		}
 	});
 
 	const form = superForm(data.form, {
@@ -53,7 +57,7 @@
 
 	const { form: formData, submitting, enhance } = form;
 
-	const table = createTable(readable(tags), {
+	const table = createTable(readable(data.tags), {
 		page: addPagination({
 			initialPageSize: 8
 		}),
@@ -66,9 +70,9 @@
 	const columns = table.createColumns([
 		table.column({
 			accessor: 'id',
-			header: '',
+			header: 'Tag ID',
 			cell: ({ value }) => {
-				return `${value}.`;
+				return `${value}`;
 			},
 			plugins: {
 				sort: {
@@ -84,7 +88,7 @@
 			header: 'Tag Name'
 		}),
 		table.column({
-			accessor: 'blogs',
+			accessor: 'blogsIds',
 			header: 'Blogs with Tag',
 			cell: ({ value }) => {
 				return value.length;

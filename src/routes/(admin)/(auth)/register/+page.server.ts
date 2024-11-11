@@ -44,8 +44,9 @@ export const actions = {
 					password: await bcrypt.hash(password, 15)
 				}
 			});
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (error) {
-			console.log('CAUGTH REGISTERATION ERROR: ', JSON.stringify(error, null, 2));
+			// console.log('CAUGTH REGISTERATION ERROR: ', JSON.stringify(error, null, 2));
 
 			setError(form, 'comfirmPassword', 'Registeration Failed!!');
 

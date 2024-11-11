@@ -5,10 +5,26 @@ import { blogTagsSchema } from './schema';
 
 export const ssr = false;
 
-export const load: PageLoad = async () => {
+type Tag = {
+	name: string;
+	id: string;
+	authorId: string;
+	blogsIds: string[];
+	createdAt: Date;
+	updatedAt: Date;
+};
+
+export const load: PageLoad = async ({ fetch, depends }) => {
 	const form = await superValidate(zod(blogTagsSchema));
 
+	const tagsResponse = await fetch('/api/tags');
+
+	depends(`tags:PageData`);
+
+	const tags: Tag[] = await tagsResponse.json();
+
 	return {
-		form
+		form,
+		tags
 	};
 };

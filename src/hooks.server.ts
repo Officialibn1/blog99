@@ -9,12 +9,15 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const currentPath = event.url.pathname;
 
+	// console.log('HOOKS LOCALS USER: ', event.locals);
+
 	const isPublicRoute = (path: string): boolean => {
 		return publicRoutes.some((route) => path === route || path.startsWith(`${route}/`));
 	};
 
 	if (!isPublicRoute(currentPath) && !adminSession) {
-		event.locals.user = null;
+		// event.locals.user = null;
+		// event.locals.session = null;
 
 		return redirect(303, '/signin');
 	}
@@ -23,10 +26,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 		const claims = jwt.verify(adminSession, SECRET_INGREDIENT);
 
 		if (!claims) {
-			event.locals.user = null;
+			// event.locals.user = null;
+			// event.locals.session = null;
 			event.cookies.delete('adminSession', { path: '/' });
 
-			return redirect(303, '/signin');
+			return redirect(302, '/signin');
 		}
 
 		if (adminSession && claims && (currentPath === '/signin' || currentPath === '/register')) {
