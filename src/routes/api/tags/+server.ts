@@ -3,8 +3,8 @@ import db from '$lib/database';
 import { json, type RequestHandler, error } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 
-export const GET: RequestHandler = async (event) => {
-	const authToken = event.cookies.get('adminSession');
+export const GET = (async ({ cookies }) => {
+	const authToken = cookies.get('adminSession');
 
 	if (!authToken) {
 		error(400, 'UnAuthorized');
@@ -14,17 +14,17 @@ export const GET: RequestHandler = async (event) => {
 		const claim = jwt.verify(authToken, SECRET_INGREDIENT);
 
 		if (!claim) {
-			event.cookies.delete('authToken', { path: '/' });
+			cookies.delete('adminSession', { path: '/' });
 
-			error(400, 'UnAuthorized');
+			error(400, 'Session Expired!');
 		} else {
 			const author = await db.user.findUnique({ where: { authToken } });
 
 			const tags = await db.tag.findMany({ where: { authorId: author?.id } });
 
-			event.setHeaders({
-				'Cache-Control': 'max-age=60'
-			});
+			// setHeaders({
+			// 	'Cache-Control': 'max-age=60'
+			// });
 
 			return json(tags);
 		}
@@ -33,4 +33,4 @@ export const GET: RequestHandler = async (event) => {
 
 		return error(400, 'Failed to fetch tags!!');
 	}
-};
+}) satisfies RequestHandler;
