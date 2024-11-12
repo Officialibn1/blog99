@@ -5,7 +5,7 @@ import { categorySchema } from './schema';
 
 export const ssr = false;
 
-type Category = {
+export type Category = {
 	id: string;
 	name: string;
 	authorId: string;

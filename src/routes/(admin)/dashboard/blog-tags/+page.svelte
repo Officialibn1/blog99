@@ -3,7 +3,6 @@
 	import type { ActionData, PageData } from './$types';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { blogTagsSchema } from './schema';
-	import { page } from '$app/stores';
 
 	import {
 		FormField,

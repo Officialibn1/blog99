@@ -8,7 +8,8 @@
 		FormControl,
 		FormLabel,
 		FieldErrors,
-		Button as FormButton
+		Button as FormButton,
+		Description as FormDescription
 	} from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { Switch } from '$lib/components/ui/switch';
@@ -32,7 +33,7 @@
 		form: ActionData;
 	};
 
-	const { data, form: formAction }: Props = $props();
+	const { data }: Props = $props();
 
 	// console.log('Form Action: ', formAction);
 
@@ -66,7 +67,7 @@
 			el: document.querySelector('#editor'),
 			height: '500px',
 			initialEditType: 'markdown',
-			previewStyle: 'vertical'
+			previewStyle: 'tab'
 		});
 
 		editor;
@@ -100,57 +101,99 @@
 
 	<div class="editor-container">
 		<form method="POST" use:enhance onsubmit={handleSubmit}>
-			<FormField {form} name="title">
-				<FormControl let:attrs>
-					<FormLabel>Blog Title</FormLabel>
+			<div class="grid lg:grid-cols-2 gap-4 gap-x-5">
+				<FormField {form} name="title">
+					<FormControl let:attrs>
+						<FormLabel>Blog Title</FormLabel>
 
-					<Input
-						class="shadow-none max-w-xl bg-white rounded-sm"
-						disabled={$submitting}
-						aria-disabled={$submitting}
-						{...attrs}
-						bind:value={$formData.title}
-					/>
-				</FormControl>
+						<Input
+							class="shadow-none  bg-white rounded-sm"
+							disabled={$submitting}
+							aria-disabled={$submitting}
+							{...attrs}
+							bind:value={$formData.title}
+						/>
+					</FormControl>
 
-				<FieldErrors />
-			</FormField>
+					<FieldErrors />
+				</FormField>
 
-			<FormField {form} name="tags">
-				<FormControl let:attrs>
-					<FormLabel>Tags</FormLabel>
+				<FormField {form} name="description">
+					<FormControl let:attrs>
+						<FormLabel>Blog Description</FormLabel>
 
-					<SelectRoot
-						multiple
-						selected={selectedTags}
-						onSelectedChange={(s) => {
-							if (s) {
-								$formData.tags = s.map((v) => v.value);
-							} else {
-								$formData.tags = [];
-							}
-						}}
-					>
-						{#each $formData.tags as tag}
-							<Input type="hidden" name={attrs.name} value={tag} />
-						{/each}
+						<Input
+							class="shadow-none  bg-white rounded-sm"
+							disabled={$submitting}
+							aria-disabled={$submitting}
+							{...attrs}
+							bind:value={$formData.description}
+						/>
+					</FormControl>
 
-						<SelectTrigger {...attrs} class="max-w-xl bg-white shadow-none rounded-sm">
-							<SelectValue placeholder="Select Tags" />
-						</SelectTrigger>
+					<FormDescription>
+						Add a short description about the blog which will be used for a better SEO.
+					</FormDescription>
 
-						<SelectContent>
-							{#each data.tags as tag}
-								<SelectItem label={tag.name} value={tag.id} />
+					<FieldErrors />
+				</FormField>
+
+				<FormField {form} name="tags">
+					<FormControl let:attrs>
+						<FormLabel>Tags</FormLabel>
+
+						<SelectRoot
+							multiple
+							selected={selectedTags}
+							onSelectedChange={(s) => {
+								if (s) {
+									$formData.tags = s.map((v) => v.value);
+								} else {
+									$formData.tags = [];
+								}
+							}}
+						>
+							{#each $formData.tags as tag}
+								<Input type="hidden" name={attrs.name} value={tag} />
 							{/each}
-						</SelectContent>
-					</SelectRoot>
-				</FormControl>
 
-				<FieldErrors />
-			</FormField>
+							<SelectTrigger {...attrs} class=" bg-white shadow-none rounded-sm">
+								<SelectValue placeholder="Select Tags" />
+							</SelectTrigger>
 
-			<FormField {form} name="content">
+							<SelectContent>
+								{#each data.tags as tag}
+									<SelectItem class="font-openSans" label={tag.name} value={tag.id} />
+								{/each}
+							</SelectContent>
+						</SelectRoot>
+					</FormControl>
+
+					<FieldErrors />
+				</FormField>
+
+				<FormField {form} name="category">
+					<FormControl let:attrs>
+						<FormLabel>Blog Category</FormLabel>
+
+						<SelectRoot>
+							<SelectTrigger {...attrs} class=" bg-white shadow-none rounded-sm">
+								<SelectValue placeholder="Select Category" />
+							</SelectTrigger>
+
+							<SelectContent>
+								{#each data.categories as category}
+									<SelectItem class="font-openSans" label={category.name} value={category.id} />
+								{/each}
+							</SelectContent>
+						</SelectRoot>
+
+						<Input type="hidden" bind:value={$formData.category} name={attrs.name} />
+					</FormControl>
+				</FormField>
+			</div>
+
+			<FormField {form} name="content" class="w-full overflow-x-auto">
 				<FormControl let:attrs>
 					<FormLabel>Blog Content</FormLabel>
 
