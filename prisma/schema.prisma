@@ -33,6 +33,7 @@ model User {
   role        Role      @default(ADMIN)
   blogs       Blog[]
   tags        Tag[]
+  categories  Category[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -44,6 +45,16 @@ model Tag {
   authorId    String      @db.ObjectId
   blogsIds    String[]    @db.ObjectId
   blogs       Blog[]      @relation(fields: [blogsIds], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Category {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String      @unique
+  author      User        @relation(fields: [authorId], references: [id])
+  authorId    String      @db.ObjectId
+  blogs       Blog[]      
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -61,6 +72,8 @@ model Blog {
   downVotes   Int         @default(0)
   tagsIds     String[]    @db.ObjectId
   tags        Tag[]       @relation(fields: [tagsIds], references: [id])
+  categoryId  String      @db.ObjectId
+  category    Category    @relation(fields: [categoryId], references: [id])
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }

@@ -92,10 +92,17 @@ export const validateUsers = (data: any): data is User => {
 };
 
 type DateStyle = Intl.DateTimeFormatOptions['dateStyle'];
+type TimeStyle = Intl.DateTimeFormatOptions['timeStyle'];
 
-export const formatdate = (date: Date, dateStyle: DateStyle = 'medium', locales = 'en') => {
+export const formatdate = (
+	date: Date,
+	dateStyle: DateStyle = 'medium',
+	locales = 'en',
+	timeStyle: TimeStyle = 'short'
+) => {
 	const formatter = new Intl.DateTimeFormat(locales, {
-		dateStyle
+		dateStyle,
+		timeStyle
 	});
 
 	return formatter.format(new Date(date));

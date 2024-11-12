@@ -8,7 +8,8 @@
 		NotebookPen,
 		Settings,
 		Tags,
-		UsersRound
+		UsersRound,
+		ChartColumnStacked
 	} from 'lucide-svelte';
 	import { Button } from './ui/button';
 	import type { ComponentType } from 'svelte';
@@ -33,15 +34,21 @@
 			icon: NotebookPen
 		},
 		{
+			name: 'Blogs',
+			href: '/dashboard/blogs',
+			icon: Newspaper
+		},
+		{
 			name: 'Tags',
 			href: '/dashboard/blog-tags',
 			icon: Tags
 		},
 		{
-			name: 'Blogs',
-			href: '/dashboard/blogs',
-			icon: Newspaper
+			name: 'Categories',
+			href: '/dashboard/blog-categories',
+			icon: ChartColumnStacked
 		},
+
 		{
 			name: 'Subscribers',
 			href: '/dashboard/subscribers',

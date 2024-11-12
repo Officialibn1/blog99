@@ -1,16 +1,15 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { blogTagsSchema } from './schema';
-	import { page } from '$app/stores';
+	import { categorySchema } from './schema';
 
 	import {
 		FormField,
 		FormControl,
 		FormLabel,
 		FieldErrors,
-		FormButton
+		Button as FormButton
 	} from '$lib/components/ui/form';
 
 	import { Root as DialogRoot, Trigger, Content, Header, Title } from '$lib/components/ui/dialog';
@@ -39,24 +38,19 @@
 
 	type Props = {
 		data: PageData;
-		form: ActionData;
 	};
 
-	const { data, form: formActionData }: Props = $props();
+	const { data }: Props = $props();
 
-	$effect(() => {
-		if (formActionData?.success) {
-			invalidate(`tags:PageData`);
-		}
-	});
+	// console.log(data.categories);
 
 	const form = superForm(data.form, {
-		validators: zodClient(blogTagsSchema)
+		validators: zodClient(categorySchema)
 	});
 
-	const { form: formData, submitting, enhance } = form;
+	const { form: formData, enhance, submitting } = form;
 
-	const table = createTable(readable(data.tags), {
+	const table = createTable(readable(data.categories), {
 		page: addPagination({
 			initialPageSize: 8
 		}),
@@ -69,10 +63,7 @@
 	const columns = table.createColumns([
 		table.column({
 			accessor: 'id',
-			header: 'Tag ID',
-			cell: ({ value }) => {
-				return `${value}`;
-			},
+			header: 'Category ID',
 			plugins: {
 				sort: {
 					disable: true
@@ -84,33 +75,16 @@
 		}),
 		table.column({
 			accessor: 'name',
-			header: 'Tag Name'
+			header: 'Name'
 		}),
 		table.column({
-			accessor: 'blogsIds',
-			header: 'Blogs with Tag',
+			accessor: 'blogs',
+			header: 'Blogs With Categories',
 			cell: ({ value }) => {
 				return value.length;
-			},
-			plugins: {
-				sort: {
-					disable: true
-				},
-				filter: {
-					exclude: true
-				}
 			}
 		}),
 		table.column({
-			accessor: 'createdAt',
-			header: 'Created At',
-			cell: ({ value }) => {
-				return formatdate(value);
-			}
-		}),
-		// @ts-expect-error
-		table.column({
-			// @ts-expect-error
 			accessor: ({ id }) => id,
 			header: '',
 			cell: ({ value }) => {
@@ -119,7 +93,7 @@
 			},
 			plugins: {
 				sort: {
-					disabled: true
+					disable: true
 				},
 				filter: {
 					exclude: true
@@ -142,51 +116,50 @@
 	<hgroup>
 		<DialogRoot>
 			<Trigger class="ml-auto">
-				<Button class="font-openSans shadow-none rounded-sm ml-auto " variant="outline"
-					>New Tag</Button
-				>
+				<Button variant="outline" class="font-openSans shadow-none rounded-sm ml-auto ">
+					New Category
+				</Button>
+
+				<Content class="font-openSans">
+					<Header>
+						<Title>Create New Category</Title>
+					</Header>
+
+					<div>
+						<form method="POST" use:enhance action="?/addCategory">
+							<FormField {form} name="name">
+								<FormControl let:attrs>
+									<FormLabel>Category Name</FormLabel>
+									<Input
+										{...attrs}
+										bind:value={$formData.name}
+										class="shadow-none rounded-sm bg-white"
+										type="text"
+										disabled={$submitting}
+										aria-disabled={$submitting}
+									/>
+								</FormControl>
+
+								<FieldErrors />
+							</FormField>
+
+							<FormButton disabled={$submitting} aria-disabled={$submitting} class="ml-auto">
+								{#if $submitting}
+									<Loader />
+								{:else}
+									Create
+								{/if}
+							</FormButton>
+						</form>
+					</div>
+				</Content>
 			</Trigger>
-
-			<Content class="font-openSans">
-				<Header>
-					<Title>Create New Tag</Title>
-				</Header>
-
-				<div>
-					<form method="POST" use:enhance action="?/addTag">
-						<FormField {form} name="name">
-							<FormControl let:attrs>
-								<FormLabel>Tag Name</FormLabel>
-
-								<Input
-									{...attrs}
-									bind:value={$formData.name}
-									class="shadow-none rounded-sm bg-white"
-									type="text"
-									disabled={$submitting}
-									aria-disabled={$submitting}
-								/>
-							</FormControl>
-
-							<FieldErrors />
-						</FormField>
-
-						<FormButton disabled={$submitting} aria-disabled={$submitting} class="ml-auto">
-							{#if $submitting}
-								<Loader />
-							{:else}
-								Create
-							{/if}
-						</FormButton>
-					</form>
-				</div>
-			</Content>
 		</DialogRoot>
 
 		<Input
 			bind:value={$filterValue}
 			class="max-w-lg shadow-none rounded-sm bg-white mx-auto"
-			placeholder="Filter tags by name..."
+			placeholder="Filter categories by name..."
 		/>
 	</hgroup>
 
