@@ -21,11 +21,11 @@ export const actions = {
 		const { name } = form.data;
 
 		try {
-			const tag = await db.tag.findUnique({ where: { name: name } });
+			const tag = await db.tag.findUnique({ where: { name } });
 
-			console.log(tag);
+			// console.log(tag);
 
-			if (tag && form.data.name.toLowerCase() === tag.name.toLowerCase()) {
+			if (form.data.name.toLowerCase() === tag?.name.toLowerCase()) {
 				setError(form, 'name', 'Tag already exists.');
 
 				return {
@@ -65,8 +65,6 @@ export const actions = {
 			console.log('CAUGTH TAG ERROR: ', JSON.stringify(error, null, 2));
 
 			setError(form, 'name', 'Create Tag Failed!!');
-
-			console.log('Created Tag Failed');
 
 			return {
 				message: 'Create Tag Failed!!',
