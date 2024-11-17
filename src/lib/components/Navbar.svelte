@@ -39,39 +39,41 @@
 			</Button>
 		</div>
 
-		<Sheet.Root>
-			<Sheet.Trigger class="md:hidden">
-				<Button size="icon" variant="ghost">
-					<Menu />
-				</Button>
-			</Sheet.Trigger>
-			<Sheet.Content class="md:hidden py-16  flex flex-col ">
-				<Sheet.Description class=" flex flex-col h-full justify-between">
-					<ul class="mobile-links">
-						<li>
-							<a href="/">Home</a>
-						</li>
-						<li>
-							<a href="/blogs">Blogs</a>
-						</li>
+		<div class="md:hidden">
+			<Sheet.Root>
+				<Sheet.Trigger class="md:hidden">
+					<Button size="icon" variant="ghost" class="md:hidden">
+						<Menu />
+					</Button>
+				</Sheet.Trigger>
+				<Sheet.Content class="md:hidden py-16  flex flex-col ">
+					<Sheet.Description class=" flex flex-col h-full justify-between">
+						<ul class="mobile-links">
+							<li>
+								<a href="/">Home</a>
+							</li>
+							<li>
+								<a href="/blogs">Blogs</a>
+							</li>
 
-						<li>
-							<a href="/contact">Contact Us</a>
-						</li>
-					</ul>
+							<li>
+								<a href="/contact">Contact Us</a>
+							</li>
+						</ul>
 
-					<div class="flex gap-10 mt-14 justify-center w-full">
-						<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
-							<Twitter />
-						</Button>
+						<div class="flex gap-10 mt-14 justify-center w-full">
+							<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
+								<Twitter />
+							</Button>
 
-						<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
-							<WhatsApp />
-						</Button>
-					</div>
-				</Sheet.Description>
-			</Sheet.Content>
-		</Sheet.Root>
+							<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
+								<WhatsApp />
+							</Button>
+						</div>
+					</Sheet.Description>
+				</Sheet.Content>
+			</Sheet.Root>
+		</div>
 	</div>
 </nav>
 
