@@ -40,7 +40,7 @@
 	const form = superForm(data.form, {
 		validators: zodClient(createBlogFormSchema),
 		applyAction: true,
-		resetForm: false
+		resetForm: true
 	});
 
 	const { form: formData, submitting } = form;
@@ -50,6 +50,18 @@
 			label: data.tags.find((val) => val.id === tag)?.name,
 			value: tag
 		}))
+	);
+
+	const selectedCategory = $derived(
+		$formData.category
+			? {
+					label: data.categories.find((val) => val.id === $formData.category)?.name,
+					value: $formData.category
+				}
+			: {
+					label: '',
+					value: ''
+				}
 	);
 
 	// $effect(() => {
@@ -176,7 +188,12 @@
 					<FormControl let:attrs>
 						<FormLabel>Blog Category</FormLabel>
 
-						<SelectRoot>
+						<SelectRoot
+							selected={selectedCategory}
+							onSelectedChange={(s) => {
+								s && ($formData.category = s.value);
+							}}
+						>
 							<SelectTrigger {...attrs} class=" bg-white shadow-none rounded-sm">
 								<SelectValue placeholder="Select Category" />
 							</SelectTrigger>
@@ -190,6 +207,8 @@
 
 						<Input type="hidden" bind:value={$formData.category} name={attrs.name} />
 					</FormControl>
+
+					<FieldErrors />
 				</FormField>
 			</div>
 
