@@ -29,7 +29,7 @@ export const GET = (async ({ cookies }) => {
 			return json(tags);
 		}
 	} catch (e) {
-		console.log(e);
+		console.error(JSON.stringify(e));
 
 		return error(400, 'Failed to fetch tags!!');
 	}

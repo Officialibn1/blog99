@@ -33,7 +33,9 @@ export const GET = (async ({ cookies }) => {
 			return json(categories);
 		}
 	} catch (e) {
-		console.error(e);
+		console.log('SERVER ERROR IN CATEGORIES');
+
+		console.error(JSON.stringify(e, null, 2));
 
 		return error(400, 'Failed to fetch categories!!');
 	}
