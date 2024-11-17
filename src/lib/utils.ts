@@ -107,3 +107,9 @@ export const formatdate = (
 
 	return formatter.format(new Date(date));
 };
+
+export const formatTitleToSlug = (title: string): string => {
+	const slug = title.toLowerCase().replace(/([^a-z0-9])+/g, '-');
+
+	return slug;
+};
