@@ -68,7 +68,8 @@ model Blog {
   published       Boolean     @default(false)
   author          User        @relation(fields: [authorId], references: [id])
   authorId        String      @db.ObjectId
-  comments        Comment[]
+  comments        Comment[]   
+  views           Int         @default(0)
   upVotes         Int         @default(0)
   downVotes       Int         @default(0)
   tagsIds         String[]    @db.ObjectId
