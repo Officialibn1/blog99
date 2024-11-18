@@ -61,7 +61,8 @@ export const POST = (async ({ cookies, request }) => {
 						tagsIds: data.tags,
 						categoryId: data.category,
 						markdown: data.content,
-						published: data.published
+						published: data.published,
+						views: 0
 					}
 				});
 
@@ -95,8 +96,38 @@ export const POST = (async ({ cookies, request }) => {
 			return json(blogTransaction);
 		}
 	} catch (e) {
-		// console.log('ERROR CREATING BLOG IN SERVER.TS: ', JSON.stringify(e, null, 2));
+		console.log('ERROR CREATING BLOG IN SERVER.TS: ', JSON.stringify(e, null, 2));
 
 		error(400, e as Error);
+	}
+}) satisfies RequestHandler;
+
+export const GET = (async ({ cookies }) => {
+	const authToken = cookies.get('adminSession');
+
+	if (!authToken) {
+		error(400, 'Unauthorized');
+	}
+
+	try {
+		const claims = jwt.verify(authToken, SECRET_INGREDIENT);
+
+		if (!claims) {
+			cookies.delete('adminSession', { path: '/' });
+
+			error(400, 'Session Expired');
+		} else {
+			const admin = await db.user.findUnique({ where: { authToken } });
+
+			if (!admin) {
+				error(400, `User doesn't exist /  Session Expired`);
+			}
+
+			const blogs = await db.blog.findMany({ where: { authorId: admin.id } });
+
+			return json(blogs);
+		}
+	} catch (e) {
+		error(400, JSON.stringify(e));
 	}
 }) satisfies RequestHandler;
