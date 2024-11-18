@@ -40,7 +40,7 @@
 
 		<Card class="aspect-square md:aspect-auto">
 			<CardHeader class="flex-row justify-between items-center">
-				<h1 class="font-semibold font-openSans">Top Blogs</h1>
+				<h1 class="font-semibold font-openSans">Top Viewed Blogs</h1>
 
 				<Button onclick={() => goto('/dashboard/blogs')} variant="outline" class="shadow-none"
 					>View All</Button

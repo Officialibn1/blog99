@@ -230,7 +230,7 @@
 					variant={$pageIndex === page ? 'outline' : 'secondary'}
 					onclick={() => ($pageIndex = page)}
 				>
-					{page}
+					{page + 1}
 				</Button>
 			{/each}
 		</div>
