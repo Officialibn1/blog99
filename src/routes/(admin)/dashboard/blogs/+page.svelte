@@ -2,11 +2,15 @@
 	import type { PageData } from './$types';
 	import BlogsTable from './blogs-table.svelte';
 
-	const { data }: { data: PageData } = $props();
+	interface Props {
+		data: PageData;
+	}
+
+	const { data }: Props = $props();
 </script>
 
 <section>
-	<BlogsTable />
+	<BlogsTable blogs={data.blogs} />
 </section>
 
 <style lang="postcss">

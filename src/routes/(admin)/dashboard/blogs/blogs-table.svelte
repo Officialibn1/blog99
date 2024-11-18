@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { blogs } from '$lib/dummy-datas/blogs';
+	import { type BlogWithComments } from './+page';
+
 	import { createTable, Render, Subscribe, createRender } from 'svelte-headless-table';
 	import { addPagination, addSortBy, addTableFilter } from 'svelte-headless-table/plugins';
 	import { readable } from 'svelte/store';
@@ -10,6 +11,12 @@
 	import BlogsTableActions from './blogs-table-actions.svelte';
 	import { ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import TableBadge from '$lib/components/table-badge.svelte';
+
+	type Props = {
+		blogs: BlogWithComments[];
+	};
+
+	const { blogs }: Props = $props();
 
 	const table = createTable(readable(blogs), {
 		page: addPagination({
@@ -70,7 +77,10 @@
 		}),
 		table.column({
 			accessor: 'comments',
-			header: 'Comments'
+			header: 'Comments',
+			cell: ({ value }) => {
+				return value ? value.length : 0;
+			}
 		}),
 		table.column({
 			accessor: 'views',
@@ -195,7 +205,7 @@
 					variant={$pageIndex === page ? 'outline' : 'secondary'}
 					onclick={() => ($pageIndex = page)}
 				>
-					{page}
+					{page + 1}
 				</Button>
 			{/each}
 		</div>
