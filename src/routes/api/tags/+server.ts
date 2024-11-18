@@ -18,9 +18,13 @@ export const GET = (async ({ cookies }) => {
 
 			error(400, 'Session Expired!');
 		} else {
-			const author = await db.user.findUnique({ where: { authToken } });
+			const admin = await db.user.findUnique({ where: { authToken } });
 
-			const tags = await db.tag.findMany({ where: { authorId: author?.id } });
+			if (!admin) {
+				error(400, `Session Expired / User doesn't exist`);
+			}
+
+			const tags = await db.tag.findMany({ where: { authorId: admin.id } });
 
 			// setHeaders({
 			// 	'Cache-Control': 'max-age=60'
