@@ -18,7 +18,7 @@ export const POST = (async ({ cookies, request }) => {
 	const authToken = cookies.get('adminSession');
 
 	if (!authToken) {
-		return error(400, {
+		error(400, {
 			message: 'UnAuthorized'
 		});
 	}
@@ -37,28 +37,66 @@ export const POST = (async ({ cookies, request }) => {
 
 			const slug = formatTitleToSlug(data.title);
 
+			const existingBlogWithSlug = await db.blog.findUnique({ where: { slug } });
+
+			if (existingBlogWithSlug) {
+				// error(201, 'A blog with this title already exist');
+
+				throw new Error('A blog with this title already exist', {
+					cause: {
+						status: 400
+					}
+				});
+			}
+
 			const author = await db.user.findUnique({ where: { authToken } });
 
-			const blog = await db.blog.create({
-				data: {
-					authorId: author?.id as string,
-					title: data.title,
-					slug,
-					description: data.description,
-					tagsIds: data.tags,
-					categoryId: data.category,
-					markdown: data.content,
-					published: data.published
-				}
+			const blogTransaction = await db.$transaction(async (tx) => {
+				const blog = await tx.blog.create({
+					data: {
+						authorId: author?.id as string,
+						title: data.title,
+						slug,
+						description: data.description,
+						tagsIds: data.tags,
+						categoryId: data.category,
+						markdown: data.content,
+						published: data.published
+					}
+				});
+
+				await tx.tag.updateMany({
+					where: {
+						id: {
+							in: data.tags
+						}
+					},
+					data: {
+						blogsIds: {
+							push: blog.id
+						}
+					}
+				});
+
+				return tx.blog.findUnique({
+					where: {
+						id: blog.id
+					},
+					include: {
+						tags: {
+							select: {
+								name: true
+							}
+						}
+					}
+				});
 			});
 
-			return json(blog);
+			return json(blogTransaction);
 		}
 	} catch (e) {
-		console.log('ERROR CREATING BLOG IN SERVER.TS: ', JSON.stringify(e, null, 2));
+		// console.log('ERROR CREATING BLOG IN SERVER.TS: ', JSON.stringify(e, null, 2));
 
-		return error(400, {
-			message: JSON.stringify(e, null, 2)
-		});
+		error(400, e as Error);
 	}
 }) satisfies RequestHandler;

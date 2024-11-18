@@ -106,7 +106,7 @@
 
 <section>
 	<hgroup>
-		<h1>Write New Blog</h1>
+		<h1>Write a New Blog</h1>
 	</hgroup>
 
 	<Separator class="mt-5 mb-10" />

@@ -25,6 +25,10 @@ export const actions = {
 		});
 
 		if (!res.ok) {
+			const message = await res.json();
+
+			console.log('Res Not OK Message: ', message);
+
 			return fail(400, {
 				message: 'Failed to create Blog',
 				success: false,
