@@ -1,7 +1,3 @@
-<script>
-	import { Button } from './ui/button';
-</script>
-
 <main>
 	<hgroup class="z-[5]">
 		<h2 class="text-3xl lg:text-5xl font-medium">Welcome To</h2>
@@ -11,8 +7,6 @@
 		<p class="text-lg">
 			The best place to stay updated on all your latest news, jist's and trending updates.
 		</p>
-
-		<Button variant="outline" class="mt-10">Explore</Button>
 	</hgroup>
 
 	<img src="/nigeria-map.png" alt="" />

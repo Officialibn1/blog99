@@ -8,7 +8,7 @@
 	<div class="header">
 		<h1>News</h1>
 
-		<Button>View All</Button>
+		<Button variant="secondary">View All</Button>
 	</div>
 
 	<div class="content-grid">
@@ -24,7 +24,7 @@
 	}
 
 	.header {
-		@apply flex items-center gap-5;
+		@apply flex items-center gap-5 justify-between;
 	}
 
 	.header > h1 {
