@@ -1,5 +1,4 @@
 <script lang="ts">
-	import db from '$lib/database';
 	import BlogSectionCard from './blog-section-card.svelte';
 	import { Button } from './ui/button';
 

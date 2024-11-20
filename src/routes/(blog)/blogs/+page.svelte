@@ -93,7 +93,7 @@
 		@apply flex gap-10 w-full mt-10 lg:mt-20;
 	}
 
-	aside {
+	/* aside {
 		@apply hidden md:flex flex-col gap-10 w-1/5;
 	}
 
@@ -111,7 +111,7 @@
 
 	.filter-group div {
 		@apply flex flex-row-reverse gap-2 justify-end items-center w-full;
-	}
+	} */
 
 	.main-content {
 		@apply flex flex-col w-full gap-10;
