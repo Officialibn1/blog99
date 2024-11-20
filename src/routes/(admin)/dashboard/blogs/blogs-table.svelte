@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { type BlogWithComments } from './+page';
-
 	import { createTable, Render, Subscribe, createRender } from 'svelte-headless-table';
 	import { addPagination, addSortBy, addTableFilter } from 'svelte-headless-table/plugins';
 	import { readable } from 'svelte/store';
@@ -11,6 +9,7 @@
 	import BlogsTableActions from './blogs-table-actions.svelte';
 	import { ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import TableBadge from '$lib/components/table-badge.svelte';
+	import type { BlogWithComments } from './+page';
 
 	type Props = {
 		blogs: BlogWithComments[];
