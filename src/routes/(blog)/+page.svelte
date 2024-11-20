@@ -7,7 +7,7 @@
 
 <Hero />
 
-<BlogGrid />
+<!-- <BlogGrid /> -->
 
 <BlogListSection />
 
@@ -15,7 +15,7 @@
 
 <BlogListSection />
 
-<HomeCategoriesCards />
+<!-- <HomeCategoriesCards /> -->
 
 <BlogListSection />
 
