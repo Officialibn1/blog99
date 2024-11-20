@@ -1,17 +1,18 @@
-<script>
+<script lang="ts">
 	import BlogCard from '$lib/components/blog-card.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { RadioGroup } from '$lib/components/ui/radio-group';
-	import RadioGroupItem from '$lib/components/ui/radio-group/radio-group-item.svelte';
+	import type { PageData } from './$types';
 
-	const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+	type Props = {
+		data: PageData;
+	};
+
+	const { data }: Props = $props();
 </script>
 
 <section>
-	<aside>
+	<!-- <aside>
 		<h1>Filters</h1>
 
 		<div class="filter-group">
@@ -68,20 +69,20 @@
 				</div>
 			</RadioGroup>
 		</div>
-	</aside>
+	</aside> -->
 
 	<div class="main-content">
 		<header>
 			<form>
 				<Input />
 				<!-- class="bg-green-600 hover:bg-green-600/80" -->
-				<Button variant="outline">Search</Button>
+				<Button variant="secondary" class="shadow-sm">Search</Button>
 			</form>
 		</header>
 
 		<div class="cards-wrapper">
-			{#each nums as num, i}
-				<BlogCard id={num * i} />
+			{#each data.blogs as blog, i}
+				<BlogCard {blog} />
 			{/each}
 		</div>
 	</div>
