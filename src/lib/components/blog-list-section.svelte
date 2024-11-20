@@ -1,7 +1,21 @@
-<script>
+<script lang="ts">
+	import db from '$lib/database';
 	import BlogSectionCard from './blog-section-card.svelte';
 	import { Button } from './ui/button';
-	const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+	type Props = {
+		blogs: {
+			id: string;
+			title: string;
+			slug: string;
+			createdAt: Date;
+			tags: {
+				name: string;
+			}[];
+		}[];
+	};
+
+	const { blogs }: Props = $props();
 </script>
 
 <section>
@@ -12,8 +26,8 @@
 	</div>
 
 	<div class="content-grid">
-		{#each nums.slice(0, 4) as num, i}
-			<BlogSectionCard id={num * i} />
+		{#each blogs as blog (`home-blogs-${blog.id}`)}
+			<BlogSectionCard {blog} />
 		{/each}
 	</div>
 </section>
@@ -33,7 +47,7 @@
 	}
 
 	.content-grid {
-		@apply grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+		@apply grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3;
 	}
 
 	/* .content-grid > div {

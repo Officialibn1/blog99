@@ -81,7 +81,7 @@
 		</header>
 
 		<div class="cards-wrapper">
-			{#each data.blogs as blog, i}
+			{#each data.blogs as blog (`blogs-page-${blog.id}`)}
 				<BlogCard {blog} />
 			{/each}
 		</div>
@@ -130,6 +130,6 @@
 	}
 
 	.cards-wrapper {
-		@apply grid gap-5 md:grid-cols-2 lg:grid-cols-3;
+		@apply grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
 	}
 </style>

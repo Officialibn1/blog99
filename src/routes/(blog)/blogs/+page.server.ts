@@ -1,11 +1,13 @@
-import type { Blog, Category, Tag, User } from '@prisma/client';
 import type { PageServerLoad } from './$types';
 
-export interface BlogWithComments extends Blog {
-	comments?: Comment[];
-	tags: Tag[];
-	category?: Category;
-	author: User;
+export interface BlogWithComments {
+	id: string;
+	title: string;
+	slug: string;
+	createdAt: Date;
+	tags: {
+		name: string;
+	}[];
 }
 
 export const load = (async ({ fetch }) => {

@@ -4,20 +4,29 @@
 
 	import { goto } from '$app/navigation';
 	import { Badge } from './ui/badge';
+	import { formatdate } from '$lib/utils';
 
 	type Props = {
-		id: number;
+		blog: {
+			id: string;
+			title: string;
+			slug: string;
+			createdAt: Date;
+			tags: {
+				name: string;
+			}[];
+		};
 	};
 
-	let { id }: Props = $props();
+	let { blog }: Props = $props();
 </script>
 
 <Root
 	class="shadow-none cursor-pointer md:hover:shadow-md duration-200 overflow-hidden"
-	onclick={() => goto(`/blogs/${id}`)}
+	onclick={() => goto(`/blogs/${blog.slug}`)}
 >
 	<Content class="p-0 flex sm:flex-col">
-		<Header class="w-1/4 p-0 overflow-hidden sm:w-full">
+		<Header class="w-2/5 aspect-square p-0 overflow-hidden sm:w-full">
 			<img class=" w-full h-full" src="/placeholder-image.avif" alt="Card_Placeholder_Image" />
 		</Header>
 
@@ -25,18 +34,18 @@
 		<Separator class="hidden sm:flex " />
 
 		<div class="flex flex-col">
-			<div class="p-3 pb-0">
-				<Title class="leading-loose">Card Description for {id}</Title>
+			<div class="p-2">
+				<Title class="leading-relaxed mt-0">{blog.title}</Title>
 			</div>
 
-			<Footer class="flex flex-col  gap-3 items-start  p-3">
-				<div class="flex flex-wrap gap-2">
-					<Badge variant="secondary" class="text-gray-700">Web3</Badge>
-					<Badge variant="secondary" class="text-gray-700">Crypto</Badge>
-					<Badge variant="secondary" class="text-gray-700">Javascript</Badge>
+			<Footer class="flex flex-col gap-2 p-2 items-start">
+				<div class="flex flex-wrap gap-2 px-0">
+					{#each blog.tags as tag, i (`home-blogs-card-${i}`)}
+						<Badge variant="secondary" class="text-gray-700">{tag.name}</Badge>
+					{/each}
 				</div>
 
-				<p class="text-xs font-medium text-gray-400">Mav 28. 2024 • 2 min read</p>
+				<p class="text-xs font-medium text-gray-400">{formatdate(blog.createdAt)} • 2 min read</p>
 			</Footer>
 		</div>
 	</Content>

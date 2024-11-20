@@ -1,17 +1,29 @@
+import { dev } from '$app/environment';
 import db from '$lib/database';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 
-export const GET = (async () => {
+export const GET = (async ({ setHeaders }) => {
 	try {
 		const blogs = await db.blog.findMany({
-			where: {
-				published: true
+			where: { published: true },
+			select: {
+				id: true,
+				title: true,
+				slug: true,
+				createdAt: true,
+				tags: {
+					select: {
+						name: true
+					}
+				}
 			},
-			include: {
-				comments: true,
-				category: true,
-				tags: true
+			orderBy: {
+				createdAt: 'desc'
 			}
+		});
+
+		setHeaders({
+			'Cache-Control': `max-age=${dev ? 0 : 3600}`
 		});
 
 		return json(blogs);
