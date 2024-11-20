@@ -1,11 +1,43 @@
 <script lang="ts">
 	import BlogCard from '$lib/components/blog-card.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
+	import { Badge } from '$lib/components/ui/badge';
 	import BlogTitles from '$lib/components/ui/blog-titles/blog-titles.svelte';
 	import * as Carousel from '$lib/components/ui/carousel';
 	import { Separator } from '$lib/components/ui/separator';
+	import { Textarea } from '$lib/components/ui/textarea';
+	import { formatdate } from '$lib/utils';
+	import { superForm } from 'sveltekit-superforms';
+	import type { PageData } from './$types';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { commentFormSchema } from './schema';
+	import {
+		FormField,
+		FormControl,
+		FieldErrors,
+		Button as FormButton
+	} from '$lib/components/ui/form';
+	import { Input } from '$lib/components/ui/input';
 
-	let simalar = [1, 2, 3, 4, 5, 6];
+	type Props = {
+		data: PageData;
+	};
+
+	const { data }: Props = $props();
+
+	const similarBlogs = $derived(
+		data.blogs.filter((blog) => blog.categoryId === data.blog.categoryId)
+	);
+
+	const addCommentForm = superForm(data.commentForm, {
+		validators: zodClient(commentFormSchema)
+	});
+
+	const {
+		form: commentFormData,
+		enhance: commentFormEnhance,
+		submitting: commentFormsubmitting
+	} = addCommentForm;
 </script>
 
 <section>
@@ -14,20 +46,30 @@
 		<hgroup>
 			<BlogTitles
 				className="font-medium text-2xl md:text-4xl tracking-wide leading-relaxed text-center mb-8 md:mb-14"
-				>Niger state government implements the new Minimum wage, and increases it to 80K</BlogTitles
+				>{data.blog.title}</BlogTitles
 			>
+
+			<div class="tags-container">
+				{#each data.blog.tags as tag}
+					<Badge variant="outline">
+						{tag.name}
+					</Badge>
+				{/each}
+			</div>
 
 			<div class="author-card">
 				<div>
-					<Avatar.Root>
+					<!-- <Avatar.Root>
 						<Avatar.Image src="/placeholder-author.png " alt="@blog9ja" />
 						<Avatar.Fallback>b9ja</Avatar.Fallback>
-					</Avatar.Root>
+					</Avatar.Root> -->
 
-					<h2 class="font-medium">Ibn Maryam</h2>
+					<h2 class="font-medium">Author: {data.blog.author.name}</h2>
 				</div>
 
-				<p class="text-sm font-medium text-slate-500">Posted: October 3 2024 • 2 min read</p>
+				<p class="text-sm font-medium text-slate-500">
+					Posted: {formatdate(data.blog.createdAt)} • Read Time: 2 minutes
+				</p>
 			</div>
 		</hgroup>
 	</header>
@@ -35,7 +77,7 @@
 	<!-- BLOG TABLE OF CONTENT & BLOG CONTENT -->
 
 	<div class="blog-content-container">
-		<aside>
+		<!-- <aside>
 			<h3>Table of Content</h3>
 
 			<Separator />
@@ -57,49 +99,63 @@
 					<a href="#wage">Livelihood</a>
 				</li>
 			</ul>
-		</aside>
+		</aside> -->
+
+		<div class="blog-content">
+			{@html data.blogHtml}
+		</div>
+	</div>
+
+	<Separator />
+
+	<div class="comments-section">
+		<h1>Comments ({data.blog.comments?.length})</h1>
+
+		<form method="POST" action="?/addComment" use:commentFormEnhance>
+			<FormField form={addCommentForm} name="comment">
+				<FormControl let:attrs>
+					<Textarea
+						{...attrs}
+						bind:value={$commentFormData.comment}
+						placeholder="Write your comment..."
+						class="shadow-none rounded-sm"
+					/>
+				</FormControl>
+
+				<FieldErrors />
+			</FormField>
+
+			<FormButton variant="secondary" class="mr-auto">Post Comment</FormButton>
+
+			<FormField form={addCommentForm} name="subscribersId">
+				<FormControl let:attrs>
+					<Input {...attrs} type="hidden" bind:value={$commentFormData.subscribersId} />
+				</FormControl>
+
+				<FieldErrors />
+			</FormField>
+
+			<FormField form={addCommentForm} name="blogId">
+				<FormControl let:attrs>
+					<Input {...attrs} type="hidden" bind:value={$commentFormData.blogId} />
+				</FormControl>
+
+				<FieldErrors />
+			</FormField>
+		</form>
 
 		<div>
-			<img src="/placeholder-image.avif" alt="Placeholder_Blog_Image" />
-			<p>
-				Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate sint error optio
-				assumenda, in incidunt doloremque nobis ad. Delectus nostrum cumque eum mollitia architecto
-				rem earum voluptate aliquam molestias aspernatur culpa eius deserunt a, maiores quam cum
-				fugiat quod sunt!
-			</p>
-
-			<h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, distinctio.</h1>
-
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi consectetur in, est ex
-				expedita numquam sed asperiores eveniet? Ad sunt voluptatem mollitia sit modi possimus quod
-				sed veniam at in vitae corrupti esse, delectus cupiditate dolorem nam sint repellat officiis
-				soluta a. Vel laudantium ex nam, id omnis autem nisi ab odit optio nihil culpa architecto
-				dolores consequatur corporis sunt obcaecati enim molestias eum repellendus?
-			</p>
-
-			<img src="/placeholder-image.avif" alt="Placeholder_Blog_Image" />
-
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi consectetur in, est ex
-				expedita numquam sed asperiores eveniet? Ad sunt voluptatem mollitia sit modi possimus quod
-				sed veniam at in vitae corrupti esse, delectus cupiditate dolorem nam sint repellat officiis
-				soluta a. Vel laudantium ex nam, id omnis autem nisi ab odit optio nihil culpa architecto
-				dolores consequatur corporis sunt obcaecati enim molestias eum repellendus?
-			</p>
-
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde fuga praesentium nostrum enim
-				ut! Sint delectus esse beatae magnam velit neque maiores voluptate voluptas? Rem error quasi
-				hic dolore! Temporibus ipsa dicta consequatur nulla voluptatum officiis perspiciatis. Illo
-				tempore vero debitis id quos provident. Placeat nesciunt nulla excepturi odit iure aperiam,
-				optio blanditiis fuga impedit aliquid, qui, labore delectus modi at dicta itaque
-				reprehenderit beatae natus velit ut accusamus totam? Saepe ex ducimus eum accusantium quae
-				ea laborum iste! Dolorum minima, natus deleniti eveniet quis facilis qui. Ea, molestias
-				doloribus! Natus, soluta. Provident est maxime totam distinctio libero debitis pariatur rem
-				omnis! Laborum, reiciendis voluptatibus repellendus hic nisi necessitatibus esse officiis
-				dolore eius at inventore cupiditate sapiente consectetur? Eaque, repellat.
-			</p>
+			{#if data.blog.comments && data.blog.comments.length > 0}
+				{#each data.blog.comments as comment, i (i)}
+					<section>
+						{comment}
+					</section>
+				{/each}
+			{:else}
+				<section>
+					<p>There are no comments yet !!</p>
+				</section>
+			{/if}
 		</div>
 	</div>
 
@@ -108,19 +164,17 @@
 	<div class="similar-blogs-section">
 		<BlogTitles>Similar Articles</BlogTitles>
 
-		<!-- <div class="similar-blogs">
-        </div> -->
 		<Carousel.Root
 			opts={{
 				align: 'start'
 			}}
-			class="w-3/4 sm:w-5/6 xl:w-full"
+			class="w-3/4 sm:w-5/6 xl:w-full h-max"
 		>
-			<Carousel.Content class="gap-4">
-				{#each simalar as blog, i}
-					<Carousel.Item class="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4 ">
-						<div class="p-1">
-							<BlogCard className="w-[263px] min-w-[253px]" id={blog * i} />
+			<Carousel.Content class="gap-4 h-max">
+				{#each similarBlogs as blog, i}
+					<Carousel.Item class="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+						<div class="p-1 h-full">
+							<BlogCard className="w-[263px] min-w-[253px] h-full" {blog} />
 						</div>
 					</Carousel.Item>
 				{/each}
@@ -137,7 +191,15 @@
 	}
 
 	header {
-		@apply flex items-center justify-center p-5 bg-slate-100/60;
+		@apply flex items-center justify-center p-5 bg-green-100/20;
+
+		p {
+			@apply text-center;
+		}
+
+		.tags-container {
+			@apply flex items-center justify-center max-w-md flex-wrap gap-3 mx-auto;
+		}
 	}
 
 	.author-card {
@@ -145,7 +207,7 @@
 	}
 
 	.author-card > div {
-		@apply flex items-center gap-2 mb-3;
+		@apply flex items-center gap-1 mb-2;
 	}
 
 	.blog-content-container {
@@ -169,19 +231,19 @@
 		@apply font-normal text-sm text-slate-600 tracking-wide;
 	}
 
-	.blog-content-container > div {
-		@apply flex-1 flex flex-col gap-5 p-3 bg-slate-100/50;
+	.comments-section {
+		@apply flex flex-col gap-2;
 
-		& > img {
-			@apply max-w-96 mx-auto my-10;
+		> h1 {
+			@apply text-xl font-medium;
 		}
 
-		& h1 {
-			@apply text-xl mt-5 tracking-wider font-medium text-justify leading-loose;
+		section {
+			@apply mt-3;
 		}
 
-		& p {
-			@apply text-lg tracking-wider leading-loose;
+		form {
+			@apply flex flex-col gap-3;
 		}
 	}
 

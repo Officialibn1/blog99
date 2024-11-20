@@ -80,4 +80,44 @@
 		/* font-family: "Raleway", serif; */
 		font-family: 'Montserrat Alternates', sans-serif;
 	}
+
+	.blog-content {
+		@apply flex-1 flex flex-col gap-5 p-3  max-w-screen-md mx-auto;
+	}
+
+	.blog-content img {
+		@apply w-full md:max-w-lg mx-auto my-10;
+	}
+
+	.blog-content h1,
+	h2,
+	h3,
+	h4,
+	h5 {
+		@apply mt-5 tracking-wider font-medium text-justify leading-loose;
+	}
+
+	.blog-content h1 {
+		@apply text-2xl font-semibold;
+	}
+
+	.blog-content h2 {
+		@apply text-xl;
+	}
+
+	.blog-content h3 {
+		@apply text-lg;
+	}
+
+	.blog-content p {
+		@apply text-lg tracking-wider leading-loose text-justify;
+	}
+
+	.blog-content pre {
+		@apply bg-slate-300 p-3 rounded-md overflow-x-auto;
+	}
+
+	.blog-content blockquote {
+		@apply border-l-4 border-l-green-500 p-2 rounded-sm bg-green-100/30;
+	}
 }
