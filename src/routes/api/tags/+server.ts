@@ -21,6 +21,8 @@ export const GET = (async ({ cookies }) => {
 			const admin = await db.user.findUnique({ where: { authToken } });
 
 			if (!admin) {
+				cookies.delete('adminSession', { path: '/' });
+
 				error(400, `Session Expired / User doesn't exist`);
 			}
 
