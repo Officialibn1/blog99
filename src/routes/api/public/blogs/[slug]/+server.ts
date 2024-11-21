@@ -4,6 +4,8 @@ import db from '$lib/database';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 
 export const GET = (async ({ params: { slug }, setHeaders }) => {
+	console.log(`Server Params Slug: ${slug}`);
+
 	try {
 		const blog = await db.blog.findUnique({
 			where: {
@@ -23,6 +25,8 @@ export const GET = (async ({ params: { slug }, setHeaders }) => {
 
 		return json(blog);
 	} catch (e) {
+		console.log(`Failed to get Blog, Errors: ${JSON.stringify(e, null, 2)}`);
+
 		error(400, `Failed to get Blog, Errors: ${JSON.stringify(e, null, 2)}`);
 	}
 }) satisfies RequestHandler;
