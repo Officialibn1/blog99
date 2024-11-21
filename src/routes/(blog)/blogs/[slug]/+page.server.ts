@@ -1,21 +1,40 @@
 import { marked } from 'marked';
-import type { BlogWithComments } from '../+page.server';
+// import type { BlogWithComments } from '../+page.server';
 import type { Actions, PageServerLoad } from './$types';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { commentFormSchema } from './schema';
 import db from '$lib/database';
+import type { Blog, Category, Comment, Tag, User } from '@prisma/client';
+
+export interface FullBlogData extends Blog {
+	comments: Comment[];
+	category: Category;
+	tags: Tag[];
+	author: User;
+}
+
+export interface SimilarBlogs {
+	id: string;
+	createdAt: Date;
+	title: string;
+	slug: string;
+	categoryId: string;
+	tags: {
+		name: string;
+	}[];
+}
 
 export const load = (async ({ fetch, params, cookies }) => {
 	const subscriberSession = cookies.get('subscribersSession');
 
 	const response = await fetch(`/api/public/blogs/${params.slug}`);
 
-	const { markdown, ...blog }: BlogWithComments = await response.json();
+	const { markdown, ...blog }: FullBlogData = await response.json();
 
 	const blogsResponse = await fetch('/api/public/blogs');
 
-	const blogs: BlogWithComments[] = await blogsResponse.json();
+	const blogs: SimilarBlogs[] = await blogsResponse.json();
 
 	const blogHtml = await marked.parse(markdown || '#Failed to fetch data');
 

@@ -11,6 +11,7 @@ export const GET = (async ({ setHeaders }) => {
 				title: true,
 				slug: true,
 				createdAt: true,
+				categoryId: true,
 				tags: {
 					select: {
 						name: true
@@ -26,7 +27,7 @@ export const GET = (async ({ setHeaders }) => {
 			'Cache-Control': `max-age=${dev ? 0 : 3600}`
 		});
 
-		console.log('BLOGS DATA IN PUBLIC API ROUTE: ', blogs);
+		// console.log('BLOGS DATA IN PUBLIC API ROUTE: ', blogs);
 
 		return json(blogs);
 	} catch (e) {

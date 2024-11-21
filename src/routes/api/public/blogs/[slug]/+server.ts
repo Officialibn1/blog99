@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import db from '$lib/database';
 
 import { error, json, type RequestHandler } from '@sveltejs/kit';
@@ -17,7 +18,7 @@ export const GET = (async ({ params: { slug }, setHeaders }) => {
 		});
 
 		setHeaders({
-			'Cache-Control': 'max-age=120'
+			'Cache-Control': `max-age=${dev ? 0 : 3600}`
 		});
 
 		return json(blog);
