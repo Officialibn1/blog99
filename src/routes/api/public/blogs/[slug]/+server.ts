@@ -4,8 +4,6 @@ import db from '$lib/database';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 
 export const GET = (async ({ params: { slug }, setHeaders }) => {
-	console.log(`Server Params Slug: ${slug}`);
-
 	try {
 		const blog = await db.blog.findUnique({
 			where: {

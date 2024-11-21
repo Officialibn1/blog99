@@ -33,8 +33,6 @@
 		validators: zodClient(commentFormSchema)
 	});
 
-	console.log('PAGE.SVELTE TIME: ', data.blog);
-
 	const {
 		form: commentFormData,
 		enhance: commentFormEnhance,
@@ -69,9 +67,9 @@
 					<h2 class="font-medium">Author: {data.blog.author.name}</h2>
 				</div>
 
-				<!-- <p class="text-sm font-medium text-slate-500">
+				<p class="text-sm font-medium text-slate-500">
 					Posted: {formatdate(data.blog.createdAt)} • Read Time: 2 minutes
-				</p> -->
+				</p>
 			</div>
 		</hgroup>
 	</header>
@@ -216,7 +214,7 @@
 		@apply flex flex-col sm:flex-row gap-5 lg:gap-10 w-full;
 	}
 
-	.blog-content-container > aside {
+	/* .blog-content-container > aside {
 		@apply w-full sm:w-1/4 lg:w-1/5 flex flex-col gap-4 p-2;
 	}
 
@@ -231,7 +229,7 @@
 
 	.blog-content-container > aside ul a {
 		@apply font-normal text-sm text-slate-600 tracking-wide;
-	}
+	} */
 
 	.comments-section {
 		@apply flex flex-col gap-2;
@@ -251,9 +249,5 @@
 
 	.similar-blogs-section {
 		@apply mt-10 flex flex-col gap-4  w-full max-w-full items-center;
-	}
-
-	.similar-blogs {
-		@apply flex gap-8 overflow-x-auto w-full max-w-full p-10 bg-slate-100/50;
 	}
 </style>
