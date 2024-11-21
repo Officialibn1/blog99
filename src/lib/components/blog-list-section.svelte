@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import BlogSectionCard from './blog-section-card.svelte';
 	import { Button } from './ui/button';
 
@@ -19,9 +20,7 @@
 
 <section>
 	<div class="header">
-		<h1>News</h1>
-
-		<Button variant="secondary">View All</Button>
+		<Button variant="secondary" onclick={() => goto('/blogs')}>View All</Button>
 	</div>
 
 	<div class="content-grid">
@@ -41,7 +40,7 @@
 	}
 
 	.header {
-		@apply flex items-center gap-5 justify-between;
+		@apply flex items-center gap-5 justify-end;
 	}
 
 	.header > h1 {
