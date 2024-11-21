@@ -33,6 +33,8 @@
 		validators: zodClient(commentFormSchema)
 	});
 
+	console.log('PAGE.SVELTE TIME: ', data.blog);
+
 	const {
 		form: commentFormData,
 		enhance: commentFormEnhance,
