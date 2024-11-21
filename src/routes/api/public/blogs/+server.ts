@@ -26,6 +26,8 @@ export const GET = (async ({ setHeaders }) => {
 			'Cache-Control': `max-age=${dev ? 0 : 3600}`
 		});
 
+		console.log('BLOGS DATA IN PUBLIC API ROUTE: ', blogs);
+
 		return json(blogs);
 	} catch (e) {
 		console.error('PUBLIC BLOGS SERVER ERROR: ', e);

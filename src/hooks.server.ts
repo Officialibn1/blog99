@@ -5,7 +5,7 @@ import { SECRET_INGREDIENT } from '$env/static/private';
 export const handle: Handle = async ({ event, resolve }) => {
 	const adminSession = event.cookies.get('adminSession');
 
-	const publicRoutes = ['/signin', '/register', '/', '/blogs', '/contact'];
+	const publicRoutes = ['/signin', '/register', '/', '/blogs', '/contact', '/api/public'];
 
 	const currentPath = event.url.pathname;
 
