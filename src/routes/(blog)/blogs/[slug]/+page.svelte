@@ -67,9 +67,9 @@
 					<h2 class="font-medium">Author: {data.blog.author.name}</h2>
 				</div>
 
-				<p class="text-sm font-medium text-slate-500">
+				<!-- <p class="text-sm font-medium text-slate-500">
 					Posted: {formatdate(data.blog.createdAt)} • Read Time: 2 minutes
-				</p>
+				</p> -->
 			</div>
 		</hgroup>
 	</header>
