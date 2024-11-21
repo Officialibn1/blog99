@@ -25,9 +25,13 @@
 	</div>
 
 	<div class="content-grid">
-		{#each blogs as blog (`home-blogs-${blog.id}`)}
-			<BlogSectionCard {blog} />
-		{/each}
+		{#if blogs.length > 0}
+			{#each blogs as blog (`home-blogs-${blog.id}`)}
+				<BlogSectionCard {blog} />
+			{/each}
+		{:else}
+			<h1>There are no blogs</h1>
+		{/if}
 	</div>
 </section>
 
