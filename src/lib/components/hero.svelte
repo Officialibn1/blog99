@@ -25,7 +25,7 @@
 		@apply text-6xl lg:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-gray-700/80 via-gray-900/90 to-gray-800/85 py-3;
 
 		& span {
-			@apply text-transparent bg-clip-text bg-gradient-to-br from-green-700/75 via-green-900/80 to-green-800/85 tracking-wider;
+			@apply text-transparent bg-clip-text bg-gradient-to-br from-green-600/60 via-green-900/65 to-green-700/85 tracking-wider;
 		}
 	}
 

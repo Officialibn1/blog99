@@ -72,9 +72,11 @@
 				</p>
 
 				<form action="" class="flex gap-2 h-max items-center mt-5 max-w-96">
-					<Input class=" bg-white py-5" />
+					<Input class=" bg-white py-5 shadow-none" />
 
-					<Button class="bg-transparent hover:bg-green-100/50 border-none  text-slate-800 h-full">
+					<Button
+						class="bg-transparent hover:bg-green-100/50 shadow-none border  text-slate-800 h-full"
+					>
 						Subscribe
 					</Button>
 				</form>

@@ -30,11 +30,11 @@
 		</ul>
 
 		<div class="social-container">
-			<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
+			<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc22]">
 				<Twitter />
 			</Button>
 
-			<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
+			<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc22]">
 				<WhatsApp />
 			</Button>
 		</div>
@@ -62,11 +62,11 @@
 						</ul>
 
 						<div class="flex gap-10 mt-14 justify-center w-full">
-							<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
+							<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc22]">
 								<Twitter />
 							</Button>
 
-							<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
+							<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc22]">
 								<WhatsApp />
 							</Button>
 						</div>
@@ -77,10 +77,10 @@
 	</div>
 </nav>
 
+<!-- /* border-bottom: 1px solid #cfe1b9; */ -->
 <style lang="postcss">
 	nav {
-		@apply fixed top-0 w-full backdrop-blur-md bg-green-50/30 z-10;
-		border-bottom: 1px solid #cfe1b9;
+		@apply fixed top-0 w-full backdrop-blur-md bg-white/20 z-10;
 	}
 
 	nav > div {
@@ -112,7 +112,7 @@
 	}
 
 	ul.tablet-links a {
-		@apply text-sm lg:text-lg font-medium tracking-wider;
+		@apply text-sm lg:text-lg font-semibold text-green-950 tracking-wider hover:underline underline-offset-8 duration-200;
 	}
 
 	.social-container {
