@@ -2,20 +2,19 @@
 	import { goto } from '$app/navigation';
 	import BlogSectionCard from './blog-section-card.svelte';
 	import { Button } from './ui/button';
+	import { page } from '$app/stores';
 
-	type Props = {
-		blogs: {
-			id: string;
-			title: string;
-			slug: string;
-			createdAt: Date;
-			tags: {
-				name: string;
-			}[];
+	type Blog = {
+		id: string;
+		title: string;
+		slug: string;
+		createdAt: Date;
+		tags: {
+			name: string;
 		}[];
 	};
 
-	const { blogs }: Props = $props();
+	const blogs: Blog[] = $derived($page.data.blogs);
 </script>
 
 <section>
