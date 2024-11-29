@@ -18,11 +18,11 @@
 	}
 
 	hgroup {
-		@apply w-full h-full lg:h-fit  flex flex-col gap-2  items-center mt-16 lg:-mt-64 text-center;
+		@apply w-full h-full lg:h-fit flex flex-col gap-2 items-center mt-16 lg:-mt-64 text-center;
 	}
 
 	hgroup h1 {
-		@apply text-6xl lg:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-gray-700/80 via-gray-900/90 to-gray-800/85 py-3;
+		@apply text-6xl lg:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-gray-700/80 via-gray-900/90 to-gray-800/85 py-3 animate-bounce;
 
 		& span {
 			@apply text-transparent bg-clip-text bg-gradient-to-br from-green-600/60 via-green-900/65 to-green-700/85 tracking-wider;
@@ -34,6 +34,6 @@
 	}
 
 	main > img {
-		@apply absolute inset-0 m-auto h-full opacity-25;
+		@apply absolute inset-0 m-auto h-full opacity-35;
 	}
 </style>
