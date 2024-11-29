@@ -3,17 +3,17 @@
 	import '../app.css';
 	let { children } = $props();
 
-	onNavigate((navigation) => {
-		if (!document.startViewTransition) return;
+	// onNavigate((navigation) => {
+	// 	if (!document.startViewTransition) return;
 
-		return new Promise((resolve) => {
-			document.startViewTransition(async () => {
-				resolve();
+	// 	return new Promise((resolve) => {
+	// 		document.startViewTransition(async () => {
+	// 			resolve();
 
-				await navigation.complete;
-			});
-		});
-	});
+	// 			await navigation.complete;
+	// 		});
+	// 	});
+	// });
 </script>
 
 {@render children()}
