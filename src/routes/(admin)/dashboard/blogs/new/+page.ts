@@ -10,15 +10,23 @@ export const ssr = false;
 export const load: PageLoad = async ({ fetch }) => {
 	const form = await superValidate(zod(createBlogFormSchema));
 
-	const tagsRes = await fetch('/api/tags');
-	const categoriesRes = await fetch('/api/categories');
+	const fetchTags = async () => {
+		const tagsRes = await fetch('/api/tags');
+		const tags: Tag[] = await tagsRes.json();
 
-	const tags: Tag[] = await tagsRes.json();
-	const categories: Category[] = await categoriesRes.json();
+		return tags;
+	};
+
+	const fetchCategories = async () => {
+		const categoriesRes = await fetch('/api/categories');
+		const categories: Category[] = await categoriesRes.json();
+
+		return categories;
+	};
 
 	return {
 		form,
-		tags,
-		categories
+		tags: await fetchTags(),
+		categories: await fetchCategories()
 	};
 };
