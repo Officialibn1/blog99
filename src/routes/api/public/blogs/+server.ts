@@ -12,6 +12,7 @@ export const GET = (async ({ setHeaders }) => {
 				slug: true,
 				createdAt: true,
 				categoryId: true,
+				thumbnail: true,
 				tags: {
 					select: {
 						name: true

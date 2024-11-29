@@ -12,6 +12,7 @@
 			title: string;
 			slug: string;
 			createdAt: Date;
+			thumbnail: string;
 			tags: {
 				name: string;
 			}[];
@@ -27,11 +28,15 @@
 >
 	<Content class="p-0 flex sm:flex-col">
 		<Header class="w-2/5 aspect-square p-0 overflow-hidden sm:w-full">
-			<img class=" w-full h-full" src="/placeholder-image.avif" alt="Card_Placeholder_Image" />
+			<img
+				class=" w-full h-full"
+				src={blog.thumbnail || '/placeholder-image.avif'}
+				alt="Card_Placeholder_Image"
+			/>
 		</Header>
 
-		<Separator orientation="vertical" class="lg:hidden" />
-		<Separator class="hidden sm:flex " />
+		<!-- <Separator orientation="vertical" class="lg:hidden" />
+		<Separator class="hidden sm:flex " /> -->
 
 		<div class="flex flex-col">
 			<div class="p-2">
