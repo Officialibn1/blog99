@@ -33,7 +33,7 @@
 				<TrafficAnalyticsChart {users} />
 			{:catch error}
 				<pre>
-					{JSON.stringify(error, null, 2)}
+					{error}
 				</pre>
 			{/await}
 		</div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '@toast-ui/editor/dist/toastui-editor.css';
 	import { superForm } from 'sveltekit-superforms';
 	import type { PageData, ActionData } from './$types';
 	import { zodClient } from 'sveltekit-superforms/adapters';
@@ -15,7 +16,6 @@
 	import { Switch } from '$lib/components/ui/switch';
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
 	import Editor from '@toast-ui/editor';
-	import '@toast-ui/editor/dist/toastui-editor.css'; // Editor's Style
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 	import { Separator } from '$lib/components/ui/separator';
@@ -34,8 +34,6 @@
 	};
 
 	const { data }: Props = $props();
-
-	// console.log('Form Action: ', formAction);
 
 	const form = superForm(data.form, {
 		validators: zodClient(createBlogFormSchema),
@@ -64,10 +62,6 @@
 				}
 	);
 
-	// $effect(() => {
-	// 	console.log('SELECTED TAGS: ', selectedTags);
-	// });
-
 	let editor: {
 		reset(): unknown;
 		destroy: () => any;
@@ -89,7 +83,7 @@
 
 	const handleSubmit = async () => {
 		let markdown = await editor?.getMarkdown();
-		await formData.update(
+		formData.update(
 			($form) => {
 				$form.content = markdown;
 
@@ -98,9 +92,7 @@
 			{ taint: false }
 		);
 
-		editor.reset();
-
-		// console.log('Markdown Content: ', markdown);
+		// editor.reset();
 	};
 </script>
 
@@ -112,7 +104,7 @@
 	<Separator class="mt-5 mb-10" />
 
 	<div class="editor-container">
-		<form method="POST" use:enhance onsubmit={handleSubmit}>
+		<form method="POST" use:enhance onsubmit={handleSubmit} enctype="multipart/form-data">
 			<div class="grid lg:grid-cols-2 gap-4 gap-x-5">
 				<FormField {form} name="title">
 					<FormControl let:attrs>
@@ -184,32 +176,50 @@
 					<FieldErrors />
 				</FormField>
 
-				<FormField {form} name="category">
-					<FormControl let:attrs>
-						<FormLabel>Blog Category</FormLabel>
+				<div class="grid gap-4 gap-x-5 lg:grid-cols-2">
+					<FormField {form} name="category">
+						<FormControl let:attrs>
+							<FormLabel>Blog Category</FormLabel>
 
-						<SelectRoot
-							selected={selectedCategory}
-							onSelectedChange={(s) => {
-								s && ($formData.category = s.value);
-							}}
-						>
-							<SelectTrigger {...attrs} class=" bg-white shadow-none rounded-sm">
-								<SelectValue placeholder="Select Category" />
-							</SelectTrigger>
+							<SelectRoot
+								selected={selectedCategory}
+								onSelectedChange={(s) => {
+									s && ($formData.category = s.value);
+								}}
+							>
+								<SelectTrigger {...attrs} class=" bg-white shadow-none rounded-sm">
+									<SelectValue placeholder="Select Category" />
+								</SelectTrigger>
 
-							<SelectContent>
-								{#each data.categories as category}
-									<SelectItem class="font-openSans" label={category.name} value={category.id} />
-								{/each}
-							</SelectContent>
-						</SelectRoot>
+								<SelectContent>
+									{#each data.categories as category}
+										<SelectItem class="font-openSans" label={category.name} value={category.id} />
+									{/each}
+								</SelectContent>
+							</SelectRoot>
 
-						<Input type="hidden" bind:value={$formData.category} name={attrs.name} />
-					</FormControl>
+							<Input type="hidden" bind:value={$formData.category} name={attrs.name} />
+						</FormControl>
 
-					<FieldErrors />
-				</FormField>
+						<FieldErrors />
+					</FormField>
+
+					<FormField {form} name="thumbNail">
+						<FormControl let:attrs>
+							<FormLabel>Blog Thumbnail</FormLabel>
+
+							<Input
+								{...attrs}
+								type="file"
+								accept=".jpg,.png,.jpeg,.webp"
+								bind:value={$formData.thumbNail}
+								class="shadow-none  bg-white rounded-sm"
+							/>
+						</FormControl>
+
+						<FieldErrors />
+					</FormField>
+				</div>
 			</div>
 
 			<FormField {form} name="content" class="w-full overflow-x-auto">
