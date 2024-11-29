@@ -12,16 +12,28 @@ export const actions = {
 
 			return {
 				message: 'Failed to create blog',
-				success: false,
-				form
+				success: false
 			};
 		}
 
 		const { data } = form;
 
+		const formData = new FormData();
+
+		formData.append('title', data.title);
+		formData.append('description', data.description);
+		formData.append('content', data.content);
+		formData.append('published', data.published.toString());
+		formData.append('tags', JSON.stringify(data.tags));
+		formData.append('category', data.category);
+
+		if (data.thumbNail) {
+			formData.append('thumbNail', data.thumbNail);
+		}
+
 		const res = await fetch('/api/blogs', {
 			method: 'POST',
-			body: JSON.stringify(data)
+			body: formData
 		});
 
 		if (!res.ok) {
@@ -31,15 +43,13 @@ export const actions = {
 
 			return fail(400, {
 				message: 'Failed to create Blog',
-				success: false,
-				form
+				success: false
 			});
 		}
 
 		return {
 			message: 'Created blog successfully',
-			success: true,
-			form
+			success: true
 		};
 	}
 } satisfies Actions;
