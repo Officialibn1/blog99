@@ -13,34 +13,37 @@
 
 	const { blog, className }: Props = $props();
 
-	const { slug, title, tags, createdAt } = blog;
+	const { slug, title, tags, createdAt, thumbnail } = blog;
 </script>
 
-<Root
-	class={cn('shadow-none md:hover:shadow-md duration-200 cursor-pointer', className)}
-	onclick={() => goto(`/blogs/${slug}`)}
->
-	<Content class="p-0 flex flex-col h-full">
-		<Header class="">
-			<img src="/placeholder-image.avif" alt="Card_Placeholder_Image" />
-		</Header>
+<a href={`/blogs/${slug}`} data-sveltekit-prefetch class="h-full">
+	<Root class={cn('shadow-none md:hover:shadow-md duration-200 cursor-pointer h-full', className)}>
+		<Content class="p-0 flex flex-col h-full overflow-hidden">
+			<Header class="w-2/5 aspect-square p-0 overflow-hidden sm:w-full">
+				<img
+					src={thumbnail || '/placeholder-image.avif'}
+					class=" w-full h-full rounded-md"
+					alt="Card_Placeholder_Image"
+				/>
+			</Header>
 
-		<Separator />
+			<!-- <Separator /> -->
 
-		<div class="p-2 pb-0">
-			<Title class="leading-relaxed font-semibold tracking-normal text-left mt-0">
-				{title}
-			</Title>
-		</div>
-
-		<Footer class="flex flex-col  gap-3 items-start mt-auto p-2">
-			<div class="flex flex-wrap gap-2">
-				{#each tags.slice(0, 3) as tag, i (`card-tag-${i}`)}
-					<Badge variant="secondary" class="text-gray-700">{tag.name}</Badge>
-				{/each}
+			<div class="p-2 pb-0">
+				<Title class="leading-relaxed font-semibold tracking-normal text-left mt-0">
+					{title}
+				</Title>
 			</div>
 
-			<p class="text-xs font-medium text-gray-400">{formatdate(createdAt)} • 2 min read</p>
-		</Footer>
-	</Content>
-</Root>
+			<Footer class="flex flex-col  gap-3 items-start mt-auto p-2">
+				<div class="flex flex-wrap gap-2">
+					{#each tags.slice(0, 3) as tag, i (`card-tag-${i}`)}
+						<Badge variant="secondary" class="text-gray-700">{tag.name}</Badge>
+					{/each}
+				</div>
+
+				<p class="text-xs font-medium text-gray-400">{formatdate(createdAt)} • 2 min read</p>
+			</Footer>
+		</Content>
+	</Root>
+</a>

@@ -9,6 +9,7 @@
 		title: string;
 		slug: string;
 		createdAt: Date;
+		thumbnail: string;
 		tags: {
 			name: string;
 		}[];
