@@ -1174,6 +1174,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/trusted-types@npm:^2.0.7":
+  version: 2.0.7
+  resolution: "@types/trusted-types@npm:2.0.7"
+  checksum: 10c0/4c4855f10de7c6c135e0d32ce462419d8abbbc33713b31d294596c0cc34ae1fa6112a2f9da729c8f7a20707782b0d69da3b1f8df6645b0366d08825ca1522e0c
+  languageName: node
+  linkType: hard
+
 "@types/unist@npm:^2.0.0, @types/unist@npm:^2.0.2, @types/unist@npm:^2.0.3":
   version: 2.0.11
   resolution: "@types/unist@npm:2.0.11"
@@ -1989,6 +1996,18 @@ __metadata:
   version: 2.5.7
   resolution: "dompurify@npm:2.5.7"
   checksum: 10c0/23c4f737182fcf3e731e458c3930ef4d2916191e4180e1e345f153124dfa7ec117d2810af1754e8854c581131fc75dac914a8391183d1511852ef32b4055f711
+  languageName: node
+  linkType: hard
+
+"dompurify@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "dompurify@npm:3.2.2"
+  dependencies:
+    "@types/trusted-types": "npm:^2.0.7"
+  dependenciesMeta:
+    "@types/trusted-types":
+      optional: true
+  checksum: 10c0/04fa1509a75c6c1dfc1f00c579253bd4781e291836176578927f5cb683dc904175c4fb71f9c40438b0b4b13fc306f79922d220200f3bd01eabe12727588afd1f
   languageName: node
   linkType: hard
 
@@ -3518,6 +3537,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mode-watcher@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "mode-watcher@npm:0.5.0"
+  peerDependencies:
+    svelte: ^4.0.0 || ^5.0.0-next.1
+  checksum: 10c0/ff0b2f9d361908ae81172027d1733b6591d485a6f9cdae5b4557a873ad5a9c020dee9d10e6d1450172f2a34f2385ec3ec342a1afde20557f885ca106153966d9
+  languageName: node
+  linkType: hard
+
 "mri@npm:^1.1.0":
   version: 1.2.0
   resolution: "mri@npm:1.2.0"
@@ -3605,6 +3633,7 @@ __metadata:
     chart.js: "npm:^4.4.6"
     cloudinary: "npm:^2.5.1"
     clsx: "npm:^2.1.1"
+    dompurify: "npm:^3.2.2"
     embla-carousel-svelte: "npm:^8.3.0"
     eslint: "npm:^9.7.0"
     eslint-config-prettier: "npm:^9.1.0"
@@ -3615,6 +3644,7 @@ __metadata:
     lucide-svelte: "npm:^0.454.0"
     marked: "npm:^15.0.1"
     mdsvex: "npm:^0.12.3"
+    mode-watcher: "npm:^0.5.0"
     prettier: "npm:^3.3.2"
     prettier-plugin-svelte: "npm:^3.2.6"
     prisma: "npm:^5.22.0"
@@ -3622,6 +3652,7 @@ __metadata:
     svelte-check: "npm:^4.0.0"
     svelte-headless-table: "npm:^0.18.3"
     svelte-radix: "npm:^2.0.1"
+    svelte-sonner: "npm:^0.3.28"
     sveltekit-superforms: "npm:^2.20.0"
     tailwind-merge: "npm:^2.5.4"
     tailwind-variants: "npm:^0.2.1"
@@ -4733,6 +4764,15 @@ __metadata:
   peerDependencies:
     svelte: ^4.0.0
   checksum: 10c0/f2bb1277a2f41b91c9d6a099c5ea512a8b09958b9f6df0e933392e3da0ca57c9dce3455afeb40b78cfb310315c5eb85b3acbb3dcf752c87f955c5ff02bab63ef
+  languageName: node
+  linkType: hard
+
+"svelte-sonner@npm:^0.3.28":
+  version: 0.3.28
+  resolution: "svelte-sonner@npm:0.3.28"
+  peerDependencies:
+    svelte: ^3.0.0 || ^4.0.0 || ^5.0.0-next.1
+  checksum: 10c0/47db67b3a4c7c31be620e16c1bc88b392e8e8d8434e9e314efc771776c24ea35ebd69b196f2d5376b2526db839ddba4cc41e6da0c0b457b7f6d5253724741499
   languageName: node
   linkType: hard
 
