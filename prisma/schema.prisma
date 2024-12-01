@@ -66,6 +66,7 @@ model Blog {
   slug                      String              @unique
   markdown                  String
   thumbnail                 String              @default("")
+  thumbnailPublicId         String              @default("")
   published                 Boolean             @default(false)
   author                    User                @relation(fields: [authorId], references: [id])
   authorId                  String              @db.ObjectId
