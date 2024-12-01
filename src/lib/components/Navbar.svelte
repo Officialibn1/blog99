@@ -92,7 +92,7 @@
 	}
 
 	.logo > h1 {
-		@apply text-2xl font-semibold;
+		@apply text-2xl font-bold;
 	}
 
 	.logo > h1 > span {
