@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onNavigate } from '$app/navigation';
+	import { Toaster } from '$lib/components/ui/sonner';
 	import '../app.css';
 	let { children } = $props();
 
@@ -15,5 +15,7 @@
 	// 	});
 	// });
 </script>
+
+<Toaster position="bottom-center" />
 
 {@render children()}
