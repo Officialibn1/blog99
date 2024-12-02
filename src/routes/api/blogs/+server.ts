@@ -152,8 +152,6 @@ export const GET = (async ({ cookies }) => {
 export const DELETE = (async ({ cookies, request }) => {
 	const authToken = cookies.get('adminSession');
 
-	// console.log(await request.json());
-
 	if (!authToken) {
 		error(401, 'UnAuthorized');
 	}
@@ -168,27 +166,56 @@ export const DELETE = (async ({ cookies, request }) => {
 		} else {
 			const id = await request.json();
 
-			// console.log('API ID: ', id);
-
-			const blog = await db.blog.findUnique({ where: { id } });
-
-			if (!blog) {
-				throw new Error('Blog does not exist', {
-					cause: {
-						status: 404
+			const deletedBlog = await db.$transaction(async (prisma) => {
+				const blog = await prisma.blog.findUnique({
+					where: { id },
+					select: {
+						id: true,
+						tags: true,
+						tagsIds: true,
+						thumbnailPublicId: true
 					}
 				});
-			}
 
-			const deletedBlog = await db.blog.delete({ where: { id: blog.id } });
+				if (!blog) {
+					throw new Error('Blog does not exist', {
+						cause: {
+							status: 404
+						}
+					});
+				}
+
+				const relatedTags = await prisma.tag.findMany({
+					where: {
+						blogsIds: {
+							has: blog.id
+						}
+					}
+				});
+
+				for (const tag of relatedTags) {
+					await prisma.tag.update({
+						where: {
+							id: tag.id
+						},
+						data: {
+							blogsIds: {
+								set: tag.blogsIds.filter((blogId) => blogId !== blog.id)
+							}
+						}
+					});
+				}
+
+				const deletedBlog = await prisma.blog.delete({ where: { id: blog.id } });
+
+				return deletedBlog;
+			});
 
 			if (deletedBlog && deletedBlog.thumbnailPublicId.length > 5) {
-				console.log('Deleted Thumbnail Successfully');
-
 				await deleteThumbnailFromCloudinary(deletedBlog.thumbnailPublicId);
 			}
 
-			return json(`${'deletedBlog.title'} have been deleted`);
+			return json(`${deletedBlog.title} have been deleted`);
 		}
 	} catch (e) {
 		console.error(e);
