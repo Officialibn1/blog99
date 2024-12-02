@@ -7,8 +7,10 @@ export interface BlogWithComments extends Blog {
 	comments: Comment[];
 }
 
-export const load = (async ({ fetch }) => {
+export const load = (async ({ fetch, depends }) => {
 	const blogsResponse = await fetch(`/api/blogs`);
+
+	depends(`blogs:DashboardData`);
 
 	const blogs: BlogWithComments[] = await blogsResponse.json();
 
