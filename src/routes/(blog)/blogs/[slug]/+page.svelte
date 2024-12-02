@@ -1,6 +1,5 @@
 <script lang="ts">
 	import BlogCard from '$lib/components/blog-card.svelte';
-	import * as Avatar from '$lib/components/ui/avatar';
 	import { Badge } from '$lib/components/ui/badge';
 	import BlogTitles from '$lib/components/ui/blog-titles/blog-titles.svelte';
 	import * as Carousel from '$lib/components/ui/carousel';
@@ -68,7 +67,9 @@
 				</div>
 
 				<p class="text-sm font-medium text-slate-500">
-					Posted: {formatdate(data.blog.createdAt)} • Read Time: 2 minutes
+					Posted: {formatdate(data.blog.createdAt)} • Read Time: {Math.ceil(
+						data.blogHtml.length / 800
+					)} minutes
 				</p>
 			</div>
 		</hgroup>
