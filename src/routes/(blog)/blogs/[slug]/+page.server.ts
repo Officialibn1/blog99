@@ -19,6 +19,7 @@ export interface SimilarBlogs {
 	createdAt: Date;
 	title: string;
 	slug: string;
+	thumbnail: string;
 	categoryId: string;
 	tags: {
 		name: string;

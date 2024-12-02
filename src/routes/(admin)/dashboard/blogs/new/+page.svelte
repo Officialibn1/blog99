@@ -27,6 +27,7 @@
 		Content as SelectContent,
 		Item as SelectItem
 	} from '$lib/components/ui/select';
+	import { toast } from 'svelte-sonner';
 
 	type Props = {
 		data: PageData;
@@ -104,7 +105,25 @@
 	<Separator class="mt-5 mb-10" />
 
 	<div class="editor-container">
-		<form method="POST" use:enhance onsubmit={handleSubmit} enctype="multipart/form-data">
+		<form
+			method="POST"
+			use:enhance={() => {
+				return async ({ result }) => {
+					if (result.type === 'success') {
+						toast.success(`Blog Created successfully`);
+
+						form.reset();
+						editor.reset();
+					} else if (result.type === 'error' || result.type === 'failure') {
+						toast.error(`Failed to create blog!`);
+					} else {
+						toast.error(`Something went wrong!`);
+					}
+				};
+			}}
+			onsubmit={handleSubmit}
+			enctype="multipart/form-data"
+		>
 			<div class="grid lg:grid-cols-2 gap-4 gap-x-5">
 				<FormField {form} name="title">
 					<FormControl let:attrs>
