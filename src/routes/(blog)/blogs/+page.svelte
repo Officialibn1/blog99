@@ -81,9 +81,15 @@
 		</header>
 
 		<div class="cards-wrapper">
-			{#each data.blogs as blog (`blogs-page-${blog.id}`)}
-				<BlogCard {blog} />
-			{/each}
+			{#if data.blogs.length > 0}
+				{#each data.blogs as blog (`blogs-page-${blog.id}`)}
+					<BlogCard {blog} />
+				{/each}
+			{:else}
+				<h1 class="text-3xl font-medium text-center md:col-span-2 lg:col-span-3 xl:col-span-4">
+					There are no blogs
+				</h1>
+			{/if}
 		</div>
 	</div>
 </section>

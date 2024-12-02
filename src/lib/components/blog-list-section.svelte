@@ -29,7 +29,9 @@
 				<BlogSectionCard {blog} />
 			{/each}
 		{:else}
-			<h1>There are no blogs</h1>
+			<h1 class="text-3xl font-medium text-center sm:col-span-2 md:col-span-3">
+				There are no blogs
+			</h1>
 		{/if}
 	</div>
 </section>
