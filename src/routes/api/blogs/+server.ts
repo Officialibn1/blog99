@@ -1,5 +1,5 @@
 import { SECRET_INGREDIENT } from '$env/static/private';
-import { uploadThumnailToCloudinary } from '$lib/cloudinary';
+import { deleteThumbnailFromCloudinary, uploadThumnailToCloudinary } from '$lib/cloudinary';
 import db from '$lib/database';
 import { formatTitleToSlug } from '$lib/utils';
 
@@ -20,7 +20,7 @@ export const POST = (async ({ cookies, request }) => {
 	const authToken = cookies.get('adminSession');
 
 	if (!authToken) {
-		error(400, {
+		error(401, {
 			message: 'UnAuthorized'
 		});
 	}
@@ -31,7 +31,7 @@ export const POST = (async ({ cookies, request }) => {
 		if (!claims) {
 			cookies.delete('adminSession', { path: '/' });
 
-			error(400, {
+			error(401, {
 				message: 'Session Expired!'
 			});
 		} else {
@@ -74,6 +74,7 @@ export const POST = (async ({ cookies, request }) => {
 						tagsIds: parsedData.tags,
 						categoryId: parsedData.category,
 						thumbnail: cloudinaryUpload.secure_url,
+						thumbnailPublicId: cloudinaryUpload.public_id,
 						markdown: parsedData.content,
 						published: parsedData.published,
 						views: 0
@@ -145,5 +146,53 @@ export const GET = (async ({ cookies }) => {
 		}
 	} catch (e) {
 		error(400, JSON.stringify(e));
+	}
+}) satisfies RequestHandler;
+
+export const DELETE = (async ({ cookies, request }) => {
+	const authToken = cookies.get('adminSession');
+
+	// console.log(await request.json());
+
+	if (!authToken) {
+		error(401, 'UnAuthorized');
+	}
+
+	try {
+		const claims = jwt.verify(authToken, SECRET_INGREDIENT);
+
+		if (!claims) {
+			cookies.delete('adminSession', { path: '/' });
+
+			error(401, 'Session Expired');
+		} else {
+			const id = await request.json();
+
+			// console.log('API ID: ', id);
+
+			const blog = await db.blog.findUnique({ where: { id } });
+
+			if (!blog) {
+				throw new Error('Blog does not exist', {
+					cause: {
+						status: 404
+					}
+				});
+			}
+
+			const deletedBlog = await db.blog.delete({ where: { id: blog.id } });
+
+			if (deletedBlog && deletedBlog.thumbnailPublicId.length > 5) {
+				console.log('Deleted Thumbnail Successfully');
+
+				await deleteThumbnailFromCloudinary(deletedBlog.thumbnailPublicId);
+			}
+
+			return json(`${'deletedBlog.title'} have been deleted`);
+		}
+	} catch (e) {
+		console.error(e);
+
+		error(400, e as Error);
 	}
 }) satisfies RequestHandler;
