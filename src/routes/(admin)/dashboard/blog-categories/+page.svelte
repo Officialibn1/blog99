@@ -31,10 +31,8 @@
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { readable } from 'svelte/store';
-	import { formatdate } from '$lib/utils';
-	import BlogsTableActions from '../blogs/blogs-table-actions.svelte';
 	import { ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-svelte';
-	import { invalidate } from '$app/navigation';
+	import CategoriesTableActions from './categories-table-actions.svelte';
 
 	type Props = {
 		data: PageData;
@@ -89,7 +87,7 @@
 			header: '',
 			cell: ({ value }) => {
 				// @ts-expect-error
-				return createRender(BlogsTableActions, { id: value });
+				return createRender(CategoriesTableActions, { id: value });
 			},
 			plugins: {
 				sort: {
@@ -209,6 +207,10 @@
 				{/each}
 			</TableBody>
 		</TableRoot>
+
+		{#if data.categories.length === 0}
+			<h1 class="text-3xl font-medium text-center mt-5">There are no categories</h1>
+		{/if}
 	</div>
 
 	<div class="pagination-container">
