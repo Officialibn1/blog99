@@ -6,6 +6,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { commentFormSchema } from './schema';
 import db from '$lib/database';
 import type { Blog, Category, Comment, Tag, User } from '@prisma/client';
+import { error } from '@sveltejs/kit';
 
 export interface FullBlogData extends Blog {
 	comments: Comment[];
@@ -19,6 +20,7 @@ export interface SimilarBlogs {
 	createdAt: Date;
 	title: string;
 	slug: string;
+	markdown: string;
 	thumbnail: string;
 	categoryId: string;
 	tags: {
@@ -30,6 +32,10 @@ export const load = (async ({ fetch, params, cookies }) => {
 	const subscriberSession = cookies.get('subscribersSession');
 
 	const response = await fetch(`/api/public/blogs/${params.slug}`);
+
+	if (!response.ok) {
+		return error(404, 'Blog not found');
+	}
 
 	const { markdown, ...blog }: FullBlogData = await response.json();
 
