@@ -1,8 +1,8 @@
 <script lang="ts">
 	import '@toast-ui/editor/dist/toastui-editor.css';
-	import { superForm } from 'sveltekit-superforms';
+	import { superForm, superValidate } from 'sveltekit-superforms';
 	import type { PageData, ActionData } from './$types';
-	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { zod, zodClient } from 'sveltekit-superforms/adapters';
 	import { createBlogFormSchema } from './schema';
 	import {
 		FormField,
@@ -17,7 +17,7 @@
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
 	import Editor from '@toast-ui/editor';
 	import { onMount } from 'svelte';
-	import { enhance } from '$app/forms';
+	import { applyAction, enhance } from '$app/forms';
 	import { Separator } from '$lib/components/ui/separator';
 
 	import {
@@ -42,7 +42,9 @@
 		resetForm: true
 	});
 
-	const { form: formData, submitting } = form;
+	const { form: formData, constraints } = form;
+
+	let submitting = $state(false);
 
 	const selectedTags = $derived(
 		$formData.tags.map((tag) => ({
@@ -82,8 +84,9 @@
 		return () => editor.destroy();
 	});
 
-	const handleSubmit = async () => {
+	const handlesubmit = async () => {
 		let markdown = await editor?.getMarkdown();
+
 		formData.update(
 			($form) => {
 				$form.content = markdown;
@@ -92,8 +95,6 @@
 			},
 			{ taint: false }
 		);
-
-		// editor.reset();
 	};
 </script>
 
@@ -107,21 +108,67 @@
 	<div class="editor-container">
 		<form
 			method="POST"
-			use:enhance={() => {
-				return async ({ result }) => {
+			onsubmit={handlesubmit}
+			use:enhance={async ({ formData: submittedFormData, cancel }) => {
+				submitting = true;
+
+				const submittedForm = await superValidate(submittedFormData, zod(createBlogFormSchema));
+
+				if (!submittedForm.valid) {
+					submitting = false;
+
+					applyAction({
+						type: 'failure',
+						status: 400,
+						data: {
+							form: submittedForm
+						}
+					});
+
+					toast.error(`Invalid Form Fields, failed to create blog!`);
+
+					cancel();
+
+					return;
+				}
+
+				return async ({ result, update }) => {
 					if (result.type === 'success') {
 						toast.success(`Blog Created successfully`);
 
 						form.reset();
+						submitting = false;
 						editor.reset();
-					} else if (result.type === 'error' || result.type === 'failure') {
+						submitting = false;
+					} else if (result.type === 'error') {
+						toast.error(`Error while creating blog!`);
+
+						applyAction({
+							type: 'failure',
+							status: 400,
+							data: {
+								form: submittedForm
+							}
+						});
+						submitting = false;
+					} else if (result.type === 'failure') {
 						toast.error(`Failed to create blog!`);
+
+						applyAction({
+							type: 'failure',
+							status: 400,
+							data: {
+								form: submittedForm
+							}
+						});
+						submitting = false;
 					} else {
-						toast.error(`Something went wrong!`);
+						submitting = false;
+
+						update();
 					}
 				};
 			}}
-			onsubmit={handleSubmit}
 			enctype="multipart/form-data"
 		>
 			<div class="grid lg:grid-cols-2 gap-4 gap-x-5">
@@ -131,8 +178,8 @@
 
 						<Input
 							class="shadow-none  bg-white rounded-sm"
-							disabled={$submitting}
-							aria-disabled={$submitting}
+							disabled={submitting}
+							aria-disabled={submitting}
 							{...attrs}
 							bind:value={$formData.title}
 						/>
@@ -147,8 +194,8 @@
 
 						<Input
 							class="shadow-none  bg-white rounded-sm"
-							disabled={$submitting}
-							aria-disabled={$submitting}
+							disabled={submitting}
+							aria-disabled={submitting}
 							{...attrs}
 							bind:value={$formData.description}
 						/>
@@ -230,7 +277,7 @@
 							<Input
 								{...attrs}
 								type="file"
-								accept=".jpg,.png,.jpeg,.webp"
+								accept=".jpg,.png,.jpeg,.webp,.avif"
 								bind:value={$formData.thumbNail}
 								class="shadow-none  bg-white rounded-sm"
 							/>
@@ -259,8 +306,8 @@
 						<FormLabel>Published</FormLabel>
 
 						<Switch
-							disabled={$submitting}
-							aria-disabled={$submitting}
+							disabled={submitting}
+							aria-disabled={submitting}
 							includeInput
 							{...attrs}
 							bind:checked={$formData.published}
@@ -271,8 +318,8 @@
 				<FieldErrors />
 			</FormField>
 
-			<FormButton disabled={$submitting} aria-disabled={$submitting} class="max-w-xs">
-				{#if $submitting}
+			<FormButton disabled={submitting} aria-disabled={submitting} class="max-w-xs">
+				{#if submitting}
 					<Loader />
 				{:else}
 					Create Blog
