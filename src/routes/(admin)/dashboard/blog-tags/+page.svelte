@@ -32,7 +32,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { readable } from 'svelte/store';
 	import { formatdate } from '$lib/utils';
-	import BlogsTableActions from '../blogs/blogs-table-actions.svelte';
+	import TagsTableActions from './tags-table-actions.svelte';
 	import { ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import { invalidate } from '$app/navigation';
 
@@ -114,7 +114,7 @@
 			header: '',
 			cell: ({ value }) => {
 				// @ts-expect-error
-				return createRender(BlogsTableActions, { id: value });
+				return createRender(TagsTableActions, { id: value });
 			},
 			plugins: {
 				sort: {
@@ -235,6 +235,10 @@
 				{/each}
 			</TableBody>
 		</TableRoot>
+
+		{#if data.tags.length === 0}
+			<h1 class="text-3xl font-medium text-center mt-5">There are no tags</h1>
+		{/if}
 	</div>
 
 	<div class="pagination-container">
