@@ -5,6 +5,7 @@ export interface BlogWithComments {
 	title: string;
 	slug: string;
 	thumbnail: string;
+	markdown: string;
 	createdAt: Date;
 	tags: {
 		name: string;
