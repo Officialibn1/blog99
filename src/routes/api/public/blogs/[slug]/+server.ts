@@ -1,10 +1,16 @@
 import { dev } from '$app/environment';
 import db from '$lib/database';
+import { Prisma } from '@prisma/client';
 
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 
 export const GET = (async ({ params: { slug }, setHeaders }) => {
 	try {
+		if (!slug) {
+			error(400, {
+				message: 'Invalid Blog Slug.'
+			});
+		}
 		const blog = await db.blog.findUnique({
 			where: {
 				slug
@@ -21,10 +27,24 @@ export const GET = (async ({ params: { slug }, setHeaders }) => {
 			'Cache-Control': `max-age=${dev ? 0 : 3600}`
 		});
 
+		if (!blog) {
+			error(404, {
+				message: 'Blog not found'
+			});
+		}
+
 		return json(blog);
 	} catch (e) {
-		console.log(`Failed to get Blog, Errors: ${JSON.stringify(e, null, 2)}`);
+		if (e instanceof Error) {
+			console.log(e);
 
-		error(400, `Failed to get Blog, Errors: ${JSON.stringify(e, null, 2)}`);
+			return error(404, e.message);
+		} else if (e instanceof Prisma.PrismaClientKnownRequestError) {
+			console.error('Prisma Database Error:', e);
+
+			return error(409, e.message);
+		} else {
+			return error(500, 'Internal Server Error');
+		}
 	}
 }) satisfies RequestHandler;

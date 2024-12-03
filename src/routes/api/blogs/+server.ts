@@ -51,10 +51,8 @@ export const POST = (async ({ cookies, request }) => {
 			const existingBlogWithSlug = await db.blog.findUnique({ where: { slug } });
 
 			if (existingBlogWithSlug) {
-				throw new Error('A blog with this title already exist', {
-					cause: {
-						status: 400
-					}
+				return error(400, {
+					message: 'A blog with this title already exist'
 				});
 			}
 
@@ -113,7 +111,9 @@ export const POST = (async ({ cookies, request }) => {
 	} catch (e) {
 		console.log('ERROR CREATING BLOG IN SERVER.TS: ', e);
 
-		error(400, e as Error);
+		return error(400, {
+			message: 'A blog with this title already exist'
+		});
 	}
 }) satisfies RequestHandler;
 
