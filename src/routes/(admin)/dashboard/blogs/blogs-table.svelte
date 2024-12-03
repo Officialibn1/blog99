@@ -183,6 +183,10 @@
 				{/each}
 			</Table.Body>
 		</Table.Root>
+
+		{#if blogs.length === 0}
+			<h1 class="text-3xl font-medium text-center mt-5">There are no blogs</h1>
+		{/if}
 	</div>
 
 	<div class="pagination-container">
