@@ -12,7 +12,8 @@ export const actions = {
 
 			return {
 				message: 'Failed to create blog',
-				success: false
+				success: false,
+				form
 			};
 		}
 
@@ -31,25 +32,30 @@ export const actions = {
 			formData.append('thumbNail', data.thumbNail);
 		}
 
-		const res = await fetch('/api/blogs', {
-			method: 'POST',
-			body: formData
-		});
+		try {
+			const res = await fetch('/api/blogs', {
+				method: 'POST',
+				body: formData
+			});
 
-		if (!res.ok) {
-			const message = await res.json();
+			if (!res.ok) {
+				return fail(400, {
+					message: 'Failed to create Blog',
+					success: false
+				});
+			}
 
-			console.log('Res Not OK Message: ', message);
+			return {
+				message: 'Created blog successfully',
+				success: true
+			};
+		} catch (error) {
+			console.log('Error Creating Blog: ', error);
 
 			return fail(400, {
 				message: 'Failed to create Blog',
 				success: false
 			});
 		}
-
-		return {
-			message: 'Created blog successfully',
-			success: true
-		};
 	}
 } satisfies Actions;
