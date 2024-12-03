@@ -11,6 +11,7 @@
 			id: string;
 			title: string;
 			slug: string;
+			markdown: string;
 			createdAt: Date;
 			thumbnail: string;
 			tags: {
@@ -38,20 +39,20 @@
 		<!-- <Separator orientation="vertical" class="lg:hidden" />
 		<Separator class="hidden sm:flex " /> -->
 
-		<div class="flex flex-col">
-			<div class="p-2">
-				<Title class="leading-relaxed mt-0">{blog.title}</Title>
+		<div class="p-2 pb-0">
+			<Title class="leading-relaxed mt-0">{blog.title}</Title>
+		</div>
+
+		<Footer class="flex flex-col gap-2 p-2 items-start mt-auto">
+			<div class="flex flex-wrap gap-2 px-0">
+				{#each blog.tags as tag, i (`home-blogs-card-${i}`)}
+					<Badge variant="secondary" class="text-gray-700">{tag.name}</Badge>
+				{/each}
 			</div>
 
-			<Footer class="flex flex-col gap-2 p-2 items-start">
-				<div class="flex flex-wrap gap-2 px-0">
-					{#each blog.tags as tag, i (`home-blogs-card-${i}`)}
-						<Badge variant="secondary" class="text-gray-700">{tag.name}</Badge>
-					{/each}
-				</div>
-
-				<p class="text-xs font-medium text-gray-400">{formatdate(blog.createdAt)} • 2 min read</p>
-			</Footer>
-		</div>
+			<p class="text-xs font-medium text-gray-400">
+				{formatdate(blog.createdAt)} • {Math.ceil(blog.markdown.length / 800)} min read
+			</p>
+		</Footer>
 	</Content>
 </Root>

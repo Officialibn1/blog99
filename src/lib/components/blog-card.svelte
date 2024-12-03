@@ -13,7 +13,7 @@
 
 	const { blog, className }: Props = $props();
 
-	const { slug, title, tags, createdAt, thumbnail } = blog;
+	const { slug, title, tags, createdAt, thumbnail, markdown } = blog;
 </script>
 
 <a href={`/blogs/${slug}`} data-sveltekit-prefetch class="h-full">
@@ -42,7 +42,9 @@
 					{/each}
 				</div>
 
-				<p class="text-xs font-medium text-gray-400">{formatdate(createdAt)} • 2 min read</p>
+				<p class="text-xs font-medium text-gray-400">
+					{formatdate(createdAt)} • {Math.ceil(markdown.length / 800)} min read
+				</p>
 			</Footer>
 		</Content>
 	</Root>
