@@ -1,3 +1,4 @@
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export interface BlogWithComments {
@@ -13,21 +14,22 @@ export interface BlogWithComments {
 }
 
 export const load = (async ({ fetch }) => {
-	try {
-		const response = await fetch('/api/public/blogs');
+	const response = await fetch('/api/public/blogs');
 
-		const blogs: BlogWithComments[] = await response.json();
+	if (!response.ok) {
+		console.log(response);
 
-		return {
-			blogs,
-			success: true
-		};
-	} catch (error) {
-		console.error(error);
+		if (response.status === 400) {
+			return error(400, 'Connection time out, could not connect to the server');
+		}
 
-		return {
-			blogs: [],
-			success: false
-		};
+		return error(response.status, 'Something went wrong');
 	}
+
+	const blogs: BlogWithComments[] = await response.json();
+
+	return {
+		blogs,
+		success: true
+	};
 }) satisfies PageServerLoad;
