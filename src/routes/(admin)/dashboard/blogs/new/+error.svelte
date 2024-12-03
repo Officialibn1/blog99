@@ -14,7 +14,7 @@
 
 <style lang="postcss">
 	section {
-		@apply w-full h-full flex flex-col place-content-center gap-10;
+		@apply w-full h-full flex flex-col items-center justify-center gap-10;
 	}
 
 	h1 {
