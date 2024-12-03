@@ -12,11 +12,9 @@ export const actions = {
 
 			return {
 				message: 'Failed to create blog',
-				success: false,
-				form
+				success: false
 			};
 		}
-
 		const { data } = form;
 
 		const formData = new FormData();
@@ -39,8 +37,15 @@ export const actions = {
 			});
 
 			if (!res.ok) {
+				if (res.status === 400) {
+					return fail(400, {
+						message: 'Blog already exists.',
+						success: false
+					});
+				}
+
 				return fail(400, {
-					message: 'Failed to create Blog',
+					message: 'Failed to create blog.',
 					success: false
 				});
 			}

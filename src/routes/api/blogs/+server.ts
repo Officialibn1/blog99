@@ -25,95 +25,87 @@ export const POST = (async ({ cookies, request }) => {
 		});
 	}
 
-	try {
-		const claims = jwt.verify(authToken, SECRET_INGREDIENT);
+	const claims = jwt.verify(authToken, SECRET_INGREDIENT);
 
-		if (!claims) {
-			cookies.delete('adminSession', { path: '/' });
+	if (!claims) {
+		cookies.delete('adminSession', { path: '/' });
 
-			error(401, {
-				message: 'Session Expired!'
-			});
-		} else {
-			const formData = await request.formData();
-
-			const data = Object.fromEntries(formData.entries());
-
-			const parsedData = {
-				...data,
-				tags: JSON.parse(data.tags as string),
-				published: data.published === 'true',
-				thumbNail: formData.get('thumbNail') as File
-			} as Blog;
-
-			const slug = formatTitleToSlug(parsedData.title);
-
-			const existingBlogWithSlug = await db.blog.findUnique({ where: { slug } });
-
-			if (existingBlogWithSlug) {
-				return error(400, {
-					message: 'A blog with this title already exist'
-				});
-			}
-
-			const author = await db.user.findUnique({ where: { authToken } });
-
-			let cloudinaryUpload: { public_id: string; secure_url: string } | null = null;
-
-			cloudinaryUpload = await uploadThumnailToCloudinary(parsedData.thumbNail);
-
-			const blogTransaction = await db.$transaction(async (tx) => {
-				const blog = await tx.blog.create({
-					data: {
-						authorId: author?.id as string,
-						title: parsedData.title,
-						slug,
-						description: parsedData.description,
-						tagsIds: parsedData.tags,
-						categoryId: parsedData.category,
-						thumbnail: cloudinaryUpload.secure_url,
-						thumbnailPublicId: cloudinaryUpload.public_id,
-						markdown: parsedData.content,
-						published: parsedData.published,
-						views: 0
-					}
-				});
-
-				await tx.tag.updateMany({
-					where: {
-						id: {
-							in: parsedData.tags
-						}
-					},
-					data: {
-						blogsIds: {
-							push: blog.id
-						}
-					}
-				});
-
-				return tx.blog.findUnique({
-					where: {
-						id: blog.id
-					},
-					include: {
-						tags: {
-							select: {
-								name: true
-							}
-						}
-					}
-				});
-			});
-
-			return json(blogTransaction);
-		}
-	} catch (e) {
-		console.log('ERROR CREATING BLOG IN SERVER.TS: ', e);
-
-		return error(400, {
-			message: 'A blog with this title already exist'
+		error(401, {
+			message: 'Session Expired!'
 		});
+	} else {
+		const formData = await request.formData();
+
+		const data = Object.fromEntries(formData.entries());
+
+		const parsedData = {
+			...data,
+			tags: JSON.parse(data.tags as string),
+			published: data.published === 'true',
+			thumbNail: formData.get('thumbNail') as File
+		} as Blog;
+
+		const slug = formatTitleToSlug(parsedData.title);
+
+		const existingBlogWithSlug = await db.blog.findUnique({ where: { slug } });
+
+		if (existingBlogWithSlug) {
+			return error(400, {
+				message: 'A blog with this title already exist'
+			});
+		}
+
+		const author = await db.user.findUnique({ where: { authToken } });
+
+		let cloudinaryUpload: { public_id: string; secure_url: string } | null = null;
+
+		cloudinaryUpload = await uploadThumnailToCloudinary(parsedData.thumbNail);
+
+		const blogTransaction = await db.$transaction(async (tx) => {
+			const blog = await tx.blog.create({
+				data: {
+					authorId: author?.id as string,
+					title: parsedData.title,
+					slug,
+					description: parsedData.description,
+					tagsIds: parsedData.tags,
+					categoryId: parsedData.category,
+					thumbnail: cloudinaryUpload.secure_url,
+					thumbnailPublicId: cloudinaryUpload.public_id,
+					markdown: parsedData.content,
+					published: parsedData.published,
+					views: 0
+				}
+			});
+
+			await tx.tag.updateMany({
+				where: {
+					id: {
+						in: parsedData.tags
+					}
+				},
+				data: {
+					blogsIds: {
+						push: blog.id
+					}
+				}
+			});
+
+			return tx.blog.findUnique({
+				where: {
+					id: blog.id
+				},
+				include: {
+					tags: {
+						select: {
+							name: true
+						}
+					}
+				}
+			});
+		});
+
+		return json(blogTransaction);
 	}
 }) satisfies RequestHandler;
 

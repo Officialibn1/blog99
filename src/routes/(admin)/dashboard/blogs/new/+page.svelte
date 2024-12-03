@@ -152,7 +152,13 @@
 						});
 						submitting = false;
 					} else if (result.type === 'failure') {
-						toast.error(`Failed to create blog!`);
+						console.log(result.data);
+
+						if (result.data?.message) {
+							toast.error(result.data.message as string);
+						} else {
+							toast.error(`Failed to create blog.`);
+						}
 
 						applyAction({
 							type: 'failure',
