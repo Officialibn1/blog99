@@ -118,6 +118,14 @@
 	}
 
 	.blog-content blockquote {
-		@apply border-l-4 border-l-red-500 p-2 rounded-sm bg-red-200/30 font-medium;
+		@apply border-l-4 border-l-green-500 p-2 rounded-sm bg-green-200/30 font-medium;
+	}
+
+	.blog-content ol {
+		@apply list-decimal;
+	}
+
+	.blog-content li {
+		@apply mt-5;
 	}
 }

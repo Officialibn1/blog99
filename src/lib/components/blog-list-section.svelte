@@ -9,6 +9,7 @@
 		title: string;
 		slug: string;
 		createdAt: Date;
+		markdown: string;
 		thumbnail: string;
 		tags: {
 			name: string;
@@ -51,10 +52,10 @@
 	}
 
 	.content-grid {
-		@apply grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3;
+		@apply grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3;
 	}
 
 	/* .content-grid > div {
-		@apply aspect-video md:aspect-auto md:h-80 lg:h-96 bg-green-100/50 rounded-md;
+		@apply aspect-video md:aspect-auto md:h-80 lg:h-96 bg-green-100/100 rounded-md;
 	} */
 </style>
