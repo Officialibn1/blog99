@@ -1,4 +1,5 @@
 import { validateUsers, type User } from '$lib/utils';
+import type { Blog, Subscriber } from '@prisma/client';
 import type { PageLoad } from './$types';
 
 export const ssr = false;
@@ -28,7 +29,27 @@ export const load = (async ({ fetch }) => {
 		return validatedUsers;
 	};
 
+	const fetchBlogs = async () => {
+		const response = await fetch(`/api/blogs`);
+
+		const data: Blog[] = await response.json();
+
+		return data;
+	};
+
+	const fetchSubscribers = async () => {
+		const response = await fetch(`/api/subscribers`);
+
+		const data: Subscriber[] = await response.json();
+
+		console.log(data);
+
+		return data;
+	};
+
 	return {
-		users: fetchUsers
+		users: fetchUsers,
+		blogs: fetchBlogs,
+		subscribers: fetchSubscribers
 	};
 }) satisfies PageLoad;

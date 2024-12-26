@@ -132,7 +132,12 @@ export const GET = (async ({ cookies }) => {
 				error(400, `User doesn't exist /  Session Expired`);
 			}
 
-			const blogs = await db.blog.findMany({ where: { authorId: admin.id } });
+			const blogs = await db.blog.findMany({
+				where: { authorId: admin.id },
+				orderBy: {
+					createdAt: 'desc'
+				}
+			});
 
 			return json(blogs);
 		}
