@@ -4,7 +4,6 @@
 	import { Card, CardContent, CardHeader } from './ui/card';
 	import Separator from './ui/separator/separator.svelte';
 	import Chart from 'chart.js/auto';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import * as Select from '$lib/components/ui/select';
 
 	const { users }: { users: User[] | undefined } = $props();
@@ -26,7 +25,7 @@
 			chart = new Chart(ctx, {
 				type: chartType,
 				data: {
-					labels: users.map((user) => `${user.firstName} ${user.lastName}`),
+					labels: users.map(({ firstName, lastName }) => `${firstName} ${lastName}`),
 					datasets: [
 						{
 							label: 'Age',
@@ -64,29 +63,6 @@
 <Card class="w-full h-full min-w-96 overflow-hidden">
 	<CardHeader class=" items-center pb-3 flex-row">
 		<h1 class="font-semibold font-openSans">Traffic Overview</h1>
-
-		<!-- <DropdownMenu.Root>
-			<DropdownMenu.Trigger
-				class="border ml-auto py-[7px] px-3 font-openSans font-medium rounded-sm text-sm"
-			>
-				<span class="sr-only">Open Menu</span>
-				Select Data's to Show
-			</DropdownMenu.Trigger>
-
-			<DropdownMenu.Content>
-				<DropdownMenu.Item disabled class="w-44 text-sm font-medium"
-					>Select Data's</DropdownMenu.Item
-				>
-
-				<DropdownMenu.Separator />
-
-				<DropdownMenu.Item class="w-44 text-sm font-medium">View</DropdownMenu.Item>
-
-				<DropdownMenu.Item class="w-44 text-sm font-medium">Edit</DropdownMenu.Item>
-
-				<DropdownMenu.Item class="w-44 text-sm font-medium">Delete</DropdownMenu.Item>
-			</DropdownMenu.Content>
-		</DropdownMenu.Root> -->
 
 		<Select.Root>
 			<Select.Trigger class="w-36 ml-auto rounded-sm shadow-none font-medium font-openSans">
