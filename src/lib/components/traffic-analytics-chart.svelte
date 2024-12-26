@@ -1,23 +1,24 @@
 <script lang="ts">
-	import type { User } from '$lib/utils';
 	import { fade } from 'svelte/transition';
 	import { Card, CardContent, CardHeader } from './ui/card';
 	import Separator from './ui/separator/separator.svelte';
 	import Chart from 'chart.js/auto';
 	import * as Select from '$lib/components/ui/select';
+	import type { Traffic } from '@prisma/client';
+	import { getShortDay } from '$lib/utils';
+	import Button from './ui/button/button.svelte';
 
-	const { users }: { users: User[] | undefined } = $props();
+	const { traffic }: { traffic: Traffic[] | undefined } = $props();
+
+	let totalTraffic = $derived(traffic ? traffic.reduce((acc, { count }) => acc + count, 0) : 0);
 
 	let ctx: HTMLCanvasElement | undefined = $state();
 	let chart: Chart | undefined;
 
-	let showAge = true,
-		showWeight = true,
-		showHeight = true,
-		chartType: 'line' | 'bar' = $state('bar');
+	let chartType: 'line' | 'bar' = $state('bar');
 
 	$effect(() => {
-		if (users && ctx) {
+		if (traffic && ctx) {
 			if (chart) {
 				chart.destroy();
 			}
@@ -25,25 +26,14 @@
 			chart = new Chart(ctx, {
 				type: chartType,
 				data: {
-					labels: users.map(({ firstName, lastName }) => `${firstName} ${lastName}`),
+					labels: traffic.map(({ date }) => `${getShortDay(date)}`),
 					datasets: [
 						{
-							label: 'Age',
-							data: users.map(({ age }) => age),
+							label: 'Traffic',
+							data: traffic.map(({ count }) => count),
 							borderWidth: 2,
-							hidden: !showAge
-						},
-						{
-							label: 'Height',
-							data: users.map(({ height }) => height),
-							borderWidth: 2,
-							hidden: !showHeight
-						},
-						{
-							label: 'Weight',
-							data: users.map(({ weight }) => weight),
-							borderWidth: 2,
-							hidden: !showWeight
+							backgroundColor: 'rgb(22 163 74 / 0.4)',
+							borderColor: 'rgb(22 163 74 / 0.6)'
 						}
 					]
 				},
@@ -61,11 +51,13 @@
 </script>
 
 <Card class="w-full h-full min-w-96 overflow-hidden">
-	<CardHeader class=" items-center pb-3 flex-row">
+	<CardHeader class=" items-center pb-3 flex-row justify-between">
 		<h1 class="font-semibold font-openSans">Traffic Overview</h1>
 
+		<Button variant="secondary" class="font-mono text-xs">Total Traffic: {totalTraffic}</Button>
+
 		<Select.Root>
-			<Select.Trigger class="w-36 ml-auto rounded-sm shadow-none font-medium font-openSans">
+			<Select.Trigger class="w-36  rounded-sm shadow-none font-medium font-openSans">
 				<Select.Value asChild>
 					<Select.Label class="capitalize">
 						{chartType}
@@ -85,7 +77,7 @@
 
 	<CardContent>
 		<div class="chart-container w-full">
-			{#key [showAge, showWeight, showHeight, chartType, users]}
+			{#key [chartType, traffic]}
 				<canvas class="w-full" bind:this={ctx} width="100" height="48" in:fade></canvas>
 			{/key}
 		</div>

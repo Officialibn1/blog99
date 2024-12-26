@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { redirect, type Handle } from '@sveltejs/kit';
+import { error, redirect, type Handle } from '@sveltejs/kit';
 import { SECRET_INGREDIENT } from '$env/static/private';
+import db from '$lib/database';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const adminSession = event.cookies.get('adminSession');
@@ -10,6 +11,38 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const currentPath = event.url.pathname;
 
 	// console.log('HOOKS LOCALS USER: ', event.locals);
+
+	if (
+		!event.url.pathname.startsWith('/api/') &&
+		!event.url.pathname.startsWith('/dashboard') &&
+		!event.url.pathname.includes('favicon')
+	) {
+		try {
+			const today = new Date();
+			today.setHours(0, 0, 0, 0);
+
+			await db.traffic.upsert({
+				where: {
+					date: today
+				},
+				create: {
+					count: 1,
+					date: today
+				},
+				update: {
+					count: {
+						increment: 1
+					}
+				}
+			});
+
+			console.log('Count Hook Run');
+		} catch (e) {
+			console.error('Error in traffic hook:', e);
+
+			error(500, e instanceof Error ? e.message : String(e));
+		}
+	}
 
 	const isPublicRoute = (path: string): boolean => {
 		return publicRoutes.some((route) => path === route || path.startsWith(`${route}/`));

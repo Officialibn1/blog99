@@ -91,12 +91,12 @@
 
 	<div class="analytics-section">
 		<div>
-			{#await data.users()}
+			{#await data.traffic()}
 				<Card class="w-full aspect-video shadow-none">
 					<Skeleton class="h-full w-full rounded-md" />
 				</Card>
-			{:then users}
-				<TrafficAnalyticsChart {users} />
+			{:then traffic}
+				<TrafficAnalyticsChart {traffic} />
 			{:catch error}
 				<Card class="w-full h-full">
 					<pre>
@@ -120,19 +120,22 @@
 			<CardContent class="overflow-y-auto flex flex-col gap-4">
 				{#await data.blogs()}
 					{#each { length: 5 } as _}
-						<Skeleton class="h-[89px] w-full rounded-md" />
+						<Skeleton class="h-20 w-full rounded-md" />
 					{/each}
 				{:then blogs}
-					{#each blogs.slice(0, 5) as blog}
+					{#each blogs
+						.filter((blog) => blog.published)
+						.sort(({ views: viewsA }, { views: viewsB }) => viewsB - viewsA)
+						.slice(0, 5) as blog}
 						<Card class="p-2 shadow-sm bg-gray-200/30">
-							<h1 class="font-semibold text-sm mb-2 tracking-wide">{blog.title.slice(0, 60)}...</h1>
+							<h1 class="font-semibold text-sm mb-4 tracking-wide">{blog.title.slice(0, 40)}...</h1>
 
 							<CardContent class="p-0 flex justify-between w-full items-center">
 								<p class="text-sm">Views: {blog.views}</p>
 
 								<a
 									href={`/dashboard/blogs/${blog.slug}`}
-									class="text-xs font-medium border p-1 rounded-sm bg-white">View Blog</a
+									class="text-xs font-medium border p-1 px-2 rounded-sm bg-white">View Blog</a
 								>
 							</CardContent>
 						</Card>

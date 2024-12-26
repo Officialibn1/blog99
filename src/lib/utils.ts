@@ -108,6 +108,16 @@ export const formatdate = (
 	return formatter.format(new Date(date));
 };
 
+export const getShortDay = (date: Date): string => {
+	const formatter = new Intl.DateTimeFormat('en', {
+		weekday: 'short',
+		month: 'short',
+		day: 'numeric'
+	});
+
+	return formatter.format(new Date(date));
+};
+
 export const formatTitleToSlug = (title: string): string => {
 	const slug = title.toLowerCase().replace(/([^a-z0-9])+/g, '-');
 
