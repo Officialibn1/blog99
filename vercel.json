@@ -1,7 +1,6 @@
 {
 	"crons": [
 		{
-			"name": "daily-traffic-schedule",
 			"path": "/api/public/daily-traffic-schedule",
 			"schedule": "0 0 * * *"
 		}
