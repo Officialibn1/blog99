@@ -33,6 +33,15 @@ export const GET = (async ({ params: { slug }, setHeaders }) => {
 			});
 		}
 
+		await db.blog.update({
+			where: {
+				slug
+			},
+			data: {
+				views: blog.views + 1
+			}
+		});
+
 		return json(blog);
 	} catch (e) {
 		if (e instanceof Error) {
