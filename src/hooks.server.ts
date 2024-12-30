@@ -21,20 +21,39 @@ export const handle: Handle = async ({ event, resolve }) => {
 			const today = new Date();
 			today.setHours(0, 0, 0, 0);
 
-			await db.traffic.upsert({
+			const todaysTraffic = await db.traffic.findFirst({
 				where: {
 					date: today
-				},
-				create: {
-					count: 1,
-					date: today
-				},
-				update: {
-					count: {
-						increment: 1
-					}
 				}
 			});
+
+			if (todaysTraffic) {
+				await db.traffic.update({
+					where: {
+						date: today
+					},
+					data: {
+						count: {
+							increment: 1
+						}
+					}
+				});
+			} else {
+				await db.traffic.upsert({
+					where: {
+						date: today
+					},
+					create: {
+						count: 1,
+						date: today
+					},
+					update: {
+						count: {
+							increment: 1
+						}
+					}
+				});
+			}
 
 			console.log('Count Hook Run');
 		} catch (e) {

@@ -6,6 +6,27 @@ export const GET = (async () => {
 		const today = new Date();
 		today.setHours(0, 0, 0, 0);
 
+		const todaysTraffic = await db.traffic.findFirst({
+			where: {
+				date: today
+			}
+		});
+
+		if (todaysTraffic) {
+			await db.traffic.update({
+				where: {
+					date: today
+				},
+				data: {
+					count: {
+						increment: 1
+					}
+				}
+			});
+
+			return json(200);
+		}
+
 		await db.traffic.create({
 			data: {
 				count: 0,
