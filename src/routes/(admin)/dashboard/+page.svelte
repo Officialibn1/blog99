@@ -6,7 +6,6 @@
 	import DashbaordStatsCard from '$lib/components/ui/dashbaord-stats-card/dashbaord-stats-card.svelte';
 	import { Separator } from '$lib/components/ui/separator';
 	import { Skeleton } from '$lib/components/ui/skeleton';
-
 	import type { PageData } from './$types';
 
 	const { data }: { data: PageData } = $props();
@@ -125,7 +124,7 @@
 				{:then blogs}
 					{#each blogs
 						.filter((blog) => blog.published)
-						.sort(({ views: viewsA }, { views: viewsB }) => viewsB - viewsA)
+						.sort(({ views: a }, { views: b }) => b - a)
 						.slice(0, 5) as blog}
 						<Card class="p-2 shadow-sm bg-gray-200/30">
 							<h1 class="font-semibold text-sm mb-4 tracking-wide">{blog.title.slice(0, 40)}...</h1>

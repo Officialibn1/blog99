@@ -37,9 +37,6 @@
 			plugins: {
 				sort: {
 					disable: true
-				},
-				filter: {
-					exclude: true
 				}
 			}
 		}),

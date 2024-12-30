@@ -4,7 +4,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { dev } from '$app/environment';
 	import { toast } from 'svelte-sonner';
-	import { invalidate, invalidateAll } from '$app/navigation';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 
 	type Props = {
 		id: string;
@@ -59,9 +59,15 @@
 
 		<!-- <DropdownMenu.Separator /> -->
 
-		<DropdownMenu.Item class="text-sm font-medium cursor-pointer">View</DropdownMenu.Item>
+		<DropdownMenu.Item
+			class="text-sm font-medium cursor-pointer"
+			on:click={() => goto(`/dashboard/blogs/${id}`)}>View</DropdownMenu.Item
+		>
 
-		<DropdownMenu.Item class="text-sm font-medium cursor-pointer">Edit</DropdownMenu.Item>
+		<DropdownMenu.Item
+			class="text-sm font-medium cursor-pointer"
+			on:click={() => goto(`/dashboard/blogs/${id}/edit`)}>Edit</DropdownMenu.Item
+		>
 
 		<DropdownMenu.Item
 			on:click={() => deleteBlog(id)}
