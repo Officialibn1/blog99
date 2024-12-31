@@ -41,12 +41,13 @@
 
 <section>
 	<!-- BLOG BANNER IMAGE -->
-	<header class="min-h-[450px]">
+	<header class="min-h-[400px]">
 		<hgroup>
-			<BlogTitles
-				className="font-medium text-2xl md:text-4xl tracking-wide leading-relaxed text-center mb-8 md:mb-14"
-				>{data.blog.title}</BlogTitles
+			<h1
+				class="font-semibold max-w-3xl text-2xl md:text-4xl tracking-wider leading-9 text-center mb-8 md:mb-14"
 			>
+				{data.blog.title}
+			</h1>
 
 			<div class="tags-container">
 				{#each data.blog.tags as tag}
@@ -57,15 +58,6 @@
 			</div>
 
 			<div class="author-card">
-				<div>
-					<!-- <Avatar.Root>
-						<Avatar.Image src="/placeholder-author.png " alt="@blog9ja" />
-						<Avatar.Fallback>b9ja</Avatar.Fallback>
-					</Avatar.Root> -->
-
-					<h2 class="font-medium">Author: {data.blog.author.name}</h2>
-				</div>
-
 				<p class="text-sm font-medium text-slate-500">
 					Posted: {formatdate(data.blog.createdAt)} • Read Time: {Math.ceil(
 						data.blogHtml.length / 800
@@ -75,33 +67,11 @@
 		</hgroup>
 	</header>
 
+	<Separator />
+
 	<!-- BLOG TABLE OF CONTENT & BLOG CONTENT -->
 
 	<div class="blog-content-container">
-		<!-- <aside>
-			<h3>Table of Content</h3>
-
-			<Separator />
-
-			<ul>
-				<li>
-					<a href="#salary">Salary</a>
-				</li>
-
-				<li>
-					<a href="#wage">New Minimun Wage</a>
-				</li>
-
-				<li>
-					<a href="#wage">The State Government</a>
-				</li>
-
-				<li>
-					<a href="#wage">Livelihood</a>
-				</li>
-			</ul>
-		</aside> -->
-
 		<div class="blog-content">
 			{@html data.blogHtml}
 		</div>
@@ -192,7 +162,7 @@
 	}
 
 	header {
-		@apply flex items-center justify-center p-5 bg-green-100/20;
+		@apply flex items-center justify-center p-5;
 
 		p {
 			@apply text-center;
@@ -204,33 +174,16 @@
 	}
 
 	.author-card {
-		@apply flex items-center flex-col justify-center;
+		@apply flex items-center flex-col justify-center my-4;
 	}
 
 	.author-card > div {
-		@apply flex items-center gap-1 mb-2;
+		@apply flex items-center gap-1 my-2;
 	}
 
 	.blog-content-container {
 		@apply flex flex-col sm:flex-row gap-5 lg:gap-10 w-full;
 	}
-
-	/* .blog-content-container > aside {
-		@apply w-full sm:w-1/4 lg:w-1/5 flex flex-col gap-4 p-2;
-	}
-
-	.blog-content-container > aside h3 {
-		@apply font-medium text-lg;
-		font-family: 'Open Sans', sans-serif;
-	}
-
-	.blog-content-container > aside ul {
-		@apply flex flex-col gap-1;
-	}
-
-	.blog-content-container > aside ul a {
-		@apply font-normal text-sm text-slate-600 tracking-wide;
-	} */
 
 	.comments-section {
 		@apply flex flex-col gap-2;
