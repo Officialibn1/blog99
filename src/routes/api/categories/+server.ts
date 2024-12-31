@@ -61,3 +61,82 @@ export const GET = (async ({ cookies }) => {
 		error(500, { message: 'Internal server error' });
 	}
 }) satisfies RequestHandler;
+
+export const PUT = (async ({ cookies, request }) => {
+	const authToken = cookies.get('adminSession');
+
+	if (!authToken) {
+		error(401, 'unAuthorized');
+	}
+
+	try {
+		const claims = jwt.verify(authToken, SECRET_INGREDIENT);
+
+		if (!claims) {
+			error(401, 'Session Expired');
+		}
+
+		const author = await db.user.findUnique({ where: { authToken } });
+
+		if (!author) {
+			error(401, 'Session Expired');
+		}
+
+		const { id, name }: { id: string; name: string } = await request.json();
+
+		const category = await db.category.findUnique({ where: { id } });
+
+		if (!category) {
+			error(404, 'Category not found');
+		}
+
+		const newCategory = await db.category.update({
+			where: { id },
+			data: { name }
+		});
+
+		return json(newCategory);
+	} catch (e) {
+		console.error(e);
+
+		error(400, e instanceof Error ? e.message : JSON.stringify(e));
+	}
+}) satisfies RequestHandler;
+
+export const DELETE = (async ({ cookies, request }) => {
+	const authToken = cookies.get('adminSession');
+
+	if (!authToken) {
+		error(401, 'unAuthorized Access');
+	}
+
+	try {
+		const claims = jwt.verify(authToken, SECRET_INGREDIENT);
+
+		if (!claims) {
+			error(401, 'Session Expired!');
+		}
+
+		const author = await db.user.findUnique({ where: { authToken } });
+
+		if (!author) {
+			error(401, 'Session Expired!');
+		}
+
+		const { id } = await request.json();
+
+		const category = await db.category.findUnique({ where: { id } });
+
+		if (!category) {
+			error(404, 'Category not found');
+		}
+
+		const deletedCategory = await db.category.delete({ where: { id } });
+
+		return json(deletedCategory);
+	} catch (e) {
+		console.error(e);
+
+		error(400, e instanceof Error ? e.message : JSON.stringify(e));
+	}
+}) satisfies RequestHandler;

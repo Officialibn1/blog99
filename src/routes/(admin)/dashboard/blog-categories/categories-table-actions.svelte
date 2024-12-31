@@ -5,6 +5,7 @@
 	import { dev } from '$app/environment';
 	import { toast } from 'svelte-sonner';
 	import { invalidate, invalidateAll } from '$app/navigation';
+	import { enhance } from '$app/forms';
 
 	type Props = {
 		id: string;
@@ -63,7 +64,12 @@
 
 		<DropdownMenu.Item
 			class="text-sm font-medium bg-red-300/50 text-red-800 hover:bg-red-300/15 hover:text-red-900 cursor-pointer"
-			>Delete</DropdownMenu.Item
 		>
+			<form method="POST" action="?/deleteCategory" use:enhance>
+				<input hidden bind:value={id} name="categoryId" />
+
+				<button>Delete</button>
+			</form>
+		</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
