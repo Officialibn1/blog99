@@ -3,6 +3,7 @@ import { error, json, type RequestHandler } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 import { SECRET_INGREDIENT } from '$env/static/private';
 import db from '$lib/database';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export const GET = (async ({ cookies }) => {
 	const authToken = cookies.get('adminSession');
@@ -33,10 +34,30 @@ export const GET = (async ({ cookies }) => {
 			return json(categories);
 		}
 	} catch (e) {
-		console.log('SERVER ERROR IN CATEGORIES');
+		console.error('SERVER ERROR IN CATEGORIES:', e);
 
-		console.error(JSON.stringify(e, null, 2));
+		if (e instanceof PrismaClientKnownRequestError) {
+			switch (e.code) {
+				case 'P2010':
+					return error(503, {
+						message: 'Database connection error - Please try again later'
+					});
+				case 'P2025':
+					return error(404, {
+						message: 'Record not found'
+					});
+				default:
+					error(500, {
+						message: 'Database error'
+					});
+			}
+		}
 
-		return error(400, 'Failed to fetch categories!!');
+		if (e instanceof jwt.JsonWebTokenError) {
+			error(401, { message: 'Invalid authentication token' });
+		}
+
+		// For any other unexpected errors
+		error(500, { message: 'Internal server error' });
 	}
 }) satisfies RequestHandler;
