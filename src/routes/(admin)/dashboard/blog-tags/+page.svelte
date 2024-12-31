@@ -75,9 +75,6 @@
 			plugins: {
 				sort: {
 					disable: true
-				},
-				filter: {
-					exclude: true
 				}
 			}
 		}),
@@ -86,15 +83,13 @@
 			header: 'Tag Name'
 		}),
 		table.column({
-			accessor: 'blogsIds',
+			accessor: ({ blogsIds }) => blogsIds.length,
+			id: 'blogsIds',
 			header: 'Blogs with Tag',
 			cell: ({ value }) => {
-				return value.length;
+				return value;
 			},
 			plugins: {
-				sort: {
-					disable: true
-				},
 				filter: {
 					exclude: true
 				}
@@ -197,9 +192,9 @@
 						<TableRow>
 							{#each headerRow.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
-									<TableHead>
+									<TableHead {...attrs}>
 										<div>
-											{#if cell.id === 'name' || cell.id === 'createdAt'}
+											{#if cell.id === 'name' || cell.id === 'createdAt' || cell.id === 'blogsIds'}
 												<Button variant="ghost" onclick={props.sort.toggle}>
 													<Render of={cell.render()} />
 

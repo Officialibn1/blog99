@@ -76,11 +76,9 @@
 			header: 'Name'
 		}),
 		table.column({
-			accessor: 'blogs',
+			accessor: ({ blogs }) => blogs.length,
 			header: 'Blogs With Categories',
-			cell: ({ value }) => {
-				return value.length;
-			}
+			id: 'blogs'
 		}),
 		table.column({
 			accessor: ({ id }) => id,
@@ -169,9 +167,9 @@
 						<TableRow>
 							{#each headerRow.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
-									<TableHead>
+									<TableHead {...attrs}>
 										<div>
-											{#if cell.id === 'name' || cell.id === 'createdAt'}
+											{#if cell.id === 'name' || cell.id === 'createdAt' || cell.id === 'blogs'}
 												<Button variant="ghost" onclick={props.sort.toggle}>
 													<Render of={cell.render()} />
 
