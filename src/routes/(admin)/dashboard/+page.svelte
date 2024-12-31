@@ -133,7 +133,7 @@
 								<p class="text-sm">Views: {blog.views}</p>
 
 								<a
-									href={`/dashboard/blogs/${blog.slug}`}
+									href={`/dashboard/blogs/${blog.id}`}
 									class="text-xs font-medium border p-1 px-2 rounded-sm bg-white">View Blog</a
 								>
 							</CardContent>

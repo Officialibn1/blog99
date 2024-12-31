@@ -8,7 +8,7 @@
 	<p>{$page.error?.message}</p>
 </section>
 
-<style>
+<style lang="postcss">
 	section {
 		@apply w-full h-full flex flex-col gap-8 items-center justify-center;
 

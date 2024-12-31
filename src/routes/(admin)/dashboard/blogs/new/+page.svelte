@@ -42,7 +42,7 @@
 		resetForm: true
 	});
 
-	const { form: formData, constraints } = form;
+	const { form: formData } = form;
 
 	let submitting = $state(false);
 
@@ -84,7 +84,7 @@
 		return () => editor.destroy();
 	});
 
-	const handlesubmit = async () => {
+	const handleSubmit = async () => {
 		let markdown = await editor?.getMarkdown();
 
 		formData.update(
@@ -108,7 +108,7 @@
 	<div class="editor-container">
 		<form
 			method="POST"
-			onsubmit={handlesubmit}
+			onsubmit={handleSubmit}
 			use:enhance={async ({ formData: submittedFormData, cancel }) => {
 				submitting = true;
 
