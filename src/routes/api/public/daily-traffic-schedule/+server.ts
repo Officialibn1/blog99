@@ -4,7 +4,7 @@ import { json, error, type RequestHandler } from '@sveltejs/kit';
 export const GET = (async () => {
 	try {
 		const today = new Date();
-		today.setHours(0, 0, 0, 0);
+		today.setUTCHours(0, 0, 0, 0);
 
 		const todaysTraffic = await db.traffic.findFirst({
 			where: {

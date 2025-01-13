@@ -43,10 +43,6 @@ export const actions = {
 				}
 			});
 
-			// console.log('AUTHOR: ', author);
-
-			// console.log('EVENT AUTHOR OBJECT: ', JSON.stringify(event.locals.user, null, 2));
-
 			await db.tag.create({
 				data: {
 					name,
@@ -59,8 +55,6 @@ export const actions = {
 				success: true,
 				form
 			};
-
-			// console.log('Created Tag Successfully');
 		} catch (error) {
 			console.log('CAUGTH TAG ERROR: ', JSON.stringify(error, null, 2));
 
@@ -72,7 +66,5 @@ export const actions = {
 				form
 			};
 		}
-
-		// console.log('Created Tag Successfully');
 	}
 } satisfies Actions;

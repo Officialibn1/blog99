@@ -10,8 +10,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const currentPath = event.url.pathname;
 
-	// console.log('HOOKS LOCALS USER: ', event.locals);
-
 	if (
 		!event.url.pathname.startsWith('/api/') &&
 		!event.url.pathname.startsWith('/dashboard') &&
@@ -19,7 +17,30 @@ export const handle: Handle = async ({ event, resolve }) => {
 	) {
 		try {
 			const today = new Date();
-			today.setHours(0, 0, 0, 0);
+			today.setUTCHours(0, 0, 0, 0);
+
+			// console.log(today);
+
+			// const last14days = Array.from({ length: 30 }, (_, i) => {
+			// 	const date = new Date();
+			// 	date.setUTCHours(0, 0, 0, 0);
+			// 	date.setDate(date.getDate() - i);
+
+			// 	return date;
+			// });
+
+			// for (const date of last14days) {
+			// 	await db.traffic.upsert({
+			// 		where: {
+			// 			date
+			// 		},
+			// 		create: {
+			// 			count: Math.floor(Math.random() * (200 - 75 + 1)) + 90,
+			// 			date
+			// 		},
+			// 		update: {}
+			// 	});
+			// }
 
 			const todaysTraffic = await db.traffic.findFirst({
 				where: {
@@ -62,6 +83,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 			error(500, e instanceof Error ? e.message : String(e));
 		}
 	}
+
+	// await db.traffic.deleteMany();
 
 	const isPublicRoute = (path: string): boolean => {
 		return publicRoutes.some((route) => path === route || path.startsWith(`${route}/`));
