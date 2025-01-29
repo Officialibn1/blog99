@@ -2,9 +2,9 @@
 	import Ellipsis from 'lucide-svelte/icons/ellipsis';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
-	import { dev } from '$app/environment';
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { ENVIRONMENT_PATH } from '$env/static/private';
 
 	type Props = {
 		id: string;
@@ -14,15 +14,9 @@
 
 	let { id }: Props = $props();
 
-	let ENVIRONMENT_PATH = $derived(dev ? `http://localhost:5173` : `https://blog9ja.vercel.app`);
-
-	$effect(() => {
-		console.log('DEV ENV: ', ENVIRONMENT_PATH);
-	});
-
 	const deleteBlog = async (id: string) => {
 		try {
-			const res = await fetch(`${'https://blog9ja.vercel.app'}/api/blogs/`, {
+			const res = await fetch(`${ENVIRONMENT_PATH}/api/blogs/`, {
 				method: 'DELETE',
 				body: JSON.stringify(id)
 			});
