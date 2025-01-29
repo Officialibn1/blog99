@@ -14,7 +14,7 @@
 
 	let { id }: Props = $props();
 
-	const ENVIRONMENT_PATH = dev ? `http://localhost:5173` : `https://blog9ja.vercel.app`;
+	let ENVIRONMENT_PATH = $derived(dev ? `http://localhost:5173` : `https://blog9ja.vercel.app`);
 
 	const deleteBlog = async (id: string) => {
 		try {
