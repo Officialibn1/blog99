@@ -50,8 +50,6 @@ export const load = (async ({ fetch }) => {
 
 		const data: Traffic[] = await response.json();
 
-		console.log(data);
-
 		return data;
 	};
 

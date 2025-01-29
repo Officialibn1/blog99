@@ -16,6 +16,10 @@
 
 	let ENVIRONMENT_PATH = $derived(dev ? `http://localhost:5173` : `https://blog9ja.vercel.app`);
 
+	$effect(() => {
+		console.log('DEV ENV: ', ENVIRONMENT_PATH);
+	});
+
 	const deleteBlog = async (id: string) => {
 		try {
 			const res = await fetch(`${'https://blog9ja.vercel.app'}/api/blogs/`, {
