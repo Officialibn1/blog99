@@ -39,7 +39,7 @@
 
 <style lang="postcss">
 	section {
-		@apply w-full flex flex-col gap-5 my-20;
+		@apply w-full flex flex-col gap-5 my-44;
 	}
 
 	.header {

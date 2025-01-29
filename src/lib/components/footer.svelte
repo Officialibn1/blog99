@@ -12,7 +12,7 @@
 			<div class="logo">
 				<BookOpenText size={48} strokeWidth={1.5} />
 
-				<h1>Blog <span>9ja</span></h1>
+				<h1>Blog <span>99</span></h1>
 			</div>
 
 			<div class="links">
@@ -94,7 +94,7 @@
 
 <style lang="postcss">
 	footer {
-		@apply bg-green-100/30 px-4 pt-20 pb-10 lg:py-32 flex flex-col items-center w-full;
+		@apply bg-gray-300/30 px-4 pt-20 pb-10 lg:py-32 flex flex-col items-center w-full;
 	}
 
 	.footer-content {
@@ -106,7 +106,7 @@
 	}
 
 	.logo > h1 {
-		@apply text-2xl font-bold;
+		@apply text-2xl font-bold tracking-wider;
 	}
 
 	.logo > h1 > span {

@@ -12,7 +12,7 @@
 		<a href="/" class="logo">
 			<BookOpenText size={36} strokeWidth={1.5} />
 
-			<h1>Blog <span>9ja</span></h1>
+			<h1>Blog <span>99</span></h1>
 		</a>
 
 		<ul class="tablet-links">
@@ -80,7 +80,7 @@
 <!-- /* border-bottom: 1px solid #cfe1b9; */ -->
 <style lang="postcss">
 	nav {
-		@apply fixed top-0 w-full backdrop-blur-md bg-white/20 z-10;
+		@apply fixed top-0 w-full backdrop-blur-md bg-white/10 z-10;
 	}
 
 	nav > div {
@@ -92,7 +92,7 @@
 	}
 
 	.logo > h1 {
-		@apply text-2xl font-bold;
+		@apply text-2xl font-bold tracking-wider;
 	}
 
 	.logo > h1 > span {
