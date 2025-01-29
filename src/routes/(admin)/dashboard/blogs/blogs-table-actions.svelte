@@ -4,7 +4,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { toast } from 'svelte-sonner';
 	import { goto, invalidate, invalidateAll } from '$app/navigation';
-	import { ENVIRONMENT_PATH } from '$env/static/private';
+	import { PUBLIC_ENVIRONMENT_PATH } from '$env/static/public';
 
 	type Props = {
 		id: string;
@@ -16,7 +16,7 @@
 
 	const deleteBlog = async (id: string) => {
 		try {
-			const res = await fetch(`${ENVIRONMENT_PATH}/api/blogs/`, {
+			const res = await fetch(`${PUBLIC_ENVIRONMENT_PATH}/api/blogs/`, {
 				method: 'DELETE',
 				body: JSON.stringify(id)
 			});
