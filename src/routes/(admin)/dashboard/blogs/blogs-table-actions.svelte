@@ -18,7 +18,7 @@
 
 	const deleteBlog = async (id: string) => {
 		try {
-			const res = await fetch(`${ENVIRONMENT_PATH}/api/blogs/`, {
+			const res = await fetch(`${'https://blog9ja.vercel.app'}/api/blogs/`, {
 				method: 'DELETE',
 				body: JSON.stringify(id)
 			});
