@@ -44,7 +44,7 @@
 	<header class="min-h-[400px]">
 		<hgroup>
 			<h1
-				class="font-semibold max-w-3xl text-2xl md:text-4xl tracking-wider leading-9 text-center mb-8 md:mb-14"
+				class="font-bold max-w-3xl text-2xl md:text-4xl tracking-wider leading-9 text-center mb-8 md:mb-14 bg-gradient-to-r from-sky-500 to-indigo-500 bg-clip-text"
 			>
 				{data.blog.title}
 			</h1>
