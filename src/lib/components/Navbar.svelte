@@ -80,7 +80,7 @@
 <!-- /* border-bottom: 1px solid #cfe1b9; */ -->
 <style lang="postcss">
 	nav {
-		@apply fixed top-0 w-full backdrop-blur-md bg-white/10 z-10;
+		@apply fixed top-0 w-full backdrop-blur-md bg-white/10 z-20;
 	}
 
 	nav > div {
@@ -112,7 +112,7 @@
 	}
 
 	ul.tablet-links a {
-		@apply text-sm lg:text-lg font-semibold text-green-950 tracking-wider hover:underline underline-offset-8 duration-200;
+		@apply text-sm lg:text-lg font-semibold  tracking-wider hover:underline underline-offset-8 duration-200;
 	}
 
 	.social-container {

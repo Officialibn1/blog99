@@ -24,13 +24,13 @@
 </script>
 
 <Root
-	class="shadow-none cursor-pointer md:hover:shadow-md duration-200 overflow-hidden"
+	class="shadow-none cursor-pointer md:hover:shadow-lg duration-200 overflow-hidden group"
 	onclick={() => goto(`/blogs/${blog.slug}`)}
 >
-	<Content class="p-0 flex sm:flex-col">
+	<Content class="p-0 flex sm:flex-col h-full overflow-hidden ">
 		<Header class="w-2/5 aspect-square p-0 overflow-hidden sm:w-full">
 			<img
-				class=" w-full h-full"
+				class=" w-full h-full group-hover:scale-105 duration-300"
 				src={blog.thumbnail || '/placeholder-image.avif'}
 				alt="Card_Placeholder_Image"
 			/>

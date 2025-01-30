@@ -11,9 +11,9 @@
 	<div class="footer-content w-full max-w-[1224px]">
 		<div class="left">
 			<div class="logo">
-				<BookOpenText size={48} strokeWidth={1.5} />
+				<BookOpenText size={48} strokeWidth={1.5} color="#fff" />
 
-				<h1>Blog <span>99</span></h1>
+				<h1>Blog 99</h1>
 			</div>
 
 			<div class="links">
@@ -73,13 +73,9 @@
 				</p>
 
 				<form action="" class="flex gap-2 h-max items-center mt-5 max-w-96">
-					<Input class=" bg-white py-5 shadow-none" />
+					<Input class=" bg-white py-5 shadow-none" placeholder="Enter Email" />
 
-					<Button
-						class="bg-transparent hover:bg-green-100/50 shadow-none border  text-slate-800 h-full"
-					>
-						Subscribe
-					</Button>
+					<Button variant="outline" class="bg-transparent h-full px-5 rounded-md">Subscribe</Button>
 				</form>
 			</div>
 			<div class="flex gap-5 items-center">
@@ -97,7 +93,7 @@
 
 <style lang="postcss">
 	footer {
-		@apply bg-gray-300/30 px-4 pt-20 pb-10 lg:py-32 flex flex-col items-center w-full;
+		@apply bg-black text-white px-4 pt-20 pb-10 lg:py-32 flex flex-col items-center w-full;
 	}
 
 	.footer-content {
@@ -112,10 +108,6 @@
 		@apply text-2xl font-bold tracking-wider;
 	}
 
-	.logo > h1 > span {
-		@apply text-green-900;
-	}
-
 	.middle {
 		@apply flex flex-col gap-10 md:gap-14 sm:flex-row;
 	}
@@ -125,7 +117,7 @@
 	}
 
 	.links > h1 {
-		@apply text-lg font-medium;
+		@apply text-lg font-semibold;
 	}
 
 	.links > ul {
@@ -145,6 +137,6 @@
 	}
 
 	footer > span {
-		@apply text-stone-500 text-sm tracking-wide;
+		@apply text-stone-400 text-sm tracking-wide;
 	}
 </style>

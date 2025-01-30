@@ -17,12 +17,14 @@
 </script>
 
 <a href={`/blogs/${slug}`} data-sveltekit-prefetch class="h-full">
-	<Root class={cn('shadow-none md:hover:shadow-md duration-200 cursor-pointer h-full', className)}>
+	<Root
+		class={cn('shadow-none md:hover:shadow-lg duration-200 cursor-pointer h-full group', className)}
+	>
 		<Content class="p-0 flex flex-col h-full overflow-hidden">
 			<Header class="w-2/5 aspect-square p-0 overflow-hidden sm:w-full">
 				<img
 					src={thumbnail || '/placeholder-image.avif'}
-					class=" w-full h-full rounded-md"
+					class=" w-full h-full rounded-md group-hover:scale-105 duration-300"
 					alt="Card_Placeholder_Image"
 				/>
 			</Header>

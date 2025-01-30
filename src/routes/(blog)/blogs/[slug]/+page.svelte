@@ -79,7 +79,7 @@
 
 	<Separator />
 
-	<div class="comments-section">
+	<!-- <div class="comments-section">
 		<h1>Comments ({data.blog.comments?.length})</h1>
 
 		<form method="POST" action="?/addComment" use:commentFormEnhance>
@@ -128,7 +128,7 @@
 				</section>
 			{/if}
 		</div>
-	</div>
+	</div> -->
 
 	<!-- SIMILAR ARTICLES -->
 

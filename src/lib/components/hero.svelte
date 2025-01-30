@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { ArrowUpRight } from 'lucide-svelte';
 	import Badge from './ui/badge/badge.svelte';
 	import { buttonVariants } from './ui/button';
 
@@ -19,7 +20,7 @@
 </script>
 
 <main>
-	<div>
+	<div class="group">
 		<div>
 			<h1>
 				{blogs[0].title}
@@ -31,6 +32,12 @@
 						{tag.name}
 					</Badge>
 				{/each}
+
+				<Badge class="ml-auto group-hover:animate-bounce" variant="outline">
+					<a href={`/blogs/${blogs[0].slug}`} class="flex gap-2 items-center text-white">
+						Read More <ArrowUpRight color="#fff" size={20} />
+					</a>
+				</Badge>
 			</div>
 		</div>
 
@@ -39,22 +46,22 @@
 
 	<div>
 		<div>
-			<div class="adds-container">
+			<div class="adds-container group">
 				<h1>Advert Banner</h1>
 
 				<p>Contact us to place your advertisement here.</p>
 
-				<a href="/"> Contact Us </a>
+				<a href="/" class="group-hover:animate-bounce"> Contact Us </a>
 			</div>
 		</div>
 
 		<div>
-			<div class="adds-container">
+			<div class="adds-container group">
 				<h1>Advert Banner</h1>
 
 				<p>Contact us to place your advertisement here.</p>
 
-				<a href="/">Contact Us </a>
+				<a href="/" class="group-hover:animate-bounce"> Contact Us </a>
 			</div>
 		</div>
 	</div>
@@ -67,14 +74,14 @@
 		@apply relative flex flex-col lg:flex-row w-full lg:h-fit mt-20 gap-5;
 
 		& > div:first-child {
-			@apply w-full h-full flex-1 relative rounded-xl overflow-hidden shadow-lg;
+			@apply w-full h-full flex-1 relative rounded-xl overflow-hidden shadow-lg cursor-pointer;
 
 			h1 {
 				@apply text-lg md:text-2xl font-bold tracking-wide text-white;
 			}
 
 			& > div {
-				@apply absolute left-0 bottom-0 bg-black/40 w-full p-2 py-4 md:px-4 md:py-8 backdrop-blur-sm;
+				@apply absolute left-0 bottom-0 z-10 bg-black/40 w-full p-2 py-4 md:px-4 md:py-8 backdrop-blur-sm;
 
 				& > div {
 					@apply flex flex-wrap gap-3 mt-4;
@@ -82,7 +89,7 @@
 			}
 
 			img {
-				@apply rounded-xl w-full;
+				@apply rounded-xl w-full hover:scale-105 duration-200;
 			}
 		}
 
