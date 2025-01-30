@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Badge from './ui/badge/badge.svelte';
+	import { buttonVariants } from './ui/button';
 
 	type Blog = {
 		id: string;
@@ -38,10 +39,23 @@
 
 	<div>
 		<div>
-			<h1 class="text-2xl text-center my-auto">Place your adverts here !!</h1>
+			<div class="adds-container">
+				<h1>Advert Banner</h1>
+
+				<p>Contact us to place your advertisement here.</p>
+
+				<a href="/"> Contact Us </a>
+			</div>
 		</div>
+
 		<div>
-			<h1 class="text-2xl text-center my-auto">Place your adverts here !!</h1>
+			<div class="adds-container">
+				<h1>Advert Banner</h1>
+
+				<p>Contact us to place your advertisement here.</p>
+
+				<a href="/">Contact Us </a>
+			</div>
 		</div>
 	</div>
 </main>
@@ -76,7 +90,23 @@
 			@apply grid grid-cols-2 lg:grid-cols-1 gap-5 lg:w-1/3;
 
 			& > div {
-				@apply flex-1 border rounded-xl h-full aspect-video lg:aspect-auto flex justify-center;
+				@apply flex-1 border rounded-xl h-full aspect-video lg:aspect-auto flex justify-center p-3;
+
+				& .adds-container {
+					@apply flex flex-col gap-2 text-center justify-center;
+
+					h1 {
+						@apply text-2xl font-semibold;
+					}
+
+					p {
+						@apply text-lg text-gray-600;
+					}
+
+					a {
+						@apply bg-foreground text-white w-fit px-4 py-2 rounded-md font-semibold mt-5 mx-auto hover:bg-transparent hover:border-foreground border border-transparent hover:text-foreground duration-200;
+					}
+				}
 			}
 		}
 	}

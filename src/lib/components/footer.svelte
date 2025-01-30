@@ -4,6 +4,7 @@
 	import WhatsApp from './ui/icons/WhatsApp.svelte';
 	import { Button } from './ui/button';
 	import { Input } from '$lib/components/ui/input';
+	import { Separator } from './ui/separator';
 </script>
 
 <footer>
@@ -89,7 +90,9 @@
 		</div>
 	</div>
 
-	<span> &copy; Official Ibn's Blog 2024, &reg; All Rights Reserved.</span>
+	<Separator class="my-5 lg:my-10" />
+
+	<span> &copy; Blog 99 2025, &reg; All Rights Reserved.</span>
 </footer>
 
 <style lang="postcss">
@@ -142,6 +145,6 @@
 	}
 
 	footer > span {
-		@apply text-stone-500 text-sm mt-5 lg:mt-10;
+		@apply text-stone-500 text-sm tracking-wide;
 	}
 </style>
