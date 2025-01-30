@@ -45,25 +45,23 @@
 	</div>
 
 	<div>
-		<div>
-			<div class="adds-container group">
-				<h1>Advert Banner</h1>
+		{#each [1, 2] as _, i}
+			<div>
+				<div class="adds-container group">
+					<h1>Advert Banner</h1>
 
-				<p>Contact us to place your advertisement here.</p>
+					<p>Contact us to place your advertisement here.</p>
 
-				<a href="/" class="group-hover:animate-bounce"> Contact Us </a>
+					<a
+						href="https://wa.me/p/9443870402325875/2349038880282"
+						target="_blank"
+						class="group-hover:animate-bounce"
+					>
+						Contact Us
+					</a>
+				</div>
 			</div>
-		</div>
-
-		<div>
-			<div class="adds-container group">
-				<h1>Advert Banner</h1>
-
-				<p>Contact us to place your advertisement here.</p>
-
-				<a href="/" class="group-hover:animate-bounce"> Contact Us </a>
-			</div>
-		</div>
+		{/each}
 	</div>
 </main>
 

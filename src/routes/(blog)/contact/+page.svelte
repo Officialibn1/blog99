@@ -11,6 +11,7 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import Facebook from '$lib/components/ui/icons/Facebook.svelte';
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
+	import { Separator } from '$lib/components/ui/separator';
 
 	let { data } = $props();
 
@@ -26,7 +27,7 @@
 		<hgroup>
 			<BlogTitles
 				className="font-medium text-2xl md:text-4xl tracking-wide leading-relaxed text-center mb-8 md:mb-14"
-				>How can we help you?</BlogTitles
+				>Contact Us</BlogTitles
 			>
 
 			<p class="text-base font-light text-center text-slate-500 lg:w-2/3 mx-auto">
@@ -36,27 +37,24 @@
 			</p>
 
 			<div class="social-container">
-				<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
+				<a href="/">
 					<WhatsApp />
-				</Button>
+				</a>
 
-				<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
+				<a href="/">
 					<Twitter />
-				</Button>
+				</a>
 
-				<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc7d]">
+				<a href="/">
 					<Facebook />
-				</Button>
+				</a>
 			</div>
 		</hgroup>
 	</header>
 
-	<!-- <pre>
-		{JSON.stringify(data, null, 2)}
-	</pre> -->
+	<Separator class="mb-10" />
 
 	<div>
-		<h1 class="text-2xl md:text-3xl font-semibold font-openSans text-center mb-5">Contact Us</h1>
 		<form method="POST" use:enhance>
 			<Form.Field {form} name="name">
 				<Form.Control let:attrs>
@@ -125,7 +123,7 @@
 	}
 
 	header {
-		@apply flex items-center justify-center p-5 bg-slate-100/60;
+		@apply flex items-center justify-center p-5;
 	}
 
 	.social-container {
