@@ -30,7 +30,8 @@ export const GET = (async ({ cookies }) => {
 		const traffic = await db.traffic.findMany({
 			orderBy: {
 				date: 'asc'
-			}
+			},
+			take: -21
 		});
 
 		return json(traffic);
