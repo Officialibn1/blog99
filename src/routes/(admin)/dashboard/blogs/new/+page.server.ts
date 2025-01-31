@@ -8,8 +8,6 @@ export const actions = {
 		const form = await superValidate(request, zod(createBlogFormSchema));
 
 		if (!form.valid) {
-			console.log('Failed to create blog');
-
 			return {
 				message: 'Failed to create blog',
 				success: false
