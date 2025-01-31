@@ -2,11 +2,11 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import type { Actions } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { blogTagsSchema } from './schema';
-import db from '$lib/database';
+import { fail } from '@sveltejs/kit';
 
 export const actions = {
-	addTag: async (event) => {
-		const form = await superValidate(event, zod(blogTagsSchema));
+	addTag: async ({ request, fetch }) => {
+		const form = await superValidate(request, zod(blogTagsSchema));
 
 		if (!form.valid) {
 			console.log('Failed to create Tag');
@@ -21,34 +21,22 @@ export const actions = {
 		const { name } = form.data;
 
 		try {
-			const tag = await db.tag.findUnique({ where: { name } });
+			const res = await fetch('/api/tags', {
+				method: 'POST',
+				body: JSON.stringify({ name })
+			});
 
-			// console.log(tag);
-
-			if (form.data.name.toLowerCase() === tag?.name.toLowerCase()) {
-				setError(form, 'name', 'Tag already exists.');
+			if (!res.ok) {
+				if (res.status === 400) {
+					setError(form, 'name', 'Tag already exists');
+				}
 
 				return {
-					message: 'Tag already exists.',
+					message: 'Create Tag Failed!!',
 					success: false,
 					form
 				};
 			}
-
-			const adminSession = event.cookies.get('adminSession');
-
-			const author = await db.user.findUnique({
-				where: {
-					authToken: adminSession
-				}
-			});
-
-			await db.tag.create({
-				data: {
-					name,
-					authorId: author?.id as string
-				}
-			});
 
 			return {
 				message: 'Created Tag Successfully',
@@ -64,6 +52,46 @@ export const actions = {
 				message: 'Create Tag Failed!!',
 				success: false,
 				form
+			};
+		}
+	},
+	deleteTag: async ({ request, fetch }) => {
+		const data = await request.formData();
+
+		const id = data.get('id');
+
+		if (!id) {
+			fail(400, { id: 'Invalid tag id' });
+
+			return {
+				message: 'Failed to delete tag',
+				success: false
+			};
+		}
+
+		try {
+			const res = await fetch('/api/tags', {
+				method: 'DELETE',
+				body: JSON.stringify({ id })
+			});
+
+			if (!res.ok) {
+				return {
+					message: 'Failed to delete tag',
+					success: false
+				};
+			}
+
+			return {
+				message: 'Tag deleted successfully',
+				success: true
+			};
+		} catch (error) {
+			console.error('Failed to delete tag: ', JSON.stringify(error, null, 2));
+
+			return {
+				message: 'Failed to delete tag',
+				success: false
 			};
 		}
 	}

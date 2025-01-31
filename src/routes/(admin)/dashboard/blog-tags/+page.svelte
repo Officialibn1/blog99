@@ -30,11 +30,13 @@
 	import { Input } from '$lib/components/ui/input';
 	import Loader from '$lib/components/ui/icons/Loader.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { readable } from 'svelte/store';
+	import { writable } from 'svelte/store';
 	import { formatdate } from '$lib/utils';
 	import TagsTableActions from './tags-table-actions.svelte';
 	import { ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import { invalidate } from '$app/navigation';
+	import { toast } from 'svelte-sonner';
+	import { untrack } from 'svelte';
 
 	type Props = {
 		data: PageData;
@@ -43,9 +45,15 @@
 
 	const { data, form: formActionData }: Props = $props();
 
+	const tags = writable(data.tags);
+
 	$effect(() => {
-		if (formActionData?.success) {
-			invalidate(`tags:PageData`);
+		if (formActionData?.success === true) {
+			invalidate((url) => url.href.includes('tags'));
+
+			untrack(() => tags.set(data.tags));
+
+			toast.success('Tag Created Successfully');
 		}
 	});
 
@@ -55,7 +63,7 @@
 
 	const { form: formData, submitting, enhance } = form;
 
-	const table = createTable(readable(data.tags), {
+	const table = createTable(tags, {
 		page: addPagination({
 			initialPageSize: 8
 		}),

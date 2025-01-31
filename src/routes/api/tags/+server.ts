@@ -40,3 +40,125 @@ export const GET = (async ({ cookies }) => {
 		return error(400, 'Failed to fetch tags!!');
 	}
 }) satisfies RequestHandler;
+
+export const POST = (async ({ cookies, request }) => {
+	const authToken = cookies.get('adminSession');
+
+	if (!authToken) {
+		error(401, 'unAuthorized Access');
+	}
+
+	try {
+		const claims = jwt.verify(authToken, SECRET_INGREDIENT);
+
+		if (!claims) {
+			error(401, 'Session Expired');
+		}
+
+		const author = await db.user.findUnique({ where: { authToken } });
+
+		if (!author) {
+			error(401, 'Session Expired');
+		}
+
+		const { name } = await request.json();
+
+		const tag = await db.tag.findUnique({ where: { name } });
+
+		if (tag && tag.name.toLowerCase() === name.toLowerCase()) {
+			error(400, 'Tag already exists');
+		}
+
+		const newTag = await db.tag.create({
+			data: {
+				name,
+				authorId: author.id
+			}
+		});
+
+		return json(newTag);
+	} catch (e) {
+		console.error(e);
+
+		error(400, e instanceof Error ? e.message : JSON.stringify(e));
+	}
+}) satisfies RequestHandler;
+
+export const PUT = (async ({ cookies, request }) => {
+	const authToken = cookies.get('adminSession');
+
+	if (!authToken) {
+		error(401, 'unAuthorized');
+	}
+
+	try {
+		const claims = jwt.verify(authToken, SECRET_INGREDIENT);
+
+		if (!claims) {
+			error(401, 'Session Expired');
+		}
+
+		const author = await db.user.findUnique({ where: { authToken } });
+
+		if (!author) {
+			error(401, 'Session Expired');
+		}
+
+		const { id, name }: { id: string; name: string } = await request.json();
+
+		const tag = await db.tag.findUnique({ where: { id } });
+
+		if (!tag) {
+			error(404, 'Tag not found');
+		}
+
+		const newTag = await db.tag.update({
+			where: { id },
+			data: { name }
+		});
+
+		return json(newTag);
+	} catch (e) {
+		console.error(e);
+
+		error(400, e instanceof Error ? e.message : JSON.stringify(e));
+	}
+}) satisfies RequestHandler;
+
+export const DELETE = (async ({ cookies, request }) => {
+	const authToken = cookies.get('adminSession');
+
+	if (!authToken) {
+		error(401, 'unAuthorized Access');
+	}
+
+	try {
+		const claims = jwt.verify(authToken, SECRET_INGREDIENT);
+
+		if (!claims) {
+			error(401, 'Session Expired!');
+		}
+
+		const author = await db.user.findUnique({ where: { authToken } });
+
+		if (!author) {
+			error(401, 'Session Expired!');
+		}
+
+		const { id } = await request.json();
+
+		const tag = await db.tag.findUnique({ where: { id } });
+
+		if (!tag) {
+			error(404, 'Tag not found');
+		}
+
+		const deletedTag = await db.tag.delete({ where: { id } });
+
+		return json(deletedTag);
+	} catch (e) {
+		console.error(e);
+
+		error(400, e instanceof Error ? e.message : JSON.stringify(e));
+	}
+}) satisfies RequestHandler;

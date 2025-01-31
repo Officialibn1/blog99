@@ -6,12 +6,10 @@ import type { Tag } from '@prisma/client';
 
 export const ssr = false;
 
-export const load: PageLoad = async ({ fetch, depends }) => {
+export const load: PageLoad = async ({ fetch }) => {
 	const form = await superValidate(zod(blogTagsSchema));
 
 	const tagsResponse = await fetch('/api/tags');
-
-	depends(`tags:PageData`);
 
 	const tags: Tag[] = await tagsResponse.json();
 

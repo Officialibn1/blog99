@@ -5,37 +5,13 @@
 	import { dev } from '$app/environment';
 	import { toast } from 'svelte-sonner';
 	import { invalidate, invalidateAll } from '$app/navigation';
+	import { enhance } from '$app/forms';
 
 	type Props = {
 		id: string;
 	};
 
 	let { id }: Props = $props();
-
-	const ENVIRONMENT_PATH = dev ? `http://localhost:5173` : `https://blog9ja.vercel.app`;
-
-	const deleteTag = async (id: string) => {
-		try {
-			const res = await fetch(`${ENVIRONMENT_PATH}/api/tags/`, {
-				method: 'DELETE',
-				body: JSON.stringify(id)
-			});
-
-			if (!res.ok) {
-				toast.error(`Something went wrong on the server while deleting tag`);
-
-				return;
-			}
-
-			invalidate('tags:DashboardData');
-
-			invalidateAll();
-
-			toast.success(`Tag Deleted Successfully`);
-		} catch (error) {
-			toast.error(`Something went wrong while deleting tag`);
-		}
-	};
 </script>
 
 <DropdownMenu.Root>
@@ -55,15 +31,17 @@
 			Copy ID
 		</DropdownMenu.Item>
 
-		<!-- <DropdownMenu.Separator /> -->
-
 		<DropdownMenu.Item class="text-sm font-medium cursor-pointer">View</DropdownMenu.Item>
 
 		<DropdownMenu.Item class="text-sm font-medium cursor-pointer">Edit</DropdownMenu.Item>
 
 		<DropdownMenu.Item
 			class="text-sm font-medium bg-red-300/50 text-red-800 hover:bg-red-300/15 hover:text-red-900 cursor-pointer"
-			>Delete</DropdownMenu.Item
 		>
+			<form method="POST" use:enhance action="?/deleteTag">
+				<input type="hidden" name="id" value={id} />
+				<button>Delete</button>
+			</form>
+		</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
