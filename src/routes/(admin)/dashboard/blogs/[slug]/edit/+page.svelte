@@ -234,7 +234,7 @@
 								<SelectValue placeholder="Select Tags" />
 							</SelectTrigger>
 
-							<SelectContent>
+							<SelectContent class="max-h-96 overflow-auto">
 								{#each data.tags as tag}
 									<SelectItem class="font-openSans" label={tag.name} value={tag.id} />
 								{/each}
@@ -260,7 +260,7 @@
 									<SelectValue placeholder="Select Category" />
 								</SelectTrigger>
 
-								<SelectContent>
+								<SelectContent class="max-h-96 overflow-auto">
 									{#each data.categories as category}
 										<SelectItem class="font-openSans" label={category.name} value={category.id} />
 									{/each}
