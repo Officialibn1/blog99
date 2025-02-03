@@ -29,7 +29,7 @@
 			<div>
 				{#each blogs[0].tags as tag, i}
 					<Badge variant="secondary">
-						{tag.name}
+						#{tag.name}
 					</Badge>
 				{/each}
 

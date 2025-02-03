@@ -52,7 +52,7 @@
 			<div class="tags-container">
 				{#each data.blog.tags as tag}
 					<Badge variant="outline">
-						{tag.name}
+						#{tag.name}
 					</Badge>
 				{/each}
 			</div>
@@ -164,11 +164,11 @@
 	header {
 		@apply flex items-center justify-center p-5;
 
-		p {
+		& p {
 			@apply text-center;
 		}
 
-		.tags-container {
+		& .tags-container {
 			@apply flex items-center justify-center max-w-md flex-wrap gap-3 mx-auto;
 		}
 	}
@@ -177,29 +177,25 @@
 		@apply flex items-center flex-col justify-center my-4;
 	}
 
-	.author-card > div {
-		@apply flex items-center gap-1 my-2;
-	}
-
 	.blog-content-container {
 		@apply flex flex-col sm:flex-row gap-5 lg:gap-10 w-full;
 	}
 
-	.comments-section {
+	/* .comments-section {
 		@apply flex flex-col gap-2;
 
-		> h1 {
+		& > h1 {
 			@apply text-xl font-medium;
 		}
 
-		section {
+		& section {
 			@apply mt-3;
 		}
 
-		form {
+		& form {
 			@apply flex flex-col gap-3;
 		}
-	}
+	} */
 
 	.similar-blogs-section {
 		@apply mt-10 flex flex-col gap-4  w-full max-w-full items-center;

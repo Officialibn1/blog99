@@ -40,7 +40,7 @@
 			<Footer class="flex flex-col  gap-3 items-start mt-auto p-2">
 				<div class="flex flex-wrap gap-2">
 					{#each tags.slice(0, 3) as tag, i (`card-tag-${i}`)}
-						<Badge variant="secondary" class="text-gray-700">{tag.name}</Badge>
+						<Badge variant="secondary" class="text-gray-700">#{tag.name}</Badge>
 					{/each}
 				</div>
 

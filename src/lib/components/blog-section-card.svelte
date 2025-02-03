@@ -46,7 +46,7 @@
 		<Footer class="flex flex-col gap-2 p-2 items-start mt-auto">
 			<div class="flex flex-wrap gap-2 px-0">
 				{#each blog.tags as tag, i (`home-blogs-card-${i}`)}
-					<Badge variant="secondary" class="text-gray-700">{tag.name}</Badge>
+					<Badge variant="secondary" class="text-gray-700">#{tag.name}</Badge>
 				{/each}
 			</div>
 
