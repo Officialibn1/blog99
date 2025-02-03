@@ -97,19 +97,19 @@
 	}
 
 	.blog-content h1 {
-		@apply text-2xl font-bold my-5;
+		@apply text-3xl font-bold my-5;
 	}
 
 	.blog-content h2 {
-		@apply text-xl font-semibold;
+		@apply text-2xl font-semibold;
 	}
 
 	.blog-content h3 {
-		@apply text-lg font-medium;
+		@apply text-xl font-medium;
 	}
 
 	.blog-content p {
-		@apply tracking-wider leading-loose text-justify;
+		@apply tracking-wider text-lg leading-loose text-justify my-3;
 	}
 
 	.blog-content pre {
