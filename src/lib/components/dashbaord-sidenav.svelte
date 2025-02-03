@@ -15,6 +15,7 @@
 	import type { ComponentType } from 'svelte';
 	import type { Icon } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
+	import { enhance } from '$app/forms';
 
 	type DashboardSideLinks = {
 		name: string;
@@ -76,13 +77,15 @@
 		{/each}
 
 		<li>
-			<Button
-				onclick={() => goto('/signin')}
-				variant="destructive"
-				class="gap-2 font-openSans justify-start text-xs tracking-wide p-2 font-semibold rounded-sm"
-				><LogOut color="#fff" size={20} strokeWidth={2} /><span class="text-white">Sign Out</span
-				></Button
-			>
+			<form method="POST" use:enhance action="/signout?">
+				<Button
+					type="submit"
+					variant="destructive"
+					class="gap-2 font-openSans justify-start text-xs tracking-wide p-2 font-semibold rounded-sm"
+					><LogOut color="#fff" size={20} strokeWidth={2} /><span class="text-white">Sign Out</span
+					></Button
+				>
+			</form>
 		</li>
 	</ul>
 </aside>

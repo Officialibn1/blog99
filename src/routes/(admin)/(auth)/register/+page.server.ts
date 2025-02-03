@@ -13,8 +13,6 @@ export const actions = {
 		const form = await superValidate(event, zod(registerFormSchama));
 
 		if (!form.valid) {
-			console.log('Failed to Register');
-
 			return {
 				message: 'Failed to Register',
 				form
@@ -56,23 +54,6 @@ export const actions = {
 			};
 		}
 
-		redirect(303, '/signin');
+		throw redirect(303, '/signin');
 	}
 } satisfies Actions;
-
-// return {
-// 	message: 'Registeration Successfull',
-// 	form
-// };
-
-// const authToken =  jwt.sign({authUser: email}, SECRET_INGREDIENT, {
-// 	expiresIn: '30d'
-// })
-
-// event.cookies.set('authToken', authToken, {
-// 	path: '/',
-// 	httpOnly: true,
-// 	maxAge: 60 * 60 * 24 * 30,
-// 	sameSite: 'strict',
-// 	secure: process.env.NODE_ENV === 'PRODUCTION'
-// });

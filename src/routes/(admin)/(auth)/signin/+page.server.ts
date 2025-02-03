@@ -79,6 +79,6 @@ export const actions = {
 			});
 		}
 
-		redirect(303, '/dashboard');
+		throw redirect(303, '/dashboard');
 	}
 } satisfies Actions;
