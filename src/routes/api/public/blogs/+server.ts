@@ -3,10 +3,16 @@ import db from '$lib/database';
 import { Prisma } from '@prisma/client';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 
-export const GET = (async ({ setHeaders }) => {
+export const GET = (async ({ setHeaders, url }) => {
 	try {
 		const blogs = await db.blog.findMany({
-			where: { published: true },
+			where: {
+				published: true,
+				markdown: {
+					contains: url.searchParams.get('search') ?? '',
+					mode: 'insensitive'
+				}
+			},
 			select: {
 				id: true,
 				title: true,
@@ -21,6 +27,7 @@ export const GET = (async ({ setHeaders }) => {
 					}
 				}
 			},
+
 			orderBy: {
 				createdAt: 'desc'
 			}

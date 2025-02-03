@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import BlogCard from '$lib/components/blog-card.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
@@ -9,6 +11,28 @@
 	};
 
 	const { data }: Props = $props();
+
+	let searchTerm = $state($page.url.searchParams.get('search') || '');
+
+	function debounceInput(node: HTMLInputElement, options = { delay: 500 }) {
+		let timer: NodeJS.Timeout;
+
+		function handleInput() {
+			clearTimeout(timer);
+			timer = setTimeout(() => {
+				goto(`/blogs/?search=${node.value}`);
+			}, options.delay);
+		}
+
+		node.addEventListener('input', handleInput);
+
+		return {
+			destroy() {
+				clearTimeout(timer);
+				node.removeEventListener('input', handleInput);
+			}
+		};
+	}
 </script>
 
 <section>
@@ -73,11 +97,20 @@
 
 	<div class="main-content">
 		<header>
-			<form>
-				<Input />
+			<div>
+				<input
+					placeholder="Type to start searching..."
+					bind:value={searchTerm}
+					onchange={() => goto(`/blogs/?search=${searchTerm}`)}
+					use:debounceInput
+				/>
 				<!-- class="bg-green-600 hover:bg-green-600/80" -->
-				<Button variant="secondary" class="shadow-sm">Search</Button>
-			</form>
+				<!-- <Button
+					variant="secondary"
+					class="shadow-sm"
+					onclick={() => goto(`/blogs/?search=${searchTerm}`)}>Search</Button
+				> -->
+			</div>
 		</header>
 
 		<div class="cards-wrapper">
@@ -85,9 +118,18 @@
 				{#each data.blogs as blog (`blogs-page-${blog.id}`)}
 					<BlogCard {blog} />
 				{/each}
+			{:else if data.blogs.length === 0 && searchTerm}
+				<div class="flex flex-col gap-2 md:col-span-2 lg:col-span-3 xl:col-span-4">
+					<h1 class="text-7xl text-center">🤷‍♂️</h1>
+					<h2 class="text-3xl font-medium text-center">
+						There are no blogs that match your "<span class="text-red-300">
+							{searchTerm}
+						</span>" search.
+					</h2>
+				</div>
 			{:else}
 				<h1 class="text-3xl font-medium text-center md:col-span-2 lg:col-span-3 xl:col-span-4">
-					There are no blogs
+					There are no blogs posts.
 				</h1>
 			{/if}
 		</div>
@@ -127,12 +169,12 @@
 		@apply w-full flex;
 	}
 
-	header > form {
+	header > div {
 		@apply flex w-full  items-center gap-5;
 	}
 
-	header > form > input {
-		@apply flex-1;
+	header > div > input {
+		@apply flex-1 bg-transparent px-5 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-slate-800 focus:shadow-md;
 	}
 
 	.cards-wrapper {

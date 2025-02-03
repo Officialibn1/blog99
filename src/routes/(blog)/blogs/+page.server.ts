@@ -13,8 +13,8 @@ export interface BlogWithComments {
 	}[];
 }
 
-export const load = (async ({ fetch }) => {
-	const response = await fetch('/api/public/blogs');
+export const load = (async ({ fetch, url }) => {
+	const response = await fetch(`/api/public/blogs?search=${url.searchParams.get('search') ?? ''}`);
 
 	if (!response.ok) {
 		console.log(response);
