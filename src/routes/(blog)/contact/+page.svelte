@@ -37,16 +37,12 @@
 			</p>
 
 			<div class="social-container">
-				<a href="/">
-					<WhatsApp />
-				</a>
-
-				<a href="/">
+				<a href="https://x.com/__ibn1" target="_blank">
 					<Twitter />
 				</a>
 
-				<a href="/">
-					<Facebook />
+				<a href="https://wa.me/p/9443870402325875/2349038880282" target="_blank">
+					<WhatsApp />
 				</a>
 			</div>
 		</hgroup>

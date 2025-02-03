@@ -30,13 +30,13 @@
 		</ul>
 
 		<div class="social-container">
-			<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc22]">
+			<a href="https://x.com/__ibn1" target="_blank">
 				<Twitter />
-			</Button>
+			</a>
 
-			<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc22]">
+			<a href="https://wa.me/p/9443870402325875/2349038880282" target="_blank">
 				<WhatsApp />
-			</Button>
+			</a>
 		</div>
 
 		<div class="md:hidden">
@@ -62,13 +62,13 @@
 						</ul>
 
 						<div class="flex gap-10 mt-14 justify-center w-full">
-							<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc22]">
+							<a href="https://x.com/__ibn1" target="_blank">
 								<Twitter />
-							</Button>
+							</a>
 
-							<Button variant="ghost" size="icon" class="hover:bg-[#d3e5bc22]">
+							<a href="https://wa.me/p/9443870402325875/2349038880282" target="_blank">
 								<WhatsApp />
-							</Button>
+							</a>
 						</div>
 					</Sheet.Description>
 				</Sheet.Content>

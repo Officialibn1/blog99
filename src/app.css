@@ -112,6 +112,10 @@
 		@apply tracking-wider text-lg leading-loose text-justify my-3;
 	}
 
+	.blog-content p a {
+		@apply decoration-dotted text-orange-700 underline underline-offset-2 hover:text-orange-600 duration-75;
+	}
+
 	.blog-content pre {
 		@apply bg-black text-white p-3 rounded-md overflow-x-auto my-5;
 	}
@@ -129,7 +133,7 @@
 	}
 
 	.blog-content li {
-		@apply mt-2;
+		@apply tracking-wider text-lg leading-loose text-justify;
 	}
 
 	.blog-content hr {
