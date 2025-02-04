@@ -16,6 +16,7 @@
 	import type { Icon } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 	import { enhance } from '$app/forms';
+	import { cn } from '$lib/utils';
 
 	type DashboardSideLinks = {
 		name: string;
@@ -70,8 +71,10 @@
 				<Button
 					onclick={() => goto(href)}
 					variant={$page.url.pathname === href ? 'secondary' : 'ghost'}
-					class="gap-2 font-openSans justify-start text-xs tracking-wide p-2 font-semibold rounded-sm"
-					><svelte:component this={icon} size={20} strokeWidth={2} /> <span>{name}</span></Button
+					class={cn(
+						'gap-2 font-openSans justify-start text-xs tracking-wide p-2 font-semibold text-gray-500 rounded-sm',
+						$page.url.pathname === href && 'text-gray-900'
+					)}><svelte:component this={icon} size={20} strokeWidth={2} /> <span>{name}</span></Button
 				>
 			</li>
 		{/each}
