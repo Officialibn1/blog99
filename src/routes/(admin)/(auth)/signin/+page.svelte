@@ -23,7 +23,7 @@
 <section>
 	<hgroup>
 		<div>
-			<h1>Blog <a href="/">9ja</a> Admin</h1>
+			<h1>Blog <a href="/">99</a> Admin</h1>
 		</div>
 	</hgroup>
 
@@ -96,7 +96,7 @@
 				@apply font-bold text-3xl tracking-widest text-center;
 
 				& a {
-					@apply text-green-700 hover:underline;
+					@apply text-orange-700 hover:underline;
 				}
 			}
 		}
